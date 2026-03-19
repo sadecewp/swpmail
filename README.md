@@ -174,21 +174,21 @@ If you skipped the wizard or want to change settings later:
 
 ### HTTP API-Based Providers
 
-| #   | Service                | Method              | Free Quota             |
-| --- | ---------------------- | ------------------- | ---------------------- |
-| 6   | **Mailgun**            | HTTP API            | 100/day                |
-| 7   | **SendGrid**           | HTTP API            | 100/day (60-day trial) |
-| 8   | **Postmark**           | HTTP API            | 100/month (test)       |
-| 9   | **Brevo (Sendinblue)** | HTTP API            | 300/day                |
-| 10  | **Amazon SES**         | HTTP API (SDK-less) | 62,000/month (EC2)     |
-| 11  | **Resend**             | HTTP API            | 3,000/month            |
-| 12  | **Elastic Email**      | HTTP API            | 100/day                |
-| 13  | **Mailjet**            | HTTP API            | 200/day                |
-| 14  | **MailerSend**         | HTTP API            | 3,000/month            |
-| 15  | **SendLayer**          | HTTP API            | 200/month (trial)      |
-| 16  | **SMTP.com**           | HTTP API            | Plan-dependent         |
-| 17  | **SMTP2GO**            | HTTP API            | 1,000/month            |
-| 18  | **SparkPost**          | HTTP API            | 500/month (test)       |
+| #   | Service                | Method              | Free Quota           |
+| --- | ---------------------- | ------------------- | -------------------- |
+| 6   | **Mailgun**            | HTTP API            | 100/day              |
+| 7   | **SendGrid**           | HTTP API            | 100/day (trial only) |
+| 8   | **Postmark**           | HTTP API            | 100/month (test)     |
+| 9   | **Brevo (Sendinblue)** | HTTP API            | 300/day              |
+| 10  | **Amazon SES**         | HTTP API (SDK-less) | 3,000/month          |
+| 11  | **Resend**             | HTTP API            | 3,000/month          |
+| 12  | **Elastic Email**      | HTTP API            | 100/day              |
+| 13  | **Mailjet**            | HTTP API            | 200/day              |
+| 14  | **MailerSend**         | HTTP API            | 3,000/month          |
+| 15  | **SendLayer**          | HTTP API            | Paid only            |
+| 16  | **SMTP.com**           | HTTP API            | Paid only            |
+| 17  | **SMTP2GO**            | HTTP API            | 1,000/month          |
+| 18  | **SparkPost**          | HTTP API            | 500/month (test)     |
 
 ### Provider Configuration
 

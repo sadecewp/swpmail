@@ -1,4 +1,4 @@
-# SWPMail — WordPress Email Sending & Subscription Plugin
+# SWPMail - WordPress SMTP & Subscription Plugin
 
 [![WordPress](https://img.shields.io/badge/WordPress-6.0%2B-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-777BB4.svg)](https://php.net/)

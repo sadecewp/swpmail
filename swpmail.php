@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       SWPMail 
+ * Plugin Name:       SWPMail - SMTP & Subscription Plugin 
  * Plugin URI:        https://github.com/sadecewp/swpmail
  * Description:       Professional email subscription, notifications and SMTP/API delivery for WordPress.
  * Version:           1.0.0

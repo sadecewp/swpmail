@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-GPLv2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)](#)
 
-SWPMail is a fully customizable **email subscription, notification, and sending infrastructure plugin** that integrates with WordPress sites, supports **18 professional mail services**, applies the configured SMTP/API setting to **all WordPress emails** sent via `wp_mail()`, and features enterprise-grade capabilities such as smart routing, failover, OAuth 2.0, email tracking & analytics, alarm system, and DNS verification.
+SWPMail is a fully customizable **email subscription, notification, and sending infrastructure plugin** that integrates with WordPress sites, supports **18 professional mail services**, applies the configured SMTP/API setting to **all WordPress emails** sent via `wp_mail()`, and features enterprise-grade capabilities such as smart routing, failover, OAuth 2.0, email tracking & analytics, alarm system, DNS verification, and multilingual support (9 languages).
 
 ---
 
@@ -90,7 +90,7 @@ SWPMail is a fully customizable **email subscription, notification, and sending 
 - **AES-256-CBC Encryption:** API keys are stored encrypted in the database with HMAC-SHA256 verification
 - **Rate Limiting:** IP-based request limiting and bot protection (honeypot)
 - **GDPR Compliant:** WordPress Privacy API integration, unsubscribe links
-- **Multilingual:** Compliant with WordPress i18n standards, Turkish and English language support
+- **Multilingual (9 Languages):** English, Türkçe, Deutsch, Español, Français, Italiano, 日本語, Nederlands, Português (BR)
 - **Zero External Dependencies:** No external libraries required; uses WordPress HTTP API
 
 ---
@@ -855,7 +855,19 @@ The plugin provides full integration with WordPress Privacy API:
 
 - Text domain: `swpmail`
 - Language files: `languages/` folder
-- Built-in languages: English (default), Turkish (`tr_TR`)
+- Built-in languages (9):
+
+| Language           | Locale  |
+| ------------------ | ------- |
+| English            | default |
+| Türkçe             | tr_TR   |
+| Deutsch            | de_DE   |
+| Español            | es_ES   |
+| Français           | fr_FR   |
+| Italiano           | it_IT   |
+| 日本語             | ja      |
+| Nederlands         | nl_NL   |
+| Português (Brasil) | pt_BR   |
 
 ### Adding Translations
 

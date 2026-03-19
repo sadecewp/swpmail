@@ -1,0 +1,34 @@
+# Development tools & dependencies
+
+vendor/
+
+# Tests
+
+tests/
+phpunit.xml.dist
+phpcs.xml
+.phpunit.result.cache
+
+# Composer dev files
+
+composer.json
+composer.lock
+composer.phar
+
+# Version control
+
+.git/
+.gitignore
+.gitattributes
+
+# Node
+
+node_modules/
+package.json
+package-lock.json
+
+# Misc
+
+.distignore
+CHANGELOG.md
+README.md

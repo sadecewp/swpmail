@@ -10,14 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * REST API controller for subscriber management.
+ */
 class SWPM_REST_API {
 
-	/** @var SWPM_Subscriber */
+	/**
+	 * Subscriber instance.
+	 *
+	 * @var SWPM_Subscriber
+	 */
 	private SWPM_Subscriber $subscriber;
 
-	/** @var SWPM_Mailer */
+	/**
+	 * Mailer instance.
+	 *
+	 * @var SWPM_Mailer
+	 */
 	private SWPM_Mailer $mailer;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param SWPM_Subscriber $subscriber Subscriber instance.
+	 * @param SWPM_Mailer     $mailer     Mailer instance.
+	 */
 	public function __construct( SWPM_Subscriber $subscriber, SWPM_Mailer $mailer ) {
 		$this->subscriber = $subscriber;
 		$this->mailer     = $mailer;
@@ -29,81 +46,95 @@ class SWPM_REST_API {
 	public function register_routes(): void {
 		$ns = 'swpmail/v1';
 
-		register_rest_route( $ns, '/subscribe', array(
-			'methods'             => WP_REST_Server::CREATABLE,
-			'callback'            => array( $this, 'subscribe' ),
-			'permission_callback' => '__return_true',
-			'args'                => array(
-				'email'     => array(
-					'required'          => true,
-					'type'              => 'string',
-					'format'            => 'email',
-					'sanitize_callback' => 'sanitize_email',
+		register_rest_route(
+			$ns,
+			'/subscribe',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'subscribe' ),
+				'permission_callback' => '__return_true',
+				'args'                => array(
+					'email'        => array(
+						'required'          => true,
+						'type'              => 'string',
+						'format'            => 'email',
+						'sanitize_callback' => 'sanitize_email',
+					),
+					'name'         => array(
+						'required'          => false,
+						'type'              => 'string',
+						'default'           => '',
+						'sanitize_callback' => 'sanitize_text_field',
+					),
+					'frequency'    => array(
+						'required' => false,
+						'type'     => 'string',
+						'default'  => 'instant',
+						'enum'     => array( 'instant', 'daily', 'weekly' ),
+					),
+					'swpm_website' => array(
+						'required' => false,
+						'type'     => 'string',
+						'default'  => '',
+					),
+					'gdpr'         => array(
+						'required' => false,
+						'type'     => 'boolean',
+						'default'  => false,
+					),
 				),
-				'name'      => array(
-					'required'          => false,
-					'type'              => 'string',
-					'default'           => '',
-					'sanitize_callback' => 'sanitize_text_field',
-				),
-				'frequency' => array(
-					'required' => false,
-					'type'     => 'string',
-					'default'  => 'instant',
-					'enum'     => array( 'instant', 'daily', 'weekly' ),
-				),
-				'swpm_website' => array(
-					'required' => false,
-					'type'     => 'string',
-					'default'  => '',
-				),
-				'gdpr'      => array(
-					'required' => false,
-					'type'     => 'boolean',
-					'default'  => false,
-				),
-			),
-		) );
+			)
+		);
 
-		register_rest_route( $ns, '/subscribers', array(
-			'methods'             => WP_REST_Server::READABLE,
-			'callback'            => array( $this, 'get_subscribers' ),
-			'permission_callback' => function () {
-				return current_user_can( 'manage_options' );
-			},
-			'args'                => array(
-				'status'   => array(
-					'required' => false,
-					'type'     => 'string',
-					'enum'     => array( 'pending', 'confirmed', 'unsubscribed', 'bounced' ),
+		register_rest_route(
+			$ns,
+			'/subscribers',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_subscribers' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
+				'args'                => array(
+					'status'   => array(
+						'required' => false,
+						'type'     => 'string',
+						'enum'     => array( 'pending', 'confirmed', 'unsubscribed', 'bounced' ),
+					),
+					'per_page' => array(
+						'required' => false,
+						'type'     => 'integer',
+						'default'  => 20,
+						'minimum'  => 1,
+						'maximum'  => 100,
+					),
+					'page'     => array(
+						'required' => false,
+						'type'     => 'integer',
+						'default'  => 1,
+						'minimum'  => 1,
+					),
 				),
-				'per_page' => array(
-					'required' => false,
-					'type'     => 'integer',
-					'default'  => 20,
-					'minimum'  => 1,
-					'maximum'  => 100,
-				),
-				'page'     => array(
-					'required' => false,
-					'type'     => 'integer',
-					'default'  => 1,
-					'minimum'  => 1,
-				),
-			),
-		) );
+			)
+		);
 
-		register_rest_route( $ns, '/subscribers/(?P<id>\d+)', array(
-			'methods'             => WP_REST_Server::DELETABLE,
-			'callback'            => array( $this, 'delete_subscriber' ),
-			'permission_callback' => function () {
-				return current_user_can( 'manage_options' );
-			},
-		) );
+		register_rest_route(
+			$ns,
+			'/subscribers/(?P<id>\d+)',
+			array(
+				'methods'             => WP_REST_Server::DELETABLE,
+				'callback'            => array( $this, 'delete_subscriber' ),
+				'permission_callback' => function () {
+					return current_user_can( 'manage_options' );
+				},
+			)
+		);
 	}
 
 	/**
 	 * POST /subscribe
+	 *
+	 * @param WP_REST_Request $request REST request.
 	 */
 	public function subscribe( WP_REST_Request $request ): WP_REST_Response {
 		// 0. Origin / Referer validation for CSRF protection.
@@ -129,11 +160,11 @@ class SWPM_REST_API {
 		}
 
 		// 1. Rate limit.
-		$ip            = SWPM_Ajax_Handler::get_client_ip();
-		$rate_key      = 'swpm_rate_' . md5( $ip );
-		$attempts      = (int) get_transient( $rate_key );
-		$max_attempts  = (int) apply_filters( 'swpm_subscribe_rate_limit', 5 );
-		$rate_window   = (int) apply_filters( 'swpm_subscribe_rate_window', 10 * MINUTE_IN_SECONDS );
+		$ip           = SWPM_Ajax_Handler::get_client_ip();
+		$rate_key     = 'swpm_rate_' . md5( $ip );
+		$attempts     = (int) get_transient( $rate_key );
+		$max_attempts = (int) apply_filters( 'swpm_subscribe_rate_limit', 5 );
+		$rate_window  = (int) apply_filters( 'swpm_subscribe_rate_window', 10 * MINUTE_IN_SECONDS );
 
 		if ( $attempts >= $max_attempts ) {
 			return new WP_REST_Response(
@@ -178,16 +209,19 @@ class SWPM_REST_API {
 
 			/** @var SWPM_Template_Engine $engine */
 			$engine = swpm( 'template_engine' );
-			$body   = $engine->render( 'confirm-subscription', array(
-				'subscriber_name' => $name ?: $email,
-				'confirm_url'     => add_query_arg(
-					array(
-						'swpm_action' => 'confirm',
-						'token'       => rawurlencode( $sub->token ),
+			$body = $engine->render(
+				'confirm-subscription',
+				array(
+					'subscriber_name' => $name ? $name : $email,
+					'confirm_url'     => add_query_arg(
+						array(
+							'swpm_action' => 'confirm',
+							'token'       => rawurlencode( $sub->token ),
+						),
+						home_url()
 					),
-					home_url()
-				),
-			) );
+				)
+			);
 
 			add_filter( 'swpm_skip_override', '__return_true' );
 			try {
@@ -219,6 +253,8 @@ class SWPM_REST_API {
 
 	/**
 	 * GET /subscribers
+	 *
+	 * @param WP_REST_Request $request REST request.
 	 */
 	public function get_subscribers( WP_REST_Request $request ): WP_REST_Response {
 		global $wpdb;
@@ -240,8 +276,9 @@ class SWPM_REST_API {
 		$params[] = $per_page;
 		$params[] = $offset;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$results = $wpdb->get_results(
+			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
 			$wpdb->prepare(
 				"SELECT id, email, name, status, frequency, created_at FROM {$table} {$where} ORDER BY id DESC LIMIT %d OFFSET %d",
 				$params
@@ -250,10 +287,13 @@ class SWPM_REST_API {
 
 		// Total count.
 		if ( $status ) {
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE status = %s", $status ) );
-		} else {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$total = (int) $wpdb->get_var(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE status = %s", $status )
+			);
+		} else {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$total = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" );
 		}
 
@@ -266,6 +306,8 @@ class SWPM_REST_API {
 
 	/**
 	 * DELETE /subscribers/{id}
+	 *
+	 * @param WP_REST_Request $request REST request.
 	 */
 	public function delete_subscriber( WP_REST_Request $request ): WP_REST_Response {
 		global $wpdb;

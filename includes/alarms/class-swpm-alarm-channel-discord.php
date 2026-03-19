@@ -10,16 +10,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Discord alarm channel implementation.
+ */
 class SWPM_Alarm_Channel_Discord implements SWPM_Alarm_Channel_Interface {
 
+	/**
+	 * Get the channel key.
+	 *
+	 * @return string
+	 */
 	public function get_key(): string {
 		return 'discord';
 	}
 
+	/**
+	 * Get the channel label.
+	 *
+	 * @return string
+	 */
 	public function get_label(): string {
 		return 'Discord';
 	}
 
+	/**
+	 * Send an alarm event to Discord.
+	 *
+	 * @param array $event Event data.
+	 * @return bool
+	 */
 	public function send( array $event ): bool {
 		$webhook_url = $this->get_webhook_url();
 		if ( empty( $webhook_url ) ) {
@@ -65,32 +84,54 @@ class SWPM_Alarm_Channel_Discord implements SWPM_Alarm_Channel_Interface {
 		return $this->post( $webhook_url, $payload );
 	}
 
+	/**
+	 * Send a test notification.
+	 *
+	 * @return bool
+	 */
 	public function test(): bool {
-		return $this->send( array(
-			'type'      => 'test',
-			'title'     => __( 'SWPMail Test Alarm', 'swpmail' ),
-			'message'   => __( 'This is a test notification from SWPMail alarm system.', 'swpmail' ),
-			'context'   => array(),
-			'timestamp' => time(),
-		) );
+		return $this->send(
+			array(
+				'type'      => 'test',
+				'title'     => __( 'SWPMail Test Alarm', 'swpmail' ),
+				'message'   => __( 'This is a test notification from SWPMail alarm system.', 'swpmail' ),
+				'context'   => array(),
+				'timestamp' => time(),
+			)
+		);
 	}
 
+	/**
+	 * Get the webhook URL.
+	 *
+	 * @return string
+	 */
 	private function get_webhook_url(): string {
 		$encrypted = get_option( 'swpm_alarm_discord_webhook_enc', '' );
 		return swpm_decrypt( $encrypted );
 	}
 
+	/**
+	 * Post payload to Discord webhook.
+	 *
+	 * @param string $url     Webhook URL.
+	 * @param array  $payload Payload data.
+	 * @return bool
+	 */
 	private function post( string $url, array $payload ): bool {
 		if ( ! swpm_is_safe_url( $url ) ) {
 			swpm_log( 'warning', 'Discord alarm blocked: unsafe webhook URL.' );
 			return false;
 		}
 
-		$response = wp_remote_post( $url, array(
-			'headers' => array( 'Content-Type' => 'application/json' ),
-			'body'    => wp_json_encode( $payload ),
-			'timeout' => 15,
-		) );
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers' => array( 'Content-Type' => 'application/json' ),
+				'body'    => wp_json_encode( $payload ),
+				'timeout' => 15,
+			)
+		);
 
 		if ( is_wp_error( $response ) ) {
 			swpm_log( 'warning', 'Discord alarm failed: ' . $response->get_error_message() );

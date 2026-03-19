@@ -10,14 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * AJAX handler for subscribe, confirm, and unsubscribe actions.
+ */
 class SWPM_Ajax_Handler {
 
-	/** @var SWPM_Subscriber */
+	/**
+	 * Subscriber instance.
+	 *
+	 * @var SWPM_Subscriber
+	 */
 	private SWPM_Subscriber $subscriber;
 
-	/** @var SWPM_Mailer */
+	/**
+	 * Mailer instance.
+	 *
+	 * @var SWPM_Mailer
+	 */
 	private SWPM_Mailer $mailer;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param SWPM_Subscriber $subscriber Subscriber instance.
+	 * @param SWPM_Mailer     $mailer     Mailer instance.
+	 */
 	public function __construct( SWPM_Subscriber $subscriber, SWPM_Mailer $mailer ) {
 		$this->subscriber = $subscriber;
 		$this->mailer     = $mailer;
@@ -43,11 +60,11 @@ class SWPM_Ajax_Handler {
 		}
 
 		// 2. Rate limit.
-		$ip            = self::get_client_ip();
-		$rate_key      = 'swpm_rate_' . md5( $ip );
-		$attempts      = (int) get_transient( $rate_key );
-		$max_attempts  = (int) apply_filters( 'swpm_subscribe_rate_limit', 5 );
-		$rate_window   = (int) apply_filters( 'swpm_subscribe_rate_window', 10 * MINUTE_IN_SECONDS );
+		$ip           = self::get_client_ip();
+		$rate_key     = 'swpm_rate_' . md5( $ip );
+		$attempts     = (int) get_transient( $rate_key );
+		$max_attempts = (int) apply_filters( 'swpm_subscribe_rate_limit', 5 );
+		$rate_window  = (int) apply_filters( 'swpm_subscribe_rate_window', 10 * MINUTE_IN_SECONDS );
 
 		if ( $attempts >= $max_attempts ) {
 			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'swpmail' ) ), 429 );
@@ -88,16 +105,19 @@ class SWPM_Ajax_Handler {
 
 			/** @var SWPM_Template_Engine $engine */
 			$engine = swpm( 'template_engine' );
-			$body   = $engine->render( 'confirm-subscription', array(
-				'subscriber_name' => $name ?: $email,
-				'confirm_url'     => add_query_arg(
-					array(
-						'swpm_action' => 'confirm',
-						'token'       => rawurlencode( $sub->token ),
+			$body = $engine->render(
+				'confirm-subscription',
+				array(
+					'subscriber_name' => $name ? $name : $email,
+					'confirm_url'     => add_query_arg(
+						array(
+							'swpm_action' => 'confirm',
+							'token'       => rawurlencode( $sub->token ),
+						),
+						home_url()
 					),
-					home_url()
-				),
-			) );
+				)
+			);
 
 			// Skip override — this mail is already sent by SWPMail.
 			add_filter( 'swpm_skip_override', '__return_true' );
@@ -117,11 +137,13 @@ class SWPM_Ajax_Handler {
 			}
 		}
 
-		wp_send_json_success( array(
-			'message' => get_option( 'swpm_double_opt_in', true )
-				? __( 'Please check your email to confirm your subscription.', 'swpmail' )
-				: __( 'You have successfully subscribed!', 'swpmail' ),
-		) );
+		wp_send_json_success(
+			array(
+				'message' => get_option( 'swpm_double_opt_in', true )
+					? __( 'Please check your email to confirm your subscription.', 'swpmail' )
+					: __( 'You have successfully subscribed!', 'swpmail' ),
+			)
+		);
 	}
 
 	/**
@@ -140,11 +162,11 @@ class SWPM_Ajax_Handler {
 		}
 
 		// Rate limit.
-		$ip            = self::get_client_ip();
-		$rate_key      = 'swpm_confirm_rate_' . md5( $ip );
-		$attempts      = (int) get_transient( $rate_key );
-		$max_attempts  = (int) apply_filters( 'swpm_confirm_rate_limit', 10 );
-		$rate_window   = (int) apply_filters( 'swpm_confirm_rate_window', 10 * MINUTE_IN_SECONDS );
+		$ip           = self::get_client_ip();
+		$rate_key     = 'swpm_confirm_rate_' . md5( $ip );
+		$attempts     = (int) get_transient( $rate_key );
+		$max_attempts = (int) apply_filters( 'swpm_confirm_rate_limit', 10 );
+		$rate_window  = (int) apply_filters( 'swpm_confirm_rate_window', 10 * MINUTE_IN_SECONDS );
 
 		if ( $attempts >= $max_attempts ) {
 			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'swpmail' ) ), 429 );
@@ -176,11 +198,11 @@ class SWPM_Ajax_Handler {
 		}
 
 		// Rate limit.
-		$ip            = self::get_client_ip();
-		$rate_key      = 'swpm_unsub_rate_' . md5( $ip );
-		$attempts      = (int) get_transient( $rate_key );
-		$max_attempts  = (int) apply_filters( 'swpm_unsubscribe_rate_limit', 10 );
-		$rate_window   = (int) apply_filters( 'swpm_unsubscribe_rate_window', 10 * MINUTE_IN_SECONDS );
+		$ip           = self::get_client_ip();
+		$rate_key     = 'swpm_unsub_rate_' . md5( $ip );
+		$attempts     = (int) get_transient( $rate_key );
+		$max_attempts = (int) apply_filters( 'swpm_unsubscribe_rate_limit', 10 );
+		$rate_window  = (int) apply_filters( 'swpm_unsubscribe_rate_window', 10 * MINUTE_IN_SECONDS );
 
 		if ( $attempts >= $max_attempts ) {
 			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'swpmail' ) ), 429 );
@@ -228,9 +250,10 @@ class SWPM_Ajax_Handler {
 			}
 		}
 
-		return filter_var(
+		$ip = filter_var(
 			wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ),
 			FILTER_VALIDATE_IP
-		) ?: '';
+		);
+		return $ip ? $ip : '';
 	}
 }

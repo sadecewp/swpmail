@@ -10,14 +10,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Alarm dispatcher routes failure events to enabled notification channels.
+ */
 class SWPM_Alarm_Dispatcher {
 
-	/** @var SWPM_Alarm_Channel_Interface[] */
+	/**
+	 * Registered alarm channels.
+	 *
+	 * @var SWPM_Alarm_Channel_Interface[]
+	 */
 	private array $channels = array();
 
-	/** @var int Default throttle cooldown in seconds. */
+	/**
+	 * Default throttle cooldown in seconds.
+	 *
+	 * @var int
+	 */
 	private const DEFAULT_COOLDOWN = 300;
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		$this->register_channels();
 	}
@@ -65,20 +79,23 @@ class SWPM_Alarm_Dispatcher {
 		// Sanitize: remove potential API keys/tokens from error messages before external dispatch.
 		$error_msg = preg_replace( '/[a-zA-Z0-9_\-]{20,}/', '***', $error_msg );
 
-		$this->dispatch( 'mail_failed', array(
-			'title'   => __( 'Email Delivery Failed', 'swpmail' ),
-			'message' => sprintf(
-				/* translators: 1: recipient, 2: error message */
-				__( 'Failed to deliver email to %1$s: %2$s', 'swpmail' ),
-				$recipient,
-				$error_msg
-			),
-			'context' => array(
-				'recipient' => $recipient,
-				'subject'   => $mail_data['subject'] ?? '',
-				'error'     => $error_msg,
-			),
-		) );
+		$this->dispatch(
+			'mail_failed',
+			array(
+				'title'   => __( 'Email Delivery Failed', 'swpmail' ),
+				'message' => sprintf(
+					/* translators: 1: recipient, 2: error message */
+					__( 'Failed to deliver email to %1$s: %2$s', 'swpmail' ),
+					$recipient,
+					$error_msg
+				),
+				'context' => array(
+					'recipient' => $recipient,
+					'subject'   => $mail_data['subject'] ?? '',
+					'error'     => $error_msg,
+				),
+			)
+		);
 	}
 
 	/**
@@ -92,19 +109,22 @@ class SWPM_Alarm_Dispatcher {
 			? $result->get_message()
 			: __( 'Unknown error', 'swpmail' );
 
-		$this->dispatch( 'failover_triggered', array(
-			'title'   => __( 'Provider Failover Activated', 'swpmail' ),
-			'message' => sprintf(
-				/* translators: 1: provider key, 2: error */
-				__( 'Primary provider "%1$s" failed, switching to backup. Error: %2$s', 'swpmail' ),
-				$provider_key,
-				$error_msg
-			),
-			'context' => array(
-				'provider' => $provider_key,
-				'error'    => $error_msg,
-			),
-		) );
+		$this->dispatch(
+			'failover_triggered',
+			array(
+				'title'   => __( 'Provider Failover Activated', 'swpmail' ),
+				'message' => sprintf(
+					/* translators: 1: provider key, 2: error */
+					__( 'Primary provider "%1$s" failed, switching to backup. Error: %2$s', 'swpmail' ),
+					$provider_key,
+					$error_msg
+				),
+				'context' => array(
+					'provider' => $provider_key,
+					'error'    => $error_msg,
+				),
+			)
+		);
 	}
 
 	/**
@@ -120,8 +140,8 @@ class SWPM_Alarm_Dispatcher {
 		}
 
 		// Throttle: one notification per event type within cooldown.
-		$cooldown       = (int) get_option( 'swpm_alarm_cooldown', self::DEFAULT_COOLDOWN );
-		$transient_key  = 'swpm_alarm_t_' . $event_type;
+		$cooldown      = (int) get_option( 'swpm_alarm_cooldown', self::DEFAULT_COOLDOWN );
+		$transient_key = 'swpm_alarm_t_' . $event_type;
 
 		if ( get_transient( $transient_key ) ) {
 			return;
@@ -166,15 +186,15 @@ class SWPM_Alarm_Dispatcher {
 
 		// Enabled channels.
 		$channels = isset( $_POST['enabled_channels'] ) && is_array( $_POST['enabled_channels'] )
-			? array_map( 'sanitize_text_field', $_POST['enabled_channels'] )
+			? array_map( 'sanitize_text_field', wp_unslash( $_POST['enabled_channels'] ) )
 			: array();
 		$valid    = array_keys( $this->channels );
 		$channels = array_values( array_intersect( $channels, $valid ) );
 		update_option( 'swpm_alarm_enabled_channels', $channels );
 
 		// Enabled events.
-		$events = isset( $_POST['enabled_events'] ) && is_array( $_POST['enabled_events'] )
-			? array_map( 'sanitize_text_field', $_POST['enabled_events'] )
+		$events       = isset( $_POST['enabled_events'] ) && is_array( $_POST['enabled_events'] )
+			? array_map( 'sanitize_text_field', wp_unslash( $_POST['enabled_events'] ) )
 			: array();
 		$valid_events = array( 'mail_failed', 'failover_triggered' );
 		$events       = array_values( array_intersect( $events, $valid_events ) );
@@ -263,7 +283,7 @@ class SWPM_Alarm_Dispatcher {
 			wp_send_json_error( __( 'Unauthorized', 'swpmail' ) );
 		}
 
-		$channel_key = isset( $_POST['channel'] ) ? sanitize_text_field( $_POST['channel'] ) : '';
+		$channel_key = isset( $_POST['channel'] ) ? sanitize_text_field( wp_unslash( $_POST['channel'] ) ) : '';
 		if ( ! isset( $this->channels[ $channel_key ] ) ) {
 			wp_send_json_error( __( 'Invalid channel.', 'swpmail' ) );
 		}

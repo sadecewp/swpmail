@@ -10,16 +10,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Twilio SMS alarm channel implementation.
+ */
 class SWPM_Alarm_Channel_Twilio implements SWPM_Alarm_Channel_Interface {
 
+	/**
+	 * Get the channel key.
+	 *
+	 * @return string
+	 */
 	public function get_key(): string {
 		return 'twilio';
 	}
 
+	/**
+	 * Get the channel label.
+	 *
+	 * @return string
+	 */
 	public function get_label(): string {
 		return 'Twilio SMS';
 	}
 
+	/**
+	 * Send an alarm event via SMS.
+	 *
+	 * @param array $event Event data.
+	 * @return bool
+	 */
 	public function send( array $event ): bool {
 		$account_sid = $this->get_credential( 'swpm_alarm_twilio_sid_enc' );
 		$auth_token  = $this->get_credential( 'swpm_alarm_twilio_token_enc' );
@@ -58,18 +77,21 @@ class SWPM_Alarm_Channel_Twilio implements SWPM_Alarm_Channel_Interface {
 			return false;
 		}
 
-		$response = wp_remote_post( $url, array(
-			'headers' => array(
-				// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
-				'Authorization' => 'Basic ' . base64_encode( $account_sid . ':' . $auth_token ),
-			),
-			'body'    => array(
-				'From' => $from,
-				'To'   => $to,
-				'Body' => $body,
-			),
-			'timeout' => 15,
-		) );
+		$response = wp_remote_post(
+			$url,
+			array(
+				'headers' => array(
+					// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+					'Authorization' => 'Basic ' . base64_encode( $account_sid . ':' . $auth_token ),
+				),
+				'body'    => array(
+					'From' => $from,
+					'To'   => $to,
+					'Body' => $body,
+				),
+				'timeout' => 15,
+			)
+		);
 
 		if ( is_wp_error( $response ) ) {
 			swpm_log( 'warning', 'Twilio alarm failed: ' . $response->get_error_message() );
@@ -80,16 +102,29 @@ class SWPM_Alarm_Channel_Twilio implements SWPM_Alarm_Channel_Interface {
 		return $code >= 200 && $code < 300;
 	}
 
+	/**
+	 * Send a test notification.
+	 *
+	 * @return bool
+	 */
 	public function test(): bool {
-		return $this->send( array(
-			'type'      => 'test',
-			'title'     => __( 'SWPMail Test Alarm', 'swpmail' ),
-			'message'   => __( 'This is a test notification from SWPMail alarm system.', 'swpmail' ),
-			'context'   => array(),
-			'timestamp' => time(),
-		) );
+		return $this->send(
+			array(
+				'type'      => 'test',
+				'title'     => __( 'SWPMail Test Alarm', 'swpmail' ),
+				'message'   => __( 'This is a test notification from SWPMail alarm system.', 'swpmail' ),
+				'context'   => array(),
+				'timestamp' => time(),
+			)
+		);
 	}
 
+	/**
+	 * Get a Twilio credential from encrypted storage.
+	 *
+	 * @param string $option_key Option name.
+	 * @return string
+	 */
 	private function get_credential( string $option_key ): string {
 		$encrypted = get_option( $option_key, '' );
 		return swpm_decrypt( $encrypted );

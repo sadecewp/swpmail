@@ -10,11 +10,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Public-facing functionality for SWPMail.
+ */
 class SWPM_Public {
 
-	/** @var SWPM_Loader */
+	/**
+	 * Loader instance.
+	 *
+	 * @var SWPM_Loader
+	 */
 	private SWPM_Loader $loader;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param SWPM_Loader $loader Loader instance.
+	 */
 	public function __construct( SWPM_Loader $loader ) {
 		$this->loader = $loader;
 		$this->loader->add_action( 'wp_enqueue_scripts', $this, 'register_assets' );
@@ -39,12 +51,16 @@ class SWPM_Public {
 			true
 		);
 
-		wp_localize_script( 'swpmail-public', 'swpmPublic', array(
-			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-			'i18n'    => array(
-				'subscribing' => __( 'Subscribing...', 'swpmail' ),
-				'error'       => __( 'An error occurred. Please try again.', 'swpmail' ),
-			),
-		) );
+		wp_localize_script(
+			'swpmail-public',
+			'swpmPublic',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'i18n'    => array(
+					'subscribing' => __( 'Subscribing...', 'swpmail' ),
+					'error'       => __( 'An error occurred. Please try again.', 'swpmail' ),
+				),
+			)
+		);
 	}
 }

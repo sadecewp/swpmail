@@ -10,11 +10,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Subscribe shortcode handler.
+ */
 class SWPM_Shortcode {
 
-	/** @var SWPM_Subscriber */
+	/**
+	 * Subscriber instance.
+	 *
+	 * @var SWPM_Subscriber
+	 */
 	private SWPM_Subscriber $subscriber;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param SWPM_Subscriber $subscriber Subscriber instance.
+	 */
 	public function __construct( SWPM_Subscriber $subscriber ) {
 		$this->subscriber = $subscriber;
 	}

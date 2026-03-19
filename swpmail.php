@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       SWPMail - SMTP & Subscription Plugin 
+ * Plugin Name:       SWPMail - SMTP & Subscription Plugin
  * Plugin URI:        https://github.com/sadecewp/swpmail
  * Description:       Professional email subscription, notifications and SMTP/API delivery for WordPress.
  * Version:           1.0.0
@@ -12,6 +12,8 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       swpmail
  * Domain Path:       /languages
+ *
+ * @package SWPMail
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

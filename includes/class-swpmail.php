@@ -94,12 +94,12 @@ class SWPMail {
 
 		// Alarms.
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/interface-alarm-channel.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-alarm-channel-slack.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-alarm-channel-discord.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-slack.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-discord.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-alarm-channel-teams.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-alarm-channel-twilio.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-alarm-channel-custom.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-alarm-dispatcher.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-twilio.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-custom.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-dispatcher.php';
 
 		// Triggers.
 		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-base.php';
@@ -123,10 +123,10 @@ class SWPMail {
 		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-dashboard-data.php';
 
 		// Public.
-		require_once SWPM_PLUGIN_DIR . 'includes/public/class-public.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/public/class-shortcode.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/public/class-ajax-handler.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/public/class-rest-api.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/public/class-swpm-public.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/public/class-swpm-shortcode.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/public/class-swpm-ajax-handler.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/public/class-swpm-rest-api.php';
 
 		// Core.
 		self::$instances['subscriber']      = new SWPM_Subscriber();

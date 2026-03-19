@@ -1,0 +1,504 @@
+/**
+ * SWPMail Setup Wizard Styles — Redesign v2.0
+ *
+ * Inherits the "Parchment & Forest" design language from swpmail-admin.css.
+ * Full-screen focused wizard — calm, welcoming, distraction-free.
+ *
+ * @package SWPMail
+ * @since   2.0.0
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Nunito:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ========================================================================
+   HIDE WP CHROME — focused wizard experience
+   ======================================================================== */
+.swpm-wizard-page #adminmenumain,
+.swpm-wizard-page #adminmenuback,
+.swpm-wizard-page #adminmenuwrap,
+.swpm-wizard-page #wpadminbar,
+.swpm-wizard-page #wpfooter,
+.swpm-wizard-page .update-nag,
+.swpm-wizard-page .notice:not(.swpm-wizard-notice) {
+  display: none !important;
+}
+
+.swpm-wizard-page #wpcontent {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.swpm-wizard-page #wpbody-content {
+  padding-bottom: 0;
+}
+
+.swpm-wizard-page html {
+  padding-top: 0 !important;
+}
+
+/* Page background */
+.swpm-wizard-page #wpbody {
+  background: var(--swpm-bg, #f5f3ee);
+  min-height: 100vh;
+}
+
+/* ========================================================================
+   WIZARD WRAPPER
+   ======================================================================== */
+.swpm-wizard-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+}
+
+/* ========================================================================
+   WIZARD HEADER
+   ======================================================================== */
+.swpm-wizard-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+
+.swpm-wizard-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.swpm-wizard-logo .dashicons {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: var(--swpm-primary, #1e3d2f);
+}
+
+.swpm-wizard-logo span {
+  font-family: var(--swpm-font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--swpm-gray-800, #1e1a16);
+  letter-spacing: -0.01em;
+}
+
+/* ========================================================================
+   STEP INDICATOR
+   ======================================================================== */
+.swpm-wizard-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+}
+
+.swpm-wizard-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  min-width: 120px;
+}
+
+.swpm-wizard-step__number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  border: 2px solid var(--swpm-gray-300, #d4ccc0);
+  background: #fff;
+  color: var(--swpm-gray-400, #a89e92);
+  transition: all 0.3s ease;
+}
+
+.swpm-wizard-step__label {
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--swpm-gray-400, #a89e92);
+  transition: color 0.3s ease;
+}
+
+/* Active step */
+.swpm-wizard-step.active .swpm-wizard-step__number {
+  border-color: var(--swpm-primary, #1e3d2f);
+  background: var(--swpm-primary, #1e3d2f);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(30, 61, 47, 0.12);
+}
+
+.swpm-wizard-step.active .swpm-wizard-step__label {
+  color: var(--swpm-primary, #1e3d2f);
+  font-weight: 700;
+}
+
+/* Completed step */
+.swpm-wizard-step.completed .swpm-wizard-step__number {
+  border-color: var(--swpm-success, #2a6e4a);
+  background: var(--swpm-success, #2a6e4a);
+  color: #fff;
+}
+
+.swpm-wizard-step.completed .swpm-wizard-step__number::after {
+  content: "\f147";
+  font-family: dashicons;
+  font-size: 15px;
+}
+
+.swpm-wizard-step.completed .swpm-wizard-step__number span {
+  display: none;
+}
+
+.swpm-wizard-step.completed .swpm-wizard-step__label {
+  color: var(--swpm-success, #2a6e4a);
+}
+
+/* Connector lines */
+.swpm-wizard-step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--swpm-gray-200, #e8e3db);
+  margin: 0 -10px;
+  margin-bottom: 28px;
+  transition: background 0.3s ease;
+  min-width: 40px;
+  max-width: 100px;
+}
+
+.swpm-wizard-step-connector.active {
+  background: var(--swpm-success, #2a6e4a);
+}
+
+/* ========================================================================
+   WIZARD PANEL (step content)
+   ======================================================================== */
+.swpm-wizard-panel {
+  background: #fff;
+  border: 1px solid var(--swpm-card-border, #e4ddd4);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(30, 61, 47, 0.07);
+  padding: 40px;
+  animation: swpmWizardFadeIn 0.3s ease;
+}
+
+@keyframes swpmWizardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.swpm-wizard-panel h2 {
+  font-family: var(--swpm-font-display, 'Cormorant Garamond', Georgia, serif);
+  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--swpm-gray-800, #1e1a16);
+  margin: 0 0 10px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.swpm-wizard-panel > p {
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  color: var(--swpm-gray-500, #7c7065);
+  font-size: 14px;
+  text-align: center;
+  margin: 0 0 28px;
+  line-height: 1.65;
+}
+
+/* ========================================================================
+   WIZARD PROVIDER GRID
+   ======================================================================== */
+.swpm-wizard-panel .swpm-provider-grid {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 0;
+}
+
+.swpm-wizard-panel .swpm-provider-option {
+  padding: 14px 8px 10px;
+}
+
+.swpm-wizard-panel .swpm-provider-option__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+}
+
+.swpm-wizard-panel .swpm-provider-option__name {
+  font-size: 12px;
+}
+
+.swpm-wizard-panel .swpm-provider-option__desc {
+  font-size: 10px;
+}
+
+/* ========================================================================
+   WIZARD FORM FIELDS
+   ======================================================================== */
+.swpm-wizard-fields {
+  margin-top: 24px;
+}
+
+.swpm-wizard-field-group {
+  margin-bottom: 20px;
+}
+
+.swpm-wizard-field-group label {
+  display: block;
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--swpm-gray-700, #3d342c);
+  margin-bottom: 6px;
+}
+
+.swpm-wizard-field-group input[type="text"],
+.swpm-wizard-field-group input[type="email"],
+.swpm-wizard-field-group input[type="password"],
+.swpm-wizard-field-group input[type="number"],
+.swpm-wizard-field-group select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--swpm-gray-200, #e8e3db);
+  border-radius: var(--swpm-radius-sm, 6px);
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 14px;
+  color: var(--swpm-gray-700, #3d342c);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.swpm-wizard-field-group input:focus,
+.swpm-wizard-field-group select:focus {
+  border-color: var(--swpm-primary, #1e3d2f);
+  box-shadow: 0 0 0 3px rgba(30, 61, 47, 0.1);
+  outline: none;
+}
+
+.swpm-wizard-field-group .description {
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 12px;
+  color: var(--swpm-gray-400, #a89e92);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.swpm-wizard-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.swpm-wizard-separator {
+  border: none;
+  border-top: 1px solid var(--swpm-gray-100, #f5f3ee);
+  margin: 24px 0;
+}
+
+.swpm-wizard-section-label {
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--swpm-gray-400, #a89e92);
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.swpm-wizard-section-label .dashicons {
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+  color: var(--swpm-primary, #1e3d2f);
+}
+
+/* ========================================================================
+   WIZARD ACTIONS (bottom buttons)
+   ======================================================================== */
+.swpm-wizard-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--swpm-gray-100, #f5f3ee);
+  gap: 12px;
+}
+
+.swpm-wizard-actions .swpm-btn {
+  padding: 10px 26px;
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 14px;
+  border-radius: var(--swpm-radius-sm, 6px);
+}
+
+.swpm-wizard-actions .swpm-btn--primary {
+  margin-left: auto;
+}
+
+.swpm-wizard-skip {
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  color: var(--swpm-gray-400, #a89e92);
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.swpm-wizard-skip:hover {
+  color: var(--swpm-gray-600, #5a5047);
+}
+
+/* ========================================================================
+   STEP 3 — TEST RESULTS
+   ======================================================================== */
+.swpm-wizard-test-area {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.swpm-wizard-test-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  background: var(--swpm-primary-light, #eaf2ec);
+  color: var(--swpm-primary, #1e3d2f);
+}
+
+.swpm-wizard-test-icon .dashicons {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.swpm-wizard-test-icon--success {
+  background: var(--swpm-success-light, #e8f5ed);
+  color: var(--swpm-success, #2a6e4a);
+}
+
+.swpm-wizard-test-icon--error {
+  background: var(--swpm-danger-light, #fdecea);
+  color: var(--swpm-danger, #b83232);
+}
+
+.swpm-wizard-summary {
+  background: var(--swpm-gray-50, #faf9f6);
+  border: 1px solid var(--swpm-card-border, #e4ddd4);
+  border-radius: var(--swpm-radius, 10px);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.swpm-wizard-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 13px;
+}
+
+.swpm-wizard-summary-row:not(:last-child) {
+  border-bottom: 1px solid var(--swpm-gray-100, #f5f3ee);
+}
+
+.swpm-wizard-summary-row span:first-child {
+  font-weight: 700;
+  color: var(--swpm-gray-600, #5a5047);
+}
+
+.swpm-wizard-summary-row span:last-child {
+  color: var(--swpm-gray-800, #1e1a16);
+  font-weight: 500;
+}
+
+#swpm-wizard-test-result {
+  font-family: var(--swpm-font-body, 'Nunito', system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: var(--swpm-radius-sm, 6px);
+  margin-top: 16px;
+  display: none;
+}
+
+#swpm-wizard-test-result.success {
+  display: block;
+  background: var(--swpm-success-light, #e8f5ed);
+  color: var(--swpm-success, #2a6e4a);
+  border: 1px solid rgba(42, 110, 74, 0.2);
+}
+
+#swpm-wizard-test-result.error {
+  display: block;
+  background: var(--swpm-danger-light, #fdecea);
+  color: var(--swpm-danger, #b83232);
+  border: 1px solid rgba(184, 50, 50, 0.2);
+}
+
+/* ========================================================================
+   RESPONSIVE
+   ======================================================================== */
+@media screen and (max-width: 680px) {
+  .swpm-wizard-wrap {
+    padding: 24px 12px 48px;
+  }
+
+  .swpm-wizard-panel {
+    padding: 26px 20px;
+  }
+
+  .swpm-wizard-panel h2 {
+    font-size: 22px;
+  }
+
+  .swpm-wizard-field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .swpm-wizard-step__label {
+    font-size: 11px;
+  }
+
+  .swpm-wizard-step {
+    min-width: 80px;
+  }
+
+  .swpm-wizard-actions {
+    flex-wrap: wrap;
+  }
+
+  .swpm-wizard-panel .swpm-provider-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

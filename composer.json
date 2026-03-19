@@ -1,0 +1,31 @@
+{
+  "name": "swpmail/swpmail",
+  "description": "Professional email delivery, subscriptions and notifications for WordPress.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "AiBlog",
+      "homepage": "https://github.com/AiBlog"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.0",
+    "wp-coding-standards/wpcs": "^3.0",
+    "phpunit/phpunit": "^9.0",
+    "brain/monkey": "^2.6"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "scripts": {
+    "phpcs": "phpcs --standard=phpcs.xml .",
+    "phpcbf": "phpcbf --standard=phpcs.xml .",
+    "test": "phpunit"
+  }
+}

@@ -1,0 +1,796 @@
+# Turkish translation for SWPMail plugin.
+# Copyright (C) 2024 SWPMail
+# This file is distributed under the same license as the SWPMail plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: SWPMail 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0300\n"
+"Last-Translator: \n"
+"Language-Team: Turkish\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: swpmail.php
+msgid "SWPMail"
+msgstr "SWPMail"
+
+#: includes/admin/class-admin.php
+msgid "Dashboard"
+msgstr "Gösterge Paneli"
+
+#: includes/admin/class-admin.php
+msgid "Subscribers"
+msgstr "Aboneler"
+
+#: includes/admin/class-admin.php
+msgid "Email Templates"
+msgstr "E-posta Şablonları"
+
+#: includes/admin/class-admin.php
+msgid "Triggers"
+msgstr "Tetikleyiciler"
+
+#: includes/admin/class-admin.php
+msgid "Mail Settings"
+msgstr "Posta Ayarları"
+
+#: includes/admin/class-admin.php
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: includes/admin/class-admin.php
+msgid "Testing..."
+msgstr "Test ediliyor..."
+
+#: includes/admin/class-admin.php
+msgid "Connection successful! Test email sent."
+msgstr "Bağlantı başarılı! Test e-postası gönderildi."
+
+#: includes/admin/class-admin.php
+msgid "Test failed: "
+msgstr "Test başarısız: "
+
+#: includes/admin/class-admin.php
+msgid "Are you sure you want to delete this subscriber?"
+msgstr "Bu aboneyi silmek istediğinizden emin misiniz?"
+
+#: includes/admin/class-admin.php
+msgid "Settings saved."
+msgstr "Ayarlar kaydedildi."
+
+#: includes/public/class-shortcode.php
+msgid "Subscribe to Newsletter"
+msgstr "Bültene Abone Ol"
+
+#: includes/public/class-shortcode.php
+msgid "Subscribe"
+msgstr "Abone Ol"
+
+#: includes/public/class-ajax-handler.php
+msgid "Security check failed."
+msgstr "Güvenlik doğrulaması başarısız."
+
+#: includes/public/class-ajax-handler.php
+msgid "Too many requests. Please try again later."
+msgstr "Çok fazla istek. Lütfen daha sonra tekrar deneyin."
+
+#: includes/public/class-ajax-handler.php
+msgid "Check your email to confirm."
+msgstr "Onaylamak için e-postanızı kontrol edin."
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid email address."
+msgstr "Geçersiz e-posta adresi."
+
+#: includes/public/class-ajax-handler.php
+msgid "Please accept the privacy policy."
+msgstr "Lütfen gizlilik politikasını kabul edin."
+
+#: includes/public/class-ajax-handler.php
+msgid "Confirm your subscription to %s"
+msgstr "%s aboneliğinizi onaylayın"
+
+#: includes/public/class-ajax-handler.php
+msgid "Please check your email to confirm your subscription."
+msgstr "Aboneliğinizi onaylamak için lütfen e-postanızı kontrol edin."
+
+#: includes/public/class-ajax-handler.php
+msgid "You have successfully subscribed!"
+msgstr "Başarıyla abone oldunuz!"
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid token."
+msgstr "Geçersiz token."
+
+#: includes/public/class-ajax-handler.php
+msgid "Subscription confirmed!"
+msgstr "Abonelik onaylandı!"
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid or expired confirmation link."
+msgstr "Geçersiz veya süresi dolmuş onay bağlantısı."
+
+#: includes/public/class-ajax-handler.php
+msgid "You have been unsubscribed."
+msgstr "Aboneliğiniz iptal edildi."
+
+#: includes/public/class-ajax-handler.php
+msgid "Could not process your request."
+msgstr "İsteğiniz işlenemedi."
+
+#: includes/public/class-rest-api.php
+msgid "Subscription successful."
+msgstr "Abonelik başarılı."
+
+#: includes/public/class-rest-api.php
+msgid "Subscriber not found."
+msgstr "Abone bulunamadı."
+
+#: includes/public/class-rest-api.php
+msgid "Subscriber deleted."
+msgstr "Abone silindi."
+
+#: includes/public/class-public.php
+msgid "Subscribing..."
+msgstr "Abone olunuyor..."
+
+#: includes/public/class-public.php
+msgid "An error occurred. Please try again."
+msgstr "Bir hata oluştu. Lütfen tekrar deneyin."
+
+#: includes/core/class-subscriber.php
+msgid "Disposable email addresses are not allowed."
+msgstr "Tek kullanımlık e-posta adresleri kabul edilmemektedir."
+
+#: includes/core/class-subscriber.php
+msgid "This email has previously bounced."
+msgstr "Bu e-posta adresi daha önce geri dönmüştür."
+
+#: includes/core/class-subscriber.php
+msgid "This email is already subscribed."
+msgstr "Bu e-posta adresi zaten abone."
+
+#: includes/core/class-subscriber.php
+msgid "Could not save subscriber."
+msgstr "Abone kaydedilemedi."
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Email"
+msgstr "E-posta"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Name"
+msgstr "Ad"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Status"
+msgstr "Durum"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Frequency"
+msgstr "Sıklık"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Subscribed"
+msgstr "Abone Tarihi"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Delete"
+msgstr "Sil"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Pending"
+msgstr "Beklemede"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Confirmed"
+msgstr "Onaylı"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Unsubscribed"
+msgstr "Abonelikten Çıkmış"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Bounced"
+msgstr "Geri Dönmüş"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Instant"
+msgstr "Anlık"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Daily"
+msgstr "Günlük"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Weekly"
+msgstr "Haftalık"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "All Statuses"
+msgstr "Tüm Durumlar"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Filter"
+msgstr "Filtrele"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Search Subscribers"
+msgstr "Abone Ara"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "No subscribers found."
+msgstr "Abone bulunamadı."
+
+#: admin/partials/display-dashboard.php
+msgid "SWPMail Dashboard"
+msgstr "SWPMail Gösterge Paneli"
+
+#: admin/partials/display-dashboard.php
+msgid "Total Subscribers"
+msgstr "Toplam Abone"
+
+#: admin/partials/display-dashboard.php
+msgid "%1$s confirmed, %2$s pending"
+msgstr "%1$s onaylı, %2$s beklemede"
+
+#: admin/partials/display-dashboard.php
+msgid "Mail Provider"
+msgstr "Posta Sağlayıcı"
+
+#: admin/partials/display-dashboard.php
+msgid "Change provider"
+msgstr "Sağlayıcıyı değiştir"
+
+#: admin/partials/display-dashboard.php
+msgid "Queue Status"
+msgstr "Kuyruk Durumu"
+
+#: admin/partials/display-dashboard.php
+msgid "pending"
+msgstr "beklemede"
+
+#: admin/partials/display-dashboard.php
+msgid "sent"
+msgstr "gönderildi"
+
+#: admin/partials/display-dashboard.php
+msgid "failed"
+msgstr "başarısız"
+
+#: admin/partials/display-dashboard.php
+msgid "Last cron run: %s"
+msgstr "Son cron çalışması: %s"
+
+#: admin/partials/display-dashboard.php
+msgid "ago"
+msgstr "önce"
+
+#: admin/partials/display-dashboard.php
+msgid "Never"
+msgstr "Hiçbir zaman"
+
+#: admin/partials/display-dashboard.php
+msgid "Recent Logs"
+msgstr "Son Loglar"
+
+#: admin/partials/display-dashboard.php
+msgid "Date"
+msgstr "Tarih"
+
+#: admin/partials/display-dashboard.php
+msgid "Level"
+msgstr "Seviye"
+
+#: admin/partials/display-dashboard.php
+msgid "Message"
+msgstr "Mesaj"
+
+#: admin/partials/display-settings.php
+msgid "Override wp_mail()"
+msgstr "wp_mail() Fonksiyonunu Devral"
+
+#: admin/partials/display-settings.php
+msgid "Route all WordPress emails through the configured provider."
+msgstr "Tüm WordPress e-postalarını yapılandırılmış sağlayıcı üzerinden gönder."
+
+#: admin/partials/display-settings.php
+msgid "Notify on Failure"
+msgstr "Hata Durumunda Bildir"
+
+#: admin/partials/display-settings.php
+msgid "Send admin notification when mail delivery fails."
+msgstr "E-posta gönderimi başarısız olduğunda yöneticiye bildirim gönder."
+
+#: admin/partials/display-settings.php
+msgid "Subscription"
+msgstr "Abonelik"
+
+#: admin/partials/display-settings.php
+msgid "Double Opt-In"
+msgstr "Çift Onay"
+
+#: admin/partials/display-settings.php
+msgid "Require email confirmation before activating subscription."
+msgstr "Aboneliği etkinleştirmeden önce e-posta onayı iste."
+
+#: admin/partials/display-settings.php
+msgid "Form Title"
+msgstr "Form Başlığı"
+
+#: admin/partials/display-settings.php
+msgid "Show Frequency Choice"
+msgstr "Sıklık Seçeneğini Göster"
+
+#: admin/partials/display-settings.php
+msgid "Allow subscribers to choose instant, daily, or weekly delivery."
+msgstr "Abonelerin anlık, günlük veya haftalık gönderim seçmesine izin ver."
+
+#: admin/partials/display-settings.php
+msgid "GDPR"
+msgstr "KVKK/GDPR"
+
+#: admin/partials/display-settings.php
+msgid "GDPR Checkbox"
+msgstr "KVKK/GDPR Onay Kutusu"
+
+#: admin/partials/display-settings.php
+msgid "Show privacy policy consent checkbox on subscribe form."
+msgstr "Abonelik formunda gizlilik politikası onay kutusunu göster."
+
+#: admin/partials/display-settings.php
+msgid "Digest Schedule"
+msgstr "Özet Zamanlaması"
+
+#: admin/partials/display-settings.php
+msgid "Daily Digest Hour"
+msgstr "Günlük Özet Saati"
+
+#: admin/partials/display-settings.php
+msgid "Server time zone."
+msgstr "Sunucu saat dilimine göre."
+
+#: admin/partials/display-settings.php
+msgid "Weekly Digest Day"
+msgstr "Haftalık Özet Günü"
+
+#: admin/partials/display-settings.php
+msgid "Monday"
+msgstr "Pazartesi"
+
+#: admin/partials/display-settings.php
+msgid "Tuesday"
+msgstr "Salı"
+
+#: admin/partials/display-settings.php
+msgid "Wednesday"
+msgstr "Çarşamba"
+
+#: admin/partials/display-settings.php
+msgid "Thursday"
+msgstr "Perşembe"
+
+#: admin/partials/display-settings.php
+msgid "Friday"
+msgstr "Cuma"
+
+#: admin/partials/display-settings.php
+msgid "Saturday"
+msgstr "Cumartesi"
+
+#: admin/partials/display-settings.php
+msgid "Sunday"
+msgstr "Pazar"
+
+#: admin/partials/display-mail-settings.php
+msgid "From Name"
+msgstr "Gönderen Adı"
+
+#: admin/partials/display-mail-settings.php
+msgid "From Email"
+msgstr "Gönderen E-posta"
+
+#: admin/partials/display-mail-settings.php
+msgid "SMTP Host"
+msgstr "SMTP Sunucu"
+
+#: admin/partials/display-mail-settings.php
+msgid "SMTP Port"
+msgstr "SMTP Port"
+
+#: admin/partials/display-mail-settings.php
+msgid "Common: 587 (TLS), 465 (SSL), 25 (unencrypted)"
+msgstr "Yaygın: 587 (TLS), 465 (SSL), 25 (şifresiz)"
+
+#: admin/partials/display-mail-settings.php
+msgid "Encryption"
+msgstr "Şifreleme"
+
+#: admin/partials/display-mail-settings.php
+msgid "None"
+msgstr "Yok"
+
+#: admin/partials/display-mail-settings.php
+msgid "Username"
+msgstr "Kullanıcı Adı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Password"
+msgstr "Şifre"
+
+#: admin/partials/display-mail-settings.php
+msgid "Stored encrypted. Leave blank to keep current."
+msgstr "Şifreli olarak saklanır. Mevcut değeri korumak için boş bırakın."
+
+#: admin/partials/display-mail-settings.php
+msgid "Mailgun API Key"
+msgstr "Mailgun API Anahtarı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Mailgun Domain"
+msgstr "Mailgun Alan Adı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Region"
+msgstr "Bölge"
+
+#: admin/partials/display-mail-settings.php
+msgid "SendGrid API Key"
+msgstr "SendGrid API Anahtarı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Server Token"
+msgstr "Sunucu Token"
+
+#: admin/partials/display-mail-settings.php
+msgid "Message Stream"
+msgstr "Mesaj Akışı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Brevo API Key"
+msgstr "Brevo API Anahtarı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Access Key ID"
+msgstr "Erişim Anahtarı ID"
+
+#: admin/partials/display-mail-settings.php
+msgid "Secret Access Key"
+msgstr "Gizli Erişim Anahtarı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Resend API Key"
+msgstr "Resend API Anahtarı"
+
+#: admin/partials/display-mail-settings.php
+msgid "Save Settings"
+msgstr "Ayarları Kaydet"
+
+#: admin/partials/display-mail-settings.php
+msgid "Send Test Email"
+msgstr "Test E-postası Gönder"
+
+#: admin/partials/display-triggers.php
+msgid "Enable or disable automatic email triggers."
+msgstr "Otomatik e-posta tetikleyicilerini etkinleştirin veya devre dışı bırakın."
+
+#: admin/partials/display-triggers.php
+msgid "Active"
+msgstr "Aktif"
+
+#: admin/partials/display-triggers.php
+msgid "Trigger"
+msgstr "Tetikleyici"
+
+#: admin/partials/display-triggers.php
+msgid "Hook"
+msgstr "Hook"
+
+#: admin/partials/display-triggers.php
+msgid "Template"
+msgstr "Şablon"
+
+#: admin/partials/display-triggers.php
+msgid "No triggers registered."
+msgstr "Kayıtlı tetikleyici bulunamadı."
+
+#: admin/partials/display-triggers.php
+msgid "Save Triggers"
+msgstr "Tetikleyicileri Kaydet"
+
+#: admin/partials/display-triggers.php
+msgid "Custom Triggers"
+msgstr "Özel Tetikleyiciler"
+
+#: admin/partials/display-triggers.php
+msgid "Developers can register custom triggers using the %s action hook."
+msgstr "Geliştiriciler %s action hook'unu kullanarak özel tetikleyiciler kaydedebilir."
+
+#: includes/triggers/class-trigger-new-post.php
+msgid "New Post Published"
+msgstr "Yeni Yazı Yayınlandı"
+
+#: includes/triggers/class-trigger-new-post.php
+msgid "New Post: %s"
+msgstr "Yeni Yazı: %s"
+
+#: includes/triggers/class-trigger-new-user.php
+msgid "New User Registered"
+msgstr "Yeni Kullanıcı Kaydoldu"
+
+#: includes/triggers/class-trigger-new-user.php
+msgid "Welcome, %s!"
+msgstr "Hoş geldiniz, %s!"
+
+#: includes/triggers/class-trigger-user-login.php
+msgid "User Login"
+msgstr "Kullanıcı Girişi"
+
+#: includes/triggers/class-trigger-user-login.php
+msgid "New login detected: %s"
+msgstr "Yeni giriş algılandı: %s"
+
+#: includes/triggers/class-trigger-new-comment.php
+msgid "New Comment Posted"
+msgstr "Yeni Yorum Yapıldı"
+
+#: includes/triggers/class-trigger-new-comment.php
+msgid "New comment on: %s"
+msgstr "Yeni yorum: %s"
+
+#: includes/triggers/class-trigger-password-reset.php
+msgid "Password Reset Requested"
+msgstr "Şifre Sıfırlama İstendi"
+
+#: includes/triggers/class-trigger-password-reset.php
+msgid "Password reset for %s"
+msgstr "%s için şifre sıfırlama"
+
+#: includes/admin/class-settings.php
+msgid "Insufficient permissions."
+msgstr "Yetersiz yetki."
+
+#: includes/admin/class-settings.php
+msgid "No provider configured."
+msgstr "Sağlayıcı yapılandırılmamış."
+
+#: includes/admin/class-settings.php
+msgid "[SWPMail] Test Connection"
+msgstr "[SWPMail] Bağlantı Testi"
+
+#: includes/admin/class-settings.php
+msgid "This is a test email from SWPMail on %s. Your mail provider is working correctly!"
+msgstr "Bu, %s üzerindeki SWPMail'den gönderilen bir test e-postasıdır. Posta sağlayıcınız düzgün çalışıyor!"
+
+#: includes/admin/class-template-editor.php
+msgid "Confirm Subscription"
+msgstr "Abonelik Onayı"
+
+#: includes/admin/class-template-editor.php
+msgid "Welcome"
+msgstr "Hoş Geldiniz"
+
+#: includes/admin/class-template-editor.php
+msgid "New Post"
+msgstr "Yeni Yazı"
+
+#: includes/admin/class-template-editor.php
+msgid "Daily Digest"
+msgstr "Günlük Özet"
+
+#: includes/admin/class-template-editor.php
+msgid "Weekly Digest"
+msgstr "Haftalık Özet"
+
+#: includes/admin/class-template-editor.php
+msgid "Template saved."
+msgstr "Şablon kaydedildi."
+
+#: includes/admin/class-template-editor.php
+msgid "Invalid template."
+msgstr "Geçersiz şablon."
+
+#: includes/admin/class-template-editor.php
+msgid "Template reset to default."
+msgstr "Şablon varsayılana sıfırlandı."
+
+#: admin/partials/display-templates.php
+msgid "Available variables:"
+msgstr "Kullanılabilir değişkenler:"
+
+#: admin/partials/display-templates.php
+msgid "Save Template"
+msgstr "Şablonu Kaydet"
+
+#: admin/partials/display-templates.php
+msgid "Reset to Default"
+msgstr "Varsayılana Sıfırla"
+
+#: admin/partials/display-templates.php
+msgid "Reset to default? This will overwrite your changes."
+msgstr "Varsayılana sıfırla? Bu, yaptığınız değişikliklerin üzerine yazacaktır."
+
+#: includes/core/class-cron.php
+msgid "Every 5 Minutes"
+msgstr "Her 5 Dakikada"
+
+#: includes/core/class-cron.php
+msgid "Daily Digest — %s"
+msgstr "Günlük Özet — %s"
+
+#: includes/core/class-cron.php
+msgid "Weekly Digest — Week of %s"
+msgstr "Haftalık Özet — %s Haftası"
+
+#: includes/class-swpmail.php
+msgid "SWPMail: The mail queue has not run in over 1 hour. Check your WordPress cron setup."
+msgstr "SWPMail: Posta kuyruğu 1 saatten fazladır çalışmadı. WordPress cron yapılandırmanızı kontrol edin."
+
+#: public/partials/subscribe-form.php
+msgid "Your name"
+msgstr "Adınız"
+
+#: public/partials/subscribe-form.php
+msgid "your@email.com"
+msgstr "ornek@email.com"
+
+#: public/partials/subscribe-form.php
+msgid "I agree to the <a href=\"%s\" target=\"_blank\">Privacy Policy</a>."
+msgstr "<a href=\"%s\" target=\"_blank\">Gizlilik Politikası</a>'nı kabul ediyorum."
+
+#: public/partials/subscribe-form.php
+msgid "I agree to the Privacy Policy."
+msgstr "Gizlilik Politikası'nı kabul ediyorum."
+
+#: includes/core/class-template-engine.php
+msgid "Unsubscribe"
+msgstr "Abonelikten Çık"
+
+#: includes/core/class-template-engine.php
+msgid "Visit Site"
+msgstr "Siteyi Ziyaret Et"
+
+#: admin/partials/display-settings.php
+msgid "Privacy policy page: %s"
+msgstr "Gizlilik politikası sayfası: %s"
+
+#: includes/providers/class-provider-smtp.php
+msgid "Generic SMTP"
+msgstr "Genel SMTP"
+
+#: includes/providers/class-provider-smtp.php
+msgid "SWPMail SMTP Test"
+msgstr "SWPMail SMTP Testi"
+
+#: includes/providers/class-provider-smtp.php
+msgid "SMTP connection is working correctly."
+msgstr "SMTP bağlantısı doğru çalışıyor."
+
+#: includes/providers/class-provider-mailgun.php
+msgid "Mailgun"
+msgstr "Mailgun"
+
+#: includes/providers/class-provider-mailgun.php
+msgid "Mailgun API key or domain is not configured."
+msgstr "Mailgun API anahtarı veya alan adı yapılandırılmamış."
+
+#: includes/providers/class-provider-mailgun.php
+msgid "SWPMail Mailgun Test"
+msgstr "SWPMail Mailgun Testi"
+
+#: includes/providers/class-provider-mailgun.php
+msgid "Mailgun connection is working correctly."
+msgstr "Mailgun bağlantısı doğru çalışıyor."
+
+#: includes/providers/class-provider-sendgrid.php
+msgid "SendGrid"
+msgstr "SendGrid"
+
+#: includes/providers/class-provider-sendgrid.php
+msgid "SendGrid API key is not configured."
+msgstr "SendGrid API anahtarı yapılandırılmamış."
+
+#: includes/providers/class-provider-sendgrid.php
+msgid "SWPMail SendGrid Test"
+msgstr "SWPMail SendGrid Testi"
+
+#: includes/providers/class-provider-sendgrid.php
+msgid "SendGrid connection is working correctly."
+msgstr "SendGrid bağlantısı doğru çalışıyor."
+
+#: includes/providers/class-provider-postmark.php
+msgid "Postmark"
+msgstr "Postmark"
+
+#: includes/providers/class-provider-postmark.php
+msgid "Postmark Server Token is not configured."
+msgstr "Postmark Sunucu Token'ı yapılandırılmamış."
+
+#: includes/providers/class-provider-postmark.php
+msgid "SWPMail Postmark Test"
+msgstr "SWPMail Postmark Testi"
+
+#: includes/providers/class-provider-postmark.php
+msgid "Postmark connection is working correctly."
+msgstr "Postmark bağlantısı doğru çalışıyor."
+
+#: includes/providers/class-provider-brevo.php
+msgid "Brevo (Sendinblue)"
+msgstr "Brevo (Sendinblue)"
+
+#: includes/providers/class-provider-brevo.php
+msgid "Brevo API key is not configured."
+msgstr "Brevo API anahtarı yapılandırılmamış."
+
+#: includes/providers/class-provider-brevo.php
+msgid "SWPMail Brevo Test"
+msgstr "SWPMail Brevo Testi"
+
+#: includes/providers/class-provider-brevo.php
+msgid "Brevo connection is working correctly."
+msgstr "Brevo bağlantısı doğru çalışıyor."
+
+#: includes/providers/class-provider-ses.php
+msgid "Amazon SES"
+msgstr "Amazon SES"
+
+#: includes/providers/class-provider-ses.php
+msgid "Amazon SES credentials are not configured."
+msgstr "Amazon SES kimlik bilgileri yapılandırılmamış."
+
+#: includes/providers/class-provider-ses.php
+msgid "SWPMail Amazon SES Test"
+msgstr "SWPMail Amazon SES Testi"
+
+#: includes/providers/class-provider-ses.php
+msgid "Amazon SES connection is working correctly."
+msgstr "Amazon SES bağlantısı doğru çalışıyor."
+
+#: includes/providers/class-provider-resend.php
+msgid "Resend"
+msgstr "Resend"
+
+#: includes/providers/class-provider-resend.php
+msgid "Resend API key is not configured."
+msgstr "Resend API anahtarı yapılandırılmamış."
+
+#: includes/providers/class-provider-resend.php
+msgid "SWPMail Resend Test"
+msgstr "SWPMail Resend Testi"
+
+#: includes/providers/class-provider-resend.php
+msgid "Resend connection is working correctly."
+msgstr "Resend bağlantısı doğru çalışıyor."
+
+#: includes/class-swpmail.php
+msgid "Your subscription has been confirmed! Thank you."
+msgstr "Aboneliğiniz onaylandı! Teşekkür ederiz."
+
+#: includes/class-swpmail.php
+msgid "Subscription Confirmed"
+msgstr "Abonelik Onaylandı"
+
+#: includes/class-swpmail.php
+msgid "Confirmation Failed"
+msgstr "Onay Başarısız"
+
+#: includes/class-swpmail.php
+msgid "You have been unsubscribed successfully."
+msgstr "Aboneliğiniz başarıyla iptal edildi."
+
+#: includes/class-swpmail.php
+msgid "Invalid unsubscribe link."
+msgstr "Geçersiz abonelik iptal bağlantısı."
+
+#: includes/class-swpmail.php
+msgid "Unsubscribe Failed"
+msgstr "Abonelik İptali Başarısız"
+
+#: includes/class-swpmail.php
+msgid "Welcome to %s!"
+msgstr "%s'e hoş geldiniz!"

@@ -1,0 +1,662 @@
+# Italian translation for SWPMail plugin.
+# Copyright (C) 2024 SWPMail
+# This file is distributed under the same license as the SWPMail plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: SWPMail 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0100\n"
+"Last-Translator: \n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: swpmail.php
+msgid "SWPMail"
+msgstr "SWPMail"
+
+#: includes/admin/class-admin.php
+msgid "Dashboard"
+msgstr "Pannello di controllo"
+
+#: includes/admin/class-admin.php
+msgid "Subscribers"
+msgstr "Iscritti"
+
+#: includes/admin/class-admin.php
+msgid "Email Templates"
+msgstr "Modelli di email"
+
+#: includes/admin/class-admin.php
+msgid "Triggers"
+msgstr "Trigger"
+
+#: includes/admin/class-admin.php
+msgid "Mail Settings"
+msgstr "Impostazioni email"
+
+#: includes/admin/class-admin.php
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: includes/admin/class-admin.php
+msgid "Testing..."
+msgstr "Test in corso..."
+
+#: includes/admin/class-admin.php
+msgid "Connection successful! Test email sent."
+msgstr "Connessione riuscita! Email di prova inviata."
+
+#: includes/admin/class-admin.php
+msgid "Test failed: "
+msgstr "Test fallito: "
+
+#: includes/admin/class-admin.php
+msgid "Are you sure you want to delete this subscriber?"
+msgstr "Sei sicuro di voler eliminare questo iscritto?"
+
+#: includes/admin/class-admin.php
+msgid "Settings saved."
+msgstr "Impostazioni salvate."
+
+#: includes/public/class-shortcode.php
+msgid "Subscribe to Newsletter"
+msgstr "Iscriviti alla newsletter"
+
+#: includes/public/class-shortcode.php
+msgid "Subscribe"
+msgstr "Iscriviti"
+
+#: includes/public/class-ajax-handler.php
+msgid "Security check failed."
+msgstr "Verifica di sicurezza fallita."
+
+#: includes/public/class-ajax-handler.php
+msgid "Too many requests. Please try again later."
+msgstr "Troppe richieste. Riprova più tardi."
+
+#: includes/public/class-ajax-handler.php
+msgid "Check your email to confirm."
+msgstr "Controlla la tua email per confermare."
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid email address."
+msgstr "Indirizzo email non valido."
+
+#: includes/public/class-ajax-handler.php
+msgid "Please accept the privacy policy."
+msgstr "Accetta l'informativa sulla privacy."
+
+#: includes/public/class-ajax-handler.php
+msgid "Confirm your subscription to %s"
+msgstr "Conferma la tua iscrizione a %s"
+
+#: includes/public/class-ajax-handler.php
+msgid "Please check your email to confirm your subscription."
+msgstr "Controlla la tua email per confermare l'iscrizione."
+
+#: includes/public/class-ajax-handler.php
+msgid "You have successfully subscribed!"
+msgstr "Iscrizione completata con successo!"
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid token."
+msgstr "Token non valido."
+
+#: includes/public/class-ajax-handler.php
+msgid "Subscription confirmed!"
+msgstr "Iscrizione confermata!"
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid or expired confirmation link."
+msgstr "Link di conferma non valido o scaduto."
+
+#: includes/public/class-ajax-handler.php
+msgid "You have been unsubscribed."
+msgstr "La tua iscrizione è stata annullata."
+
+#: includes/public/class-ajax-handler.php
+msgid "Could not process your request."
+msgstr "Impossibile elaborare la richiesta."
+
+#: includes/public/class-rest-api.php
+msgid "Subscription successful."
+msgstr "Iscrizione riuscita."
+
+#: includes/public/class-rest-api.php
+msgid "Subscriber not found."
+msgstr "Iscritto non trovato."
+
+#: includes/public/class-rest-api.php
+msgid "Subscriber deleted."
+msgstr "Iscritto eliminato."
+
+#: includes/public/class-public.php
+msgid "Subscribing..."
+msgstr "Iscrizione in corso..."
+
+#: includes/public/class-public.php
+msgid "An error occurred. Please try again."
+msgstr "Si è verificato un errore. Riprova."
+
+#: includes/core/class-subscriber.php
+msgid "Disposable email addresses are not allowed."
+msgstr "Gli indirizzi email usa e getta non sono consentiti."
+
+#: includes/core/class-subscriber.php
+msgid "This email has previously bounced."
+msgstr "Questa email è stata respinta in precedenza."
+
+#: includes/core/class-subscriber.php
+msgid "This email is already subscribed."
+msgstr "Questa email è già iscritta."
+
+#: includes/core/class-subscriber.php
+msgid "Could not save subscriber."
+msgstr "Impossibile salvare l'iscritto."
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Email"
+msgstr "Email"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Name"
+msgstr "Nome"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Status"
+msgstr "Stato"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Frequency"
+msgstr "Frequenza"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Subscribed"
+msgstr "Iscritto"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Delete"
+msgstr "Elimina"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Pending"
+msgstr "In attesa"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Confirmed"
+msgstr "Confermato"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Unsubscribed"
+msgstr "Disiscritto"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Bounced"
+msgstr "Respinto"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Instant"
+msgstr "Immediato"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Daily"
+msgstr "Giornaliero"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Weekly"
+msgstr "Settimanale"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "All Statuses"
+msgstr "Tutti gli stati"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Filter"
+msgstr "Filtra"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Search Subscribers"
+msgstr "Cerca iscritti"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "No subscribers found."
+msgstr "Nessun iscritto trovato."
+
+#: admin/partials/display-dashboard.php
+msgid "SWPMail Dashboard"
+msgstr "Pannello di controllo SWPMail"
+
+#: admin/partials/display-dashboard.php
+msgid "Total Subscribers"
+msgstr "Totale iscritti"
+
+#: admin/partials/display-dashboard.php
+msgid "%1$s confirmed, %2$s pending"
+msgstr "%1$s confermati, %2$s in attesa"
+
+#: admin/partials/display-dashboard.php
+msgid "Mail Provider"
+msgstr "Provider di posta"
+
+#: admin/partials/display-dashboard.php
+msgid "Change provider"
+msgstr "Cambia provider"
+
+#: admin/partials/display-dashboard.php
+msgid "Queue Status"
+msgstr "Stato della coda"
+
+#: admin/partials/display-dashboard.php
+msgid "pending"
+msgstr "in attesa"
+
+#: admin/partials/display-dashboard.php
+msgid "sent"
+msgstr "inviato"
+
+#: admin/partials/display-dashboard.php
+msgid "failed"
+msgstr "fallito"
+
+#: admin/partials/display-dashboard.php
+msgid "Last cron run: %s"
+msgstr "Ultima esecuzione cron: %s"
+
+#: admin/partials/display-dashboard.php
+msgid "ago"
+msgstr "fa"
+
+#: admin/partials/display-dashboard.php
+msgid "Never"
+msgstr "Mai"
+
+#: admin/partials/display-dashboard.php
+msgid "Recent Logs"
+msgstr "Registri recenti"
+
+#: admin/partials/display-dashboard.php
+msgid "Date"
+msgstr "Data"
+
+#: admin/partials/display-dashboard.php
+msgid "Level"
+msgstr "Livello"
+
+#: admin/partials/display-dashboard.php
+msgid "Message"
+msgstr "Messaggio"
+
+#: admin/partials/display-settings.php
+msgid "Override wp_mail()"
+msgstr "Sostituisci wp_mail()"
+
+#: admin/partials/display-settings.php
+msgid "Route all WordPress emails through the configured provider."
+msgstr "Invia tutte le email di WordPress tramite il provider configurato."
+
+#: admin/partials/display-settings.php
+msgid "Notify on Failure"
+msgstr "Notifica in caso di errore"
+
+#: admin/partials/display-settings.php
+msgid "Send admin notification when mail delivery fails."
+msgstr "Invia una notifica all'amministratore quando l'invio dell'email fallisce."
+
+#: admin/partials/display-settings.php
+msgid "Subscription"
+msgstr "Iscrizione"
+
+#: admin/partials/display-settings.php
+msgid "Double Opt-In"
+msgstr "Doppia conferma"
+
+#: admin/partials/display-settings.php
+msgid "Require email confirmation before activating subscription."
+msgstr "Richiedi conferma via email prima di attivare l'iscrizione."
+
+#: admin/partials/display-settings.php
+msgid "Form Title"
+msgstr "Titolo del modulo"
+
+#: admin/partials/display-settings.php
+msgid "Show Frequency Choice"
+msgstr "Mostra scelta della frequenza"
+
+#: admin/partials/display-settings.php
+msgid "Allow subscribers to choose instant, daily, or weekly delivery."
+msgstr "Consenti agli iscritti di scegliere l'invio immediato, giornaliero o settimanale."
+
+#: admin/partials/display-settings.php
+msgid "GDPR"
+msgstr "GDPR"
+
+#: admin/partials/display-settings.php
+msgid "GDPR Checkbox"
+msgstr "Casella di controllo GDPR"
+
+#: admin/partials/display-settings.php
+msgid "Show privacy policy consent checkbox on subscribe form."
+msgstr "Mostra la casella di consenso all'informativa sulla privacy nel modulo di iscrizione."
+
+#: admin/partials/display-settings.php
+msgid "Digest Schedule"
+msgstr "Programmazione del riepilogo"
+
+#: admin/partials/display-settings.php
+msgid "Daily Digest Hour"
+msgstr "Ora del riepilogo giornaliero"
+
+#: admin/partials/display-settings.php
+msgid "Server time zone."
+msgstr "Fuso orario del server."
+
+#: admin/partials/display-settings.php
+msgid "Weekly Digest Day"
+msgstr "Giorno del riepilogo settimanale"
+
+#: admin/partials/display-settings.php
+msgid "Monday"
+msgstr "Lunedì"
+
+#: admin/partials/display-settings.php
+msgid "Tuesday"
+msgstr "Martedì"
+
+#: admin/partials/display-settings.php
+msgid "Wednesday"
+msgstr "Mercoledì"
+
+#: admin/partials/display-settings.php
+msgid "Thursday"
+msgstr "Giovedì"
+
+#: admin/partials/display-settings.php
+msgid "Friday"
+msgstr "Venerdì"
+
+#: admin/partials/display-settings.php
+msgid "Saturday"
+msgstr "Sabato"
+
+#: admin/partials/display-settings.php
+msgid "Sunday"
+msgstr "Domenica"
+
+#: admin/partials/display-mail-settings.php
+msgid "From Name"
+msgstr "Nome del mittente"
+
+#: admin/partials/display-mail-settings.php
+msgid "From Email"
+msgstr "Email del mittente"
+
+#: admin/partials/display-mail-settings.php
+msgid "SMTP Host"
+msgstr "Host SMTP"
+
+#: admin/partials/display-mail-settings.php
+msgid "SMTP Port"
+msgstr "Porta SMTP"
+
+#: admin/partials/display-mail-settings.php
+msgid "Common: 587 (TLS), 465 (SSL), 25 (unencrypted)"
+msgstr "Comuni: 587 (TLS), 465 (SSL), 25 (non crittografato)"
+
+#: admin/partials/display-mail-settings.php
+msgid "Encryption"
+msgstr "Crittografia"
+
+#: admin/partials/display-mail-settings.php
+msgid "None"
+msgstr "Nessuna"
+
+#: admin/partials/display-mail-settings.php
+msgid "Username"
+msgstr "Nome utente"
+
+#: admin/partials/display-mail-settings.php
+msgid "Password"
+msgstr "Password"
+
+#: admin/partials/display-mail-settings.php
+msgid "Stored encrypted. Leave blank to keep current."
+msgstr "Memorizzata in forma crittografata. Lascia vuoto per mantenere quella attuale."
+
+#: admin/partials/display-mail-settings.php
+msgid "Mailgun API Key"
+msgstr "Chiave API Mailgun"
+
+#: admin/partials/display-mail-settings.php
+msgid "Mailgun Domain"
+msgstr "Dominio Mailgun"
+
+#: admin/partials/display-mail-settings.php
+msgid "Region"
+msgstr "Regione"
+
+#: admin/partials/display-mail-settings.php
+msgid "SendGrid API Key"
+msgstr "Chiave API SendGrid"
+
+#: admin/partials/display-mail-settings.php
+msgid "Server Token"
+msgstr "Token del server"
+
+#: admin/partials/display-mail-settings.php
+msgid "Message Stream"
+msgstr "Flusso di messaggi"
+
+#: admin/partials/display-mail-settings.php
+msgid "Brevo API Key"
+msgstr "Chiave API Brevo"
+
+#: admin/partials/display-mail-settings.php
+msgid "Access Key ID"
+msgstr "ID chiave di accesso"
+
+#: admin/partials/display-mail-settings.php
+msgid "Secret Access Key"
+msgstr "Chiave di accesso segreta"
+
+#: admin/partials/display-mail-settings.php
+msgid "Resend API Key"
+msgstr "Chiave API Resend"
+
+#: admin/partials/display-mail-settings.php
+msgid "Save Settings"
+msgstr "Salva impostazioni"
+
+#: admin/partials/display-mail-settings.php
+msgid "Send Test Email"
+msgstr "Invia email di prova"
+
+#: admin/partials/display-triggers.php
+msgid "Enable or disable automatic email triggers."
+msgstr "Attiva o disattiva i trigger automatici delle email."
+
+#: admin/partials/display-triggers.php
+msgid "Active"
+msgstr "Attivo"
+
+#: admin/partials/display-triggers.php
+msgid "Trigger"
+msgstr "Trigger"
+
+#: admin/partials/display-triggers.php
+msgid "Hook"
+msgstr "Hook"
+
+#: admin/partials/display-triggers.php
+msgid "Template"
+msgstr "Modello"
+
+#: admin/partials/display-triggers.php
+msgid "No triggers registered."
+msgstr "Nessun trigger registrato."
+
+#: admin/partials/display-triggers.php
+msgid "Save Triggers"
+msgstr "Salva trigger"
+
+#: admin/partials/display-triggers.php
+msgid "Custom Triggers"
+msgstr "Trigger personalizzati"
+
+#: admin/partials/display-triggers.php
+msgid "Developers can register custom triggers using the %s action hook."
+msgstr "Gli sviluppatori possono registrare trigger personalizzati utilizzando l'hook di azione %s."
+
+#: includes/triggers/class-trigger-new-post.php
+msgid "New Post Published"
+msgstr "Nuovo articolo pubblicato"
+
+#: includes/triggers/class-trigger-new-post.php
+msgid "New Post: %s"
+msgstr "Nuovo articolo: %s"
+
+#: includes/triggers/class-trigger-new-user.php
+msgid "New User Registered"
+msgstr "Nuovo utente registrato"
+
+#: includes/triggers/class-trigger-new-user.php
+msgid "Welcome, %s!"
+msgstr "Benvenuto, %s!"
+
+#: includes/triggers/class-trigger-user-login.php
+msgid "User Login"
+msgstr "Accesso utente"
+
+#: includes/triggers/class-trigger-user-login.php
+msgid "New login detected: %s"
+msgstr "Nuovo accesso rilevato: %s"
+
+#: includes/triggers/class-trigger-new-comment.php
+msgid "New Comment Posted"
+msgstr "Nuovo commento pubblicato"
+
+#: includes/triggers/class-trigger-new-comment.php
+msgid "New comment on: %s"
+msgstr "Nuovo commento su: %s"
+
+#: includes/triggers/class-trigger-password-reset.php
+msgid "Password Reset Requested"
+msgstr "Reimpostazione della password richiesta"
+
+#: includes/triggers/class-trigger-password-reset.php
+msgid "Password reset for %s"
+msgstr "Reimpostazione della password per %s"
+
+#: includes/admin/class-settings.php
+msgid "Insufficient permissions."
+msgstr "Permessi insufficienti."
+
+#: includes/admin/class-settings.php
+msgid "No provider configured."
+msgstr "Nessun provider configurato."
+
+#: includes/admin/class-settings.php
+msgid "[SWPMail] Test Connection"
+msgstr "[SWPMail] Test di connessione"
+
+#: includes/admin/class-settings.php
+msgid "This is a test email from SWPMail on %s. Your mail provider is working correctly!"
+msgstr "Questa è un'email di prova da SWPMail su %s. Il tuo provider di posta funziona correttamente!"
+
+#: includes/admin/class-template-editor.php
+msgid "Confirm Subscription"
+msgstr "Conferma iscrizione"
+
+#: includes/admin/class-template-editor.php
+msgid "Welcome"
+msgstr "Benvenuto"
+
+#: includes/admin/class-template-editor.php
+msgid "New Post"
+msgstr "Nuovo articolo"
+
+#: includes/admin/class-template-editor.php
+#: public/partials/subscribe-form.php
+msgid "Daily Digest"
+msgstr "Riepilogo giornaliero"
+
+#: includes/admin/class-template-editor.php
+#: public/partials/subscribe-form.php
+msgid "Weekly Digest"
+msgstr "Riepilogo settimanale"
+
+#: includes/admin/class-template-editor.php
+msgid "Template saved."
+msgstr "Modello salvato."
+
+#: includes/admin/class-template-editor.php
+msgid "Invalid template."
+msgstr "Modello non valido."
+
+#: includes/admin/class-template-editor.php
+msgid "Template reset to default."
+msgstr "Modello ripristinato ai valori predefiniti."
+
+#: admin/partials/display-templates.php
+msgid "Available variables:"
+msgstr "Variabili disponibili:"
+
+#: admin/partials/display-templates.php
+msgid "Save Template"
+msgstr "Salva modello"
+
+#: admin/partials/display-templates.php
+msgid "Reset to Default"
+msgstr "Ripristina valori predefiniti"
+
+#: admin/partials/display-templates.php
+msgid "Reset to default? This will overwrite your changes."
+msgstr "Ripristinare i valori predefiniti? Le modifiche verranno sovrascritte."
+
+#: includes/core/class-cron.php
+msgid "Every 5 Minutes"
+msgstr "Ogni 5 minuti"
+
+#: includes/core/class-cron.php
+msgid "Daily Digest — %s"
+msgstr "Riepilogo giornaliero — %s"
+
+#: includes/core/class-cron.php
+msgid "Weekly Digest — Week of %s"
+msgstr "Riepilogo settimanale — Settimana del %s"
+
+#: includes/class-swpmail.php
+msgid "SWPMail: The mail queue has not run in over 1 hour. Check your WordPress cron setup."
+msgstr "SWPMail: La coda email non viene eseguita da oltre 1 ora. Controlla la configurazione del cron di WordPress."
+
+#: public/partials/subscribe-form.php
+msgid "Your name"
+msgstr "Il tuo nome"
+
+#: public/partials/subscribe-form.php
+msgid "your@email.com"
+msgstr "tua@email.com"
+
+#: public/partials/subscribe-form.php
+msgid "I agree to the <a href=\"%s\" target=\"_blank\">Privacy Policy</a>."
+msgstr "Accetto l'<a href=\"%s\" target=\"_blank\">Informativa sulla privacy</a>."
+
+#: public/partials/subscribe-form.php
+msgid "I agree to the Privacy Policy."
+msgstr "Accetto l'Informativa sulla privacy."
+
+#: includes/core/class-template-engine.php
+msgid "Unsubscribe"
+msgstr "Annulla iscrizione"
+
+#: includes/core/class-template-engine.php
+msgid "Visit Site"
+msgstr "Visita il sito"
+
+#: admin/partials/display-settings.php
+msgid "Privacy policy page: %s"
+msgstr "Pagina dell'informativa sulla privacy: %s"

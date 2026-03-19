@@ -1,0 +1,662 @@
+# Japanese translation for SWPMail plugin.
+# Copyright (C) 2024 SWPMail
+# This file is distributed under the same license as the SWPMail plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: SWPMail 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0900\n"
+"Last-Translator: \n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: swpmail.php
+msgid "SWPMail"
+msgstr "SWPMail"
+
+#: includes/admin/class-admin.php
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+#: includes/admin/class-admin.php
+msgid "Subscribers"
+msgstr "購読者"
+
+#: includes/admin/class-admin.php
+msgid "Email Templates"
+msgstr "メールテンプレート"
+
+#: includes/admin/class-admin.php
+msgid "Triggers"
+msgstr "トリガー"
+
+#: includes/admin/class-admin.php
+msgid "Mail Settings"
+msgstr "メール設定"
+
+#: includes/admin/class-admin.php
+msgid "Settings"
+msgstr "設定"
+
+#: includes/admin/class-admin.php
+msgid "Testing..."
+msgstr "テスト中..."
+
+#: includes/admin/class-admin.php
+msgid "Connection successful! Test email sent."
+msgstr "接続成功！テストメールが送信されました。"
+
+#: includes/admin/class-admin.php
+msgid "Test failed: "
+msgstr "テスト失敗: "
+
+#: includes/admin/class-admin.php
+msgid "Are you sure you want to delete this subscriber?"
+msgstr "この購読者を削除してもよろしいですか？"
+
+#: includes/admin/class-admin.php
+msgid "Settings saved."
+msgstr "設定が保存されました。"
+
+#: includes/public/class-shortcode.php
+msgid "Subscribe to Newsletter"
+msgstr "ニュースレターを購読"
+
+#: includes/public/class-shortcode.php
+msgid "Subscribe"
+msgstr "購読する"
+
+#: includes/public/class-ajax-handler.php
+msgid "Security check failed."
+msgstr "セキュリティチェックに失敗しました。"
+
+#: includes/public/class-ajax-handler.php
+msgid "Too many requests. Please try again later."
+msgstr "リクエストが多すぎます。しばらくしてからもう一度お試しください。"
+
+#: includes/public/class-ajax-handler.php
+msgid "Check your email to confirm."
+msgstr "確認のためメールをご確認ください。"
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid email address."
+msgstr "無効なメールアドレスです。"
+
+#: includes/public/class-ajax-handler.php
+msgid "Please accept the privacy policy."
+msgstr "プライバシーポリシーに同意してください。"
+
+#: includes/public/class-ajax-handler.php
+msgid "Confirm your subscription to %s"
+msgstr "%s への購読を確認"
+
+#: includes/public/class-ajax-handler.php
+msgid "Please check your email to confirm your subscription."
+msgstr "購読を確認するため、メールをご確認ください。"
+
+#: includes/public/class-ajax-handler.php
+msgid "You have successfully subscribed!"
+msgstr "購読の登録が完了しました！"
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid token."
+msgstr "無効なトークンです。"
+
+#: includes/public/class-ajax-handler.php
+msgid "Subscription confirmed!"
+msgstr "購読が確認されました！"
+
+#: includes/public/class-ajax-handler.php
+msgid "Invalid or expired confirmation link."
+msgstr "無効または期限切れの確認リンクです。"
+
+#: includes/public/class-ajax-handler.php
+msgid "You have been unsubscribed."
+msgstr "購読が解除されました。"
+
+#: includes/public/class-ajax-handler.php
+msgid "Could not process your request."
+msgstr "リクエストを処理できませんでした。"
+
+#: includes/public/class-rest-api.php
+msgid "Subscription successful."
+msgstr "購読が完了しました。"
+
+#: includes/public/class-rest-api.php
+msgid "Subscriber not found."
+msgstr "購読者が見つかりません。"
+
+#: includes/public/class-rest-api.php
+msgid "Subscriber deleted."
+msgstr "購読者が削除されました。"
+
+#: includes/public/class-public.php
+msgid "Subscribing..."
+msgstr "購読登録中..."
+
+#: includes/public/class-public.php
+msgid "An error occurred. Please try again."
+msgstr "エラーが発生しました。もう一度お試しください。"
+
+#: includes/core/class-subscriber.php
+msgid "Disposable email addresses are not allowed."
+msgstr "使い捨てメールアドレスは許可されていません。"
+
+#: includes/core/class-subscriber.php
+msgid "This email has previously bounced."
+msgstr "このメールアドレスは以前バウンスされています。"
+
+#: includes/core/class-subscriber.php
+msgid "This email is already subscribed."
+msgstr "このメールアドレスは既に購読登録されています。"
+
+#: includes/core/class-subscriber.php
+msgid "Could not save subscriber."
+msgstr "購読者を保存できませんでした。"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Email"
+msgstr "メールアドレス"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Name"
+msgstr "名前"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Status"
+msgstr "ステータス"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Frequency"
+msgstr "頻度"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Subscribed"
+msgstr "購読中"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Delete"
+msgstr "削除"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Pending"
+msgstr "保留中"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Confirmed"
+msgstr "確認済み"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Unsubscribed"
+msgstr "購読解除"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Bounced"
+msgstr "バウンス"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Instant"
+msgstr "即時"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Daily"
+msgstr "毎日"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Weekly"
+msgstr "毎週"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "All Statuses"
+msgstr "すべてのステータス"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Filter"
+msgstr "フィルター"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "Search Subscribers"
+msgstr "購読者を検索"
+
+#: includes/admin/class-subscribers-list-table.php
+msgid "No subscribers found."
+msgstr "購読者が見つかりません。"
+
+#: admin/partials/display-dashboard.php
+msgid "SWPMail Dashboard"
+msgstr "SWPMail ダッシュボード"
+
+#: admin/partials/display-dashboard.php
+msgid "Total Subscribers"
+msgstr "購読者合計"
+
+#: admin/partials/display-dashboard.php
+msgid "%1$s confirmed, %2$s pending"
+msgstr "%1$s 件確認済み、%2$s 件保留中"
+
+#: admin/partials/display-dashboard.php
+msgid "Mail Provider"
+msgstr "メールプロバイダー"
+
+#: admin/partials/display-dashboard.php
+msgid "Change provider"
+msgstr "プロバイダーを変更"
+
+#: admin/partials/display-dashboard.php
+msgid "Queue Status"
+msgstr "キューのステータス"
+
+#: admin/partials/display-dashboard.php
+msgid "pending"
+msgstr "保留中"
+
+#: admin/partials/display-dashboard.php
+msgid "sent"
+msgstr "送信済み"
+
+#: admin/partials/display-dashboard.php
+msgid "failed"
+msgstr "失敗"
+
+#: admin/partials/display-dashboard.php
+msgid "Last cron run: %s"
+msgstr "最終cron実行: %s"
+
+#: admin/partials/display-dashboard.php
+msgid "ago"
+msgstr "前"
+
+#: admin/partials/display-dashboard.php
+msgid "Never"
+msgstr "未実行"
+
+#: admin/partials/display-dashboard.php
+msgid "Recent Logs"
+msgstr "最近のログ"
+
+#: admin/partials/display-dashboard.php
+msgid "Date"
+msgstr "日付"
+
+#: admin/partials/display-dashboard.php
+msgid "Level"
+msgstr "レベル"
+
+#: admin/partials/display-dashboard.php
+msgid "Message"
+msgstr "メッセージ"
+
+#: admin/partials/display-settings.php
+msgid "Override wp_mail()"
+msgstr "wp_mail() を上書き"
+
+#: admin/partials/display-settings.php
+msgid "Route all WordPress emails through the configured provider."
+msgstr "すべてのWordPressメールを設定済みのプロバイダー経由で送信します。"
+
+#: admin/partials/display-settings.php
+msgid "Notify on Failure"
+msgstr "失敗時に通知"
+
+#: admin/partials/display-settings.php
+msgid "Send admin notification when mail delivery fails."
+msgstr "メール配信が失敗した場合に管理者に通知を送信します。"
+
+#: admin/partials/display-settings.php
+msgid "Subscription"
+msgstr "購読"
+
+#: admin/partials/display-settings.php
+msgid "Double Opt-In"
+msgstr "ダブルオプトイン"
+
+#: admin/partials/display-settings.php
+msgid "Require email confirmation before activating subscription."
+msgstr "購読を有効にする前にメール確認を必須にします。"
+
+#: admin/partials/display-settings.php
+msgid "Form Title"
+msgstr "フォームタイトル"
+
+#: admin/partials/display-settings.php
+msgid "Show Frequency Choice"
+msgstr "頻度の選択を表示"
+
+#: admin/partials/display-settings.php
+msgid "Allow subscribers to choose instant, daily, or weekly delivery."
+msgstr "購読者が即時、毎日、毎週の配信を選択できるようにします。"
+
+#: admin/partials/display-settings.php
+msgid "GDPR"
+msgstr "GDPR"
+
+#: admin/partials/display-settings.php
+msgid "GDPR Checkbox"
+msgstr "GDPRチェックボックス"
+
+#: admin/partials/display-settings.php
+msgid "Show privacy policy consent checkbox on subscribe form."
+msgstr "購読フォームにプライバシーポリシー同意チェックボックスを表示します。"
+
+#: admin/partials/display-settings.php
+msgid "Digest Schedule"
+msgstr "ダイジェストスケジュール"
+
+#: admin/partials/display-settings.php
+msgid "Daily Digest Hour"
+msgstr "デイリーダイジェストの時刻"
+
+#: admin/partials/display-settings.php
+msgid "Server time zone."
+msgstr "サーバーのタイムゾーン。"
+
+#: admin/partials/display-settings.php
+msgid "Weekly Digest Day"
+msgstr "ウィークリーダイジェストの曜日"
+
+#: admin/partials/display-settings.php
+msgid "Monday"
+msgstr "月曜日"
+
+#: admin/partials/display-settings.php
+msgid "Tuesday"
+msgstr "火曜日"
+
+#: admin/partials/display-settings.php
+msgid "Wednesday"
+msgstr "水曜日"
+
+#: admin/partials/display-settings.php
+msgid "Thursday"
+msgstr "木曜日"
+
+#: admin/partials/display-settings.php
+msgid "Friday"
+msgstr "金曜日"
+
+#: admin/partials/display-settings.php
+msgid "Saturday"
+msgstr "土曜日"
+
+#: admin/partials/display-settings.php
+msgid "Sunday"
+msgstr "日曜日"
+
+#: admin/partials/display-mail-settings.php
+msgid "From Name"
+msgstr "差出人名"
+
+#: admin/partials/display-mail-settings.php
+msgid "From Email"
+msgstr "差出人メールアドレス"
+
+#: admin/partials/display-mail-settings.php
+msgid "SMTP Host"
+msgstr "SMTPホスト"
+
+#: admin/partials/display-mail-settings.php
+msgid "SMTP Port"
+msgstr "SMTPポート"
+
+#: admin/partials/display-mail-settings.php
+msgid "Common: 587 (TLS), 465 (SSL), 25 (unencrypted)"
+msgstr "一般的: 587 (TLS)、465 (SSL)、25 (暗号化なし)"
+
+#: admin/partials/display-mail-settings.php
+msgid "Encryption"
+msgstr "暗号化"
+
+#: admin/partials/display-mail-settings.php
+msgid "None"
+msgstr "なし"
+
+#: admin/partials/display-mail-settings.php
+msgid "Username"
+msgstr "ユーザー名"
+
+#: admin/partials/display-mail-settings.php
+msgid "Password"
+msgstr "パスワード"
+
+#: admin/partials/display-mail-settings.php
+msgid "Stored encrypted. Leave blank to keep current."
+msgstr "暗号化して保存されます。現在の値を維持するには空欄のままにしてください。"
+
+#: admin/partials/display-mail-settings.php
+msgid "Mailgun API Key"
+msgstr "Mailgun APIキー"
+
+#: admin/partials/display-mail-settings.php
+msgid "Mailgun Domain"
+msgstr "Mailgunドメイン"
+
+#: admin/partials/display-mail-settings.php
+msgid "Region"
+msgstr "リージョン"
+
+#: admin/partials/display-mail-settings.php
+msgid "SendGrid API Key"
+msgstr "SendGrid APIキー"
+
+#: admin/partials/display-mail-settings.php
+msgid "Server Token"
+msgstr "サーバートークン"
+
+#: admin/partials/display-mail-settings.php
+msgid "Message Stream"
+msgstr "メッセージストリーム"
+
+#: admin/partials/display-mail-settings.php
+msgid "Brevo API Key"
+msgstr "Brevo APIキー"
+
+#: admin/partials/display-mail-settings.php
+msgid "Access Key ID"
+msgstr "アクセスキーID"
+
+#: admin/partials/display-mail-settings.php
+msgid "Secret Access Key"
+msgstr "シークレットアクセスキー"
+
+#: admin/partials/display-mail-settings.php
+msgid "Resend API Key"
+msgstr "Resend APIキー"
+
+#: admin/partials/display-mail-settings.php
+msgid "Save Settings"
+msgstr "設定を保存"
+
+#: admin/partials/display-mail-settings.php
+msgid "Send Test Email"
+msgstr "テストメールを送信"
+
+#: admin/partials/display-triggers.php
+msgid "Enable or disable automatic email triggers."
+msgstr "自動メールトリガーを有効または無効にします。"
+
+#: admin/partials/display-triggers.php
+msgid "Active"
+msgstr "有効"
+
+#: admin/partials/display-triggers.php
+msgid "Trigger"
+msgstr "トリガー"
+
+#: admin/partials/display-triggers.php
+msgid "Hook"
+msgstr "フック"
+
+#: admin/partials/display-triggers.php
+msgid "Template"
+msgstr "テンプレート"
+
+#: admin/partials/display-triggers.php
+msgid "No triggers registered."
+msgstr "登録されたトリガーはありません。"
+
+#: admin/partials/display-triggers.php
+msgid "Save Triggers"
+msgstr "トリガーを保存"
+
+#: admin/partials/display-triggers.php
+msgid "Custom Triggers"
+msgstr "カスタムトリガー"
+
+#: admin/partials/display-triggers.php
+msgid "Developers can register custom triggers using the %s action hook."
+msgstr "開発者はアクションフック %s を使用してカスタムトリガーを登録できます。"
+
+#: includes/triggers/class-trigger-new-post.php
+msgid "New Post Published"
+msgstr "新しい投稿が公開されました"
+
+#: includes/triggers/class-trigger-new-post.php
+msgid "New Post: %s"
+msgstr "新しい投稿: %s"
+
+#: includes/triggers/class-trigger-new-user.php
+msgid "New User Registered"
+msgstr "新しいユーザーが登録されました"
+
+#: includes/triggers/class-trigger-new-user.php
+msgid "Welcome, %s!"
+msgstr "ようこそ、%s さん！"
+
+#: includes/triggers/class-trigger-user-login.php
+msgid "User Login"
+msgstr "ユーザーログイン"
+
+#: includes/triggers/class-trigger-user-login.php
+msgid "New login detected: %s"
+msgstr "新しいログインを検出: %s"
+
+#: includes/triggers/class-trigger-new-comment.php
+msgid "New Comment Posted"
+msgstr "新しいコメントが投稿されました"
+
+#: includes/triggers/class-trigger-new-comment.php
+msgid "New comment on: %s"
+msgstr "新しいコメント: %s"
+
+#: includes/triggers/class-trigger-password-reset.php
+msgid "Password Reset Requested"
+msgstr "パスワードリセットがリクエストされました"
+
+#: includes/triggers/class-trigger-password-reset.php
+msgid "Password reset for %s"
+msgstr "%s のパスワードリセット"
+
+#: includes/admin/class-settings.php
+msgid "Insufficient permissions."
+msgstr "権限が不足しています。"
+
+#: includes/admin/class-settings.php
+msgid "No provider configured."
+msgstr "プロバイダーが設定されていません。"
+
+#: includes/admin/class-settings.php
+msgid "[SWPMail] Test Connection"
+msgstr "[SWPMail] 接続テスト"
+
+#: includes/admin/class-settings.php
+msgid "This is a test email from SWPMail on %s. Your mail provider is working correctly!"
+msgstr "これは %s 上の SWPMail からのテストメールです。メールプロバイダーは正常に動作しています！"
+
+#: includes/admin/class-template-editor.php
+msgid "Confirm Subscription"
+msgstr "購読の確認"
+
+#: includes/admin/class-template-editor.php
+msgid "Welcome"
+msgstr "ようこそ"
+
+#: includes/admin/class-template-editor.php
+msgid "New Post"
+msgstr "新しい投稿"
+
+#: includes/admin/class-template-editor.php
+#: public/partials/subscribe-form.php
+msgid "Daily Digest"
+msgstr "デイリーダイジェスト"
+
+#: includes/admin/class-template-editor.php
+#: public/partials/subscribe-form.php
+msgid "Weekly Digest"
+msgstr "ウィークリーダイジェスト"
+
+#: includes/admin/class-template-editor.php
+msgid "Template saved."
+msgstr "テンプレートが保存されました。"
+
+#: includes/admin/class-template-editor.php
+msgid "Invalid template."
+msgstr "無効なテンプレートです。"
+
+#: includes/admin/class-template-editor.php
+msgid "Template reset to default."
+msgstr "テンプレートがデフォルトにリセットされました。"
+
+#: admin/partials/display-templates.php
+msgid "Available variables:"
+msgstr "利用可能な変数:"
+
+#: admin/partials/display-templates.php
+msgid "Save Template"
+msgstr "テンプレートを保存"
+
+#: admin/partials/display-templates.php
+msgid "Reset to Default"
+msgstr "デフォルトにリセット"
+
+#: admin/partials/display-templates.php
+msgid "Reset to default? This will overwrite your changes."
+msgstr "デフォルトにリセットしますか？変更内容が上書きされます。"
+
+#: includes/core/class-cron.php
+msgid "Every 5 Minutes"
+msgstr "5分ごと"
+
+#: includes/core/class-cron.php
+msgid "Daily Digest — %s"
+msgstr "デイリーダイジェスト — %s"
+
+#: includes/core/class-cron.php
+msgid "Weekly Digest — Week of %s"
+msgstr "ウィークリーダイジェスト — %s の週"
+
+#: includes/class-swpmail.php
+msgid "SWPMail: The mail queue has not run in over 1 hour. Check your WordPress cron setup."
+msgstr "SWPMail: メールキューが1時間以上実行されていません。WordPressのcron設定を確認してください。"
+
+#: public/partials/subscribe-form.php
+msgid "Your name"
+msgstr "お名前"
+
+#: public/partials/subscribe-form.php
+msgid "your@email.com"
+msgstr "your@email.com"
+
+#: public/partials/subscribe-form.php
+msgid "I agree to the <a href=\"%s\" target=\"_blank\">Privacy Policy</a>."
+msgstr "<a href=\"%s\" target=\"_blank\">プライバシーポリシー</a>に同意します。"
+
+#: public/partials/subscribe-form.php
+msgid "I agree to the Privacy Policy."
+msgstr "プライバシーポリシーに同意します。"
+
+#: includes/core/class-template-engine.php
+msgid "Unsubscribe"
+msgstr "購読解除"
+
+#: includes/core/class-template-engine.php
+msgid "Visit Site"
+msgstr "サイトを訪問"
+
+#: admin/partials/display-settings.php
+msgid "Privacy policy page: %s"
+msgstr "プライバシーポリシーページ: %s"

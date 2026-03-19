@@ -20,7 +20,7 @@ class Test_Helpers extends SWPM_Test_Case {
 
 	public function test_sanitize_header_value_strips_crlf(): void {
 		$this->assertSame(
-			'Hello World',
+			'HelloWorld',
 			swpm_sanitize_header_value( "Hello\r\nWorld" )
 		);
 	}

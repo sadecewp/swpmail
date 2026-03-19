@@ -37,6 +37,15 @@ if ( ! defined( 'SWPM_PLUGIN_URL' ) ) {
 if ( ! defined( 'SWPM_VERSION' ) ) {
 	define( 'SWPM_VERSION', '1.1.0' );
 }
+if ( ! defined( 'ARRAY_A' ) ) {
+	define( 'ARRAY_A', 'ARRAY_A' );
+}
+if ( ! defined( 'ARRAY_N' ) ) {
+	define( 'ARRAY_N', 'ARRAY_N' );
+}
+if ( ! defined( 'OBJECT' ) ) {
+	define( 'OBJECT', 'OBJECT' );
+}
 
 /**
  * Base test case with Brain\Monkey setup/teardown.

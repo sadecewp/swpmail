@@ -83,6 +83,7 @@ class Test_Subscriber extends SWPM_Test_Case {
 		Functions\when( 'sanitize_email' )->justReturn( '' );
 		Functions\when( 'sanitize_text_field' )->returnArg();
 		Functions\when( 'is_email' )->justReturn( false );
+		Functions\when( '__' )->returnArg();
 
 		$sub    = $this->make_subscriber();
 		$result = $sub->create( 'not-an-email' );
@@ -125,7 +126,8 @@ class Test_Subscriber extends SWPM_Test_Case {
 		Functions\when( 'current_time' )->justReturn( '2026-01-01 00:00:00' );
 		Functions\when( 'do_action' )->justReturn( null );
 
-		// get_by_email returns null (no existing subscriber).
+		// get_by_email calls prepare() then get_row().
+		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT * FROM wp_swpm_subscribers WHERE email = ...' );
 		$this->wpdb->shouldReceive( 'get_row' )->once()->andReturnNull();
 
 		// insert() should be called with status = 'pending'.

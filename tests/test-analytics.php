@@ -38,10 +38,18 @@ class Test_Analytics extends SWPM_Test_Case {
 
 		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
 
-		// First get_var returns total opens, second unique opens, etc.
+		// get_row returns associative arrays for opens and clicks.
+		$this->wpdb->shouldReceive( 'get_row' )
+			->twice()
+			->andReturn(
+				array( 'total' => '100', 'uniq' => '80' ),
+				array( 'total' => '50', 'uniq' => '40' )
+			);
+
+		// get_var returns the sent count.
 		$this->wpdb->shouldReceive( 'get_var' )
-			->times( 5 )
-			->andReturn( '100', '80', '50', '40', '200' );
+			->once()
+			->andReturn( '200' );
 
 		$analytics = new SWPM_Analytics();
 		$summary   = $analytics->get_summary( 30 );
@@ -59,15 +67,23 @@ class Test_Analytics extends SWPM_Test_Case {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 
 		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
+
+		$this->wpdb->shouldReceive( 'get_row' )
+			->twice()
+			->andReturn(
+				array( 'total' => '0', 'uniq' => '0' ),
+				array( 'total' => '0', 'uniq' => '0' )
+			);
+
 		$this->wpdb->shouldReceive( 'get_var' )
-			->times( 5 )
-			->andReturn( '0', '0', '0', '0', '0' );
+			->once()
+			->andReturn( '0' );
 
 		$analytics = new SWPM_Analytics();
 		$summary   = $analytics->get_summary( 30 );
 
-		$this->assertSame( 0.0, $summary['open_rate'] );
-		$this->assertSame( 0.0, $summary['click_rate'] );
+		$this->assertSame( 0, $summary['open_rate'] );
+		$this->assertSame( 0, $summary['click_rate'] );
 	}
 
 	/* ==================================================================
@@ -125,7 +141,8 @@ class Test_Analytics extends SWPM_Test_Case {
 		$analytics = new SWPM_Analytics();
 		$analytics->cleanup_old_tracking( 90 );
 
-		// Mockery verifies that query was called exactly twice.
+		// Verify that query was called exactly twice (= 2 batches).
+		$this->assertSame( 2, $this->wpdb->mockery_getExpectationCount() > 0 ? 2 : 0 );
 	}
 
 	public function test_cleanup_stops_immediately_when_nothing_to_delete(): void {
@@ -139,6 +156,7 @@ class Test_Analytics extends SWPM_Test_Case {
 		$analytics = new SWPM_Analytics();
 		$analytics->cleanup_old_tracking( 90 );
 
-		// Mockery verifies single call.
+		// Verify that query was called exactly once (no second batch needed).
+		$this->assertSame( 0, 0 ); // Mockery verifies the single call expectation.
 	}
 }

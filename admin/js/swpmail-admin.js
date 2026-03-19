@@ -130,6 +130,7 @@
         action: "swpm_save_template",
         nonce: swpmAdmin.nonce,
         template_id: templateId,
+        locale: $("#swpm-template-locale").val() || "",
         content: content,
       },
       dataType: "json",
@@ -172,6 +173,7 @@
         action: "swpm_reset_template",
         nonce: swpmAdmin.nonce,
         template_id: templateId,
+        locale: $("#swpm-template-locale").val() || "",
       },
       dataType: "json",
       success: function (response) {
@@ -219,6 +221,7 @@
         action: "swpm_preview_template",
         nonce: swpmAdmin.nonce,
         template_id: templateId,
+        locale: $("#swpm-template-locale").val() || "",
         content: content,
       },
       dataType: "json",

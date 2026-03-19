@@ -18,13 +18,31 @@ $variables = $editor->get_template_variables();
 /* @var SWPM_Template_Engine $engine */
 $engine = swpm( 'template_engine' );
 
+// Determine current locale so the editor can show the language context.
+$current_locale = sanitize_key( determine_locale() );
+// Strip charset suffix (e.g. "de_DE.UTF-8" → "de_DE").
+$current_locale = (string) preg_replace( '/[^a-zA-Z_].*$/', '', $current_locale );
+
+// Map locale codes to human-readable language names shown in the UI badge.
+$locale_names = array(
+	'de_DE' => 'Deutsch',
+	'es_ES' => 'Español',
+	'fr_FR' => 'Français',
+	'it_IT' => 'Italiano',
+	'ja'    => '日本語',
+	'nl_NL' => 'Nederlands',
+	'pt_BR' => 'Português (BR)',
+	'tr_TR' => 'Türkçe',
+);
+$locale_label = $locale_names[ $current_locale ] ?? 'English';
+
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $current = isset( $_GET['template'] ) ? sanitize_key( $_GET['template'] ) : 'confirm-subscription';
 if ( ! array_key_exists( $current, $templates ) ) {
 	$current = 'confirm-subscription';
 }
 
-$content    = $engine->get_raw( $current );
+$content    = $engine->get_raw( $current, $current_locale );
 $is_custom  = ! $editor->is_builtin( $current );
 $is_builtin = $editor->is_builtin( $current );
 ?>
@@ -96,6 +114,9 @@ $is_builtin = $editor->is_builtin( $current );
 						<?php if ( $is_custom ) : ?>
 							<span class="swpm-badge swpm-badge--custom"><?php esc_html_e( 'Custom', 'swpmail' ); ?></span>
 						<?php endif; ?>
+						<span class="swpm-badge swpm-badge--locale" title="<?php echo esc_attr( $current_locale ); ?>" style="background:#e8f0fe;color:#1a56db;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;vertical-align:middle;margin-left:6px;">
+							🌐 <?php echo esc_html( $locale_label ); ?>
+						</span>
 					</h2>
 					<?php if ( $is_custom ) : ?>
 						<button type="button" id="swpm-delete-template" class="swpm-btn swpm-btn--danger swpm-btn--sm" data-template="<?php echo esc_attr( $current ); ?>">
@@ -116,6 +137,7 @@ $is_builtin = $editor->is_builtin( $current );
 				<textarea id="swpm-template-editor" name="template_content" rows="20"><?php echo esc_textarea( $content ); ?></textarea>
 
 				<input type="hidden" id="swpm-template-id" value="<?php echo esc_attr( $current ); ?>" />
+				<input type="hidden" id="swpm-template-locale" value="<?php echo esc_attr( $current_locale ); ?>" />
 
 				<div style="display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap;">
 					<button type="button" id="swpm-save-template" class="swpm-btn swpm-btn--primary">

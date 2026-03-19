@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nieuw bericht: {{post_title}}</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f4f4f4;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans,
+          Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      }
+      .wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+      }
+      .header {
+        padding: 24px 32px;
+        background: #0073aa;
+        text-align: center;
+      }
+      .header h1 {
+        color: #fff;
+        font-size: 20px;
+        margin: 8px 0 0;
+      }
+      .content {
+        padding: 32px;
+        line-height: 1.7;
+        color: #333;
+        font-size: 15px;
+      }
+      .btn {
+        display: inline-block;
+        background: #0073aa;
+        color: #fff !important;
+        padding: 12px 28px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 16px 0;
+      }
+      .meta {
+        color: #999;
+        font-size: 13px;
+        margin-bottom: 16px;
+      }
+      .footer {
+        padding: 20px 32px;
+        background: #f9f9f9;
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        border-top: 1px solid #eee;
+      }
+      .footer a {
+        color: #0073aa;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="background: #f4f4f4"
+    >
+      <tr>
+        <td align="center" style="padding: 24px 0">
+          <table
+            class="wrapper"
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            role="presentation"
+          >
+            <tr>
+              <td class="header"><h1>{{site_name}}</h1></td>
+            </tr>
+            <tr>
+              <td class="content">
+                <h2>{{post_title}}</h2>
+                <p class="meta">door {{author}} &middot; {{post_date}}</p>
+                <p>{{post_excerpt}}</p>
+                <p style="text-align: center">
+                  <a href="{{post_url}}" class="btn">Lees verder →</a>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="footer">
+                <p>
+                  &copy; {{year}} {{site_name}} &middot;
+                  <a href="{{unsubscribe_url}}">{{unsubscribe_text}}</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

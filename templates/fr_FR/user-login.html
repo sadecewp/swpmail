@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nouvelle connexion détectée</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f4f4f4;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+      }
+      .wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+      }
+      .header {
+        padding: 24px 32px;
+        background: #0073aa;
+        text-align: center;
+      }
+      .header h1 {
+        color: #fff;
+        font-size: 20px;
+        margin: 8px 0 0;
+      }
+      .content {
+        padding: 32px;
+        line-height: 1.6;
+        color: #333;
+        font-size: 15px;
+      }
+      .info-box {
+        background: #f0f6fc;
+        border-left: 4px solid #0073aa;
+        padding: 16px;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .footer {
+        padding: 20px 32px;
+        background: #f9f9f9;
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        border-top: 1px solid #eee;
+      }
+      .footer a {
+        color: #0073aa;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="background: #f4f4f4"
+    >
+      <tr>
+        <td align="center" style="padding: 24px 0">
+          <table
+            class="wrapper"
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            role="presentation"
+          >
+            <tr>
+              <td class="header"><h1>{{site_name}}</h1></td>
+            </tr>
+            <tr>
+              <td class="content">
+                <h2>Nouvelle connexion détectée</h2>
+                <p>
+                  Une nouvelle connexion à votre compte sur
+                  <strong>{{site_name}}</strong> a été détectée.
+                </p>
+                <div class="info-box">
+                  <p style="margin: 0">
+                    <strong>Utilisateur :</strong> {{username}}<br /><strong
+                      >Heure :</strong
+                    >
+                    {{login_time}}<br /><strong>Adresse IP :</strong>
+                    {{ip_address}}
+                  </p>
+                </div>
+                <p>
+                  Si ce n'était pas vous, veuillez changer votre mot de passe
+                  immédiatement.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="footer"><p>&copy; {{year}} {{site_name}}</p></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

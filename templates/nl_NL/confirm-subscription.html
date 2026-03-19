@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bevestig je abonnement</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f4f4f4;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans,
+          Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      }
+      .wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+      }
+      .header {
+        padding: 24px 32px;
+        background: #0073aa;
+        text-align: center;
+      }
+      .header h1 {
+        color: #fff;
+        font-size: 20px;
+        margin: 8px 0 0;
+      }
+      .content {
+        padding: 32px;
+        line-height: 1.7;
+        color: #333;
+        font-size: 15px;
+      }
+      .btn {
+        display: inline-block;
+        background: #0073aa;
+        color: #fff !important;
+        padding: 12px 28px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+        margin: 16px 0;
+      }
+      .footer {
+        padding: 20px 32px;
+        background: #f9f9f9;
+        text-align: center;
+        font-size: 12px;
+        color: #999;
+        border-top: 1px solid #eee;
+      }
+      .footer a {
+        color: #0073aa;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="background: #f4f4f4"
+    >
+      <tr>
+        <td align="center" style="padding: 24px 0">
+          <table
+            class="wrapper"
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            role="presentation"
+          >
+            <tr>
+              <td class="header"><h1>{{site_name}}</h1></td>
+            </tr>
+            <tr>
+              <td class="content">
+                <h2>Bevestig je abonnement</h2>
+                <p>Hallo {{subscriber_name}},</p>
+                <p>
+                  Bedankt voor je aanmelding bij <strong>{{site_name}}</strong>!
+                  Klik op de onderstaande knop om je e-mailadres te bevestigen
+                  en je abonnement te activeren.
+                </p>
+                <p style="text-align: center">
+                  <a href="{{confirmation_url}}" class="btn"
+                    >Abonnement bevestigen</a
+                  >
+                </p>
+                <p>
+                  Als je je niet hebt aangemeld, kun je deze e-mail veilig
+                  negeren.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="footer"><p>&copy; {{year}} {{site_name}}</p></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

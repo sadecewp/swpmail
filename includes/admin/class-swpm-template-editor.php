@@ -173,6 +173,7 @@ class SWPM_Template_Editor {
 		}
 
 		$template_id = sanitize_key( wp_unslash( $_POST['template_id'] ?? '' ) );
+		$locale      = sanitize_key( wp_unslash( $_POST['locale'] ?? '' ) );
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$content = $this->sanitize_template_html( wp_unslash( $_POST['content'] ?? '' ) );
 
@@ -180,7 +181,9 @@ class SWPM_Template_Editor {
 			wp_send_json_error( array( 'message' => __( 'Invalid template.', 'swpmail' ) ) );
 		}
 
-		update_option( 'swpm_template_' . $template_id, $content );
+		/** @var SWPM_Template_Engine $engine */
+		$engine = swpm( 'template_engine' );
+		$engine->save( $template_id, $content, $locale );
 
 		wp_send_json_success( array( 'message' => __( 'Template saved.', 'swpmail' ) ) );
 	}
@@ -196,20 +199,16 @@ class SWPM_Template_Editor {
 		}
 
 		$template_id = sanitize_key( wp_unslash( $_POST['template_id'] ?? '' ) );
+		$locale      = sanitize_key( wp_unslash( $_POST['locale'] ?? '' ) );
 
 		if ( empty( $template_id ) || ! array_key_exists( $template_id, $this->get_template_list() ) ) {
 			wp_send_json_error( array( 'message' => __( 'Invalid template.', 'swpmail' ) ) );
 		}
 
-		delete_option( 'swpm_template_' . $template_id );
-
-		// Load default content.
-		$default_path = SWPM_PLUGIN_DIR . 'templates/default/' . $template_id . '.html';
-		$content      = '';
-		if ( file_exists( $default_path ) ) {
-			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-			$content = file_get_contents( $default_path );
-		}
+		/** @var SWPM_Template_Engine $engine */
+		$engine = swpm( 'template_engine' );
+		$engine->reset( $template_id, $locale );
+		$content = $engine->get_default_file_content( $template_id, $locale );
 
 		wp_send_json_success(
 			array(

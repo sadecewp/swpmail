@@ -19,15 +19,20 @@ $sub_table = $wpdb->prefix . 'swpm_subscribers';
 // Single GROUP BY query instead of 4 separate COUNT queries.
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 $status_raw = $wpdb->get_results( "SELECT status, COUNT(*) AS cnt FROM {$sub_table} GROUP BY status" );
-$sub_stats  = array( 'confirmed' => 0, 'pending' => 0, 'unsubscribed' => 0, 'bounced' => 0 );
+$sub_stats  = array(
+	'confirmed'    => 0,
+	'pending'      => 0,
+	'unsubscribed' => 0,
+	'bounced'      => 0,
+);
 foreach ( $status_raw as $row ) {
 	$sub_stats[ $row->status ] = (int) $row->cnt;
 }
-$total        = array_sum( $sub_stats );
-$confirmed    = $sub_stats['confirmed'];
+$total         = array_sum( $sub_stats );
+$confirmed     = $sub_stats['confirmed'];
 $pending_count = $sub_stats['pending'];
-$unsubscribed = $sub_stats['unsubscribed'];
-$bounced      = $sub_stats['bounced'];
+$unsubscribed  = $sub_stats['unsubscribed'];
+$bounced       = $sub_stats['bounced'];
 ?>
 
 <div class="swpm-wrap">

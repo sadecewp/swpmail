@@ -30,6 +30,18 @@ $has_custom_webhook  = '' !== swpm_decrypt( get_option( 'swpm_alarm_custom_webho
 $has_custom_secret   = '' !== swpm_decrypt( get_option( 'swpm_alarm_custom_secret_enc', '' ) );
 
 // Helper: build status dot markup for each channel tab.
+
+
+
+
+
+
+/**
+ * Swpm alarm tab dot.
+ *
+ * @param mixed $channel Channel.
+ * @param mixed $enabled_channels Enabled channels.
+ */
 function swpm_alarm_tab_dot( $channel, $enabled_channels ) {
 	if ( in_array( $channel, $enabled_channels, true ) ) {
 		return '<span class="swpm-ms-tab-dot swpm-ms-tab-dot--success"></span>';

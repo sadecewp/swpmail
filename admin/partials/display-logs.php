@@ -24,7 +24,12 @@ $tracking_table = $wpdb->prefix . 'swpm_tracking';
 // Summary stats (single grouped query).
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 $status_stats_raw = $wpdb->get_results( "SELECT status, COUNT(*) AS cnt FROM {$queue_table} GROUP BY status" );
-$status_stats = array( 'pending' => 0, 'sending' => 0, 'sent' => 0, 'failed' => 0 );
+$status_stats     = array(
+	'pending' => 0,
+	'sending' => 0,
+	'sent'    => 0,
+	'failed'  => 0,
+);
 foreach ( $status_stats_raw as $row ) {
 	$status_stats[ $row->status ] = (int) $row->cnt;
 }

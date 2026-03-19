@@ -14,13 +14,45 @@ if ( ! class_exists( 'WP_Error' ) ) {
 	class WP_Error {
 		public string $code;
 		public string $message;
+
+
+
+
+
+
+		/**
+		 * Constructor.
+		 *
+		 * @param string $code Code.
+		 * @param string $message Message.
+		 */
 		public function __construct( string $code = '', string $message = '' ) {
 			$this->code    = $code;
 			$this->message = $message;
 		}
+
+
+
+
+
+		/**
+		 * Get error code.
+		 *
+		 * @return string
+		 */
 		public function get_error_code(): string {
 			return $this->code;
 		}
+
+
+
+
+
+		/**
+		 * Get error message.
+		 *
+		 * @return string
+		 */
 		public function get_error_message(): string {
 			return $this->message;
 		}
@@ -30,6 +62,16 @@ if ( ! class_exists( 'WP_Error' ) ) {
 // Stub SWPM_Ajax_Handler for get_client_ip().
 if ( ! class_exists( 'SWPM_Ajax_Handler' ) ) {
 	class SWPM_Ajax_Handler {
+
+
+
+
+
+		/**
+		 * Get client ip.
+		 *
+		 * @return string
+		 */
 		public static function get_client_ip(): string {
 			return '127.0.0.1';
 		}
@@ -39,6 +81,20 @@ if ( ! class_exists( 'SWPM_Ajax_Handler' ) ) {
 // Stub SWPMail class.
 if ( ! class_exists( 'SWPMail' ) ) {
 	class SWPMail {
+
+
+
+
+
+
+
+		/**
+		 * Get.
+		 *
+		 * @param string $key Key.
+		 *
+		 * @return ?object
+		 */
 		public static function get( string $key ): ?object {
 			return null;
 		}
@@ -47,15 +103,35 @@ if ( ! class_exists( 'SWPMail' ) ) {
 
 // Stub swpm_log to avoid loading full helpers twice if already loaded.
 if ( ! function_exists( 'swpm_log' ) ) {
+
+
+
+
+
+
+
+	/**
+	 * Swpm log.
+	 *
+	 * @param string $level Level.
+	 * @param string $message Message.
+	 * @param array $context Context.
+	 */
 	function swpm_log( string $level, string $message, array $context = array() ): void {}
 }
 
-require_once SWPM_PLUGIN_DIR . 'includes/core/class-subscriber.php';
+require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-subscriber.php';
 
 class Test_Subscriber extends SWPM_Test_Case {
 
 	private object $wpdb;
 
+
+
+
+	/**
+	 * Setup.
+	 */
 	protected function setUp(): void {
 		parent::setUp();
 
@@ -66,19 +142,41 @@ class Test_Subscriber extends SWPM_Test_Case {
 		$GLOBALS['wpdb'] = $this->wpdb;
 	}
 
+
+
+
+	/**
+	 * Teardown.
+	 */
 	protected function tearDown(): void {
 		unset( $GLOBALS['wpdb'] );
 		parent::tearDown();
 	}
 
+
+
+
+
+
+	/**
+	 * Make subscriber.
+	 *
+	 * @return SWPM_Subscriber
+	 */
 	private function make_subscriber(): SWPM_Subscriber {
 		return new SWPM_Subscriber();
 	}
 
 	/* ==================================================================
-	 * create()
+	 * Create()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test create returns error for invalid email.
+	 */
 	public function test_create_returns_error_for_invalid_email(): void {
 		Functions\when( 'sanitize_email' )->justReturn( '' );
 		Functions\when( 'sanitize_text_field' )->returnArg();
@@ -92,6 +190,12 @@ class Test_Subscriber extends SWPM_Test_Case {
 		$this->assertSame( 'invalid_email', $result->get_error_code() );
 	}
 
+
+
+
+	/**
+	 * Test create rejects disposable email.
+	 */
 	public function test_create_rejects_disposable_email(): void {
 		Functions\when( 'sanitize_email' )->justReturn( 'user@mailinator.com' );
 		Functions\when( 'sanitize_text_field' )->returnArg();
@@ -108,6 +212,12 @@ class Test_Subscriber extends SWPM_Test_Case {
 		$this->assertSame( 'subscribe_failed', $result->get_error_code() );
 	}
 
+
+
+
+	/**
+	 * Test create inserts pending when double optin.
+	 */
 	public function test_create_inserts_pending_when_double_optin(): void {
 		$email = 'real@example.com';
 
@@ -149,9 +259,15 @@ class Test_Subscriber extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * count()
+	 * Count()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test count returns integer.
+	 */
 	public function test_count_returns_integer(): void {
 		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT COUNT(*) FROM wp_swpm_subscribers' );
 		$this->wpdb->shouldReceive( 'get_var' )->once()->andReturn( '15' );
@@ -160,6 +276,12 @@ class Test_Subscriber extends SWPM_Test_Case {
 		$this->assertSame( 15, $sub->count() );
 	}
 
+
+
+
+	/**
+	 * Test count filters by status.
+	 */
 	public function test_count_filters_by_status(): void {
 		$this->wpdb->shouldReceive( 'prepare' )->andReturn(
 			"SELECT COUNT(*) FROM wp_swpm_subscribers WHERE status = 'confirmed'"
@@ -172,9 +294,15 @@ class Test_Subscriber extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * get_by_email()
+	 * Get_by_email()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test get by email returns null when not found.
+	 */
 	public function test_get_by_email_returns_null_when_not_found(): void {
 		Functions\when( 'sanitize_email' )->justReturn( 'test@example.com' );
 		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT * ...' );
@@ -184,6 +312,12 @@ class Test_Subscriber extends SWPM_Test_Case {
 		$this->assertNull( $sub->get_by_email( 'test@example.com' ) );
 	}
 
+
+
+
+	/**
+	 * Test get by email returns object when found.
+	 */
 	public function test_get_by_email_returns_object_when_found(): void {
 		Functions\when( 'sanitize_email' )->justReturn( 'found@example.com' );
 		$row = (object) array(
@@ -199,9 +333,15 @@ class Test_Subscriber extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * delete()
+	 * Delete()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test delete returns true when row deleted.
+	 */
 	public function test_delete_returns_true_when_row_deleted(): void {
 		$this->wpdb->shouldReceive( 'delete' )->once()->with(
 			'wp_swpm_subscribers',
@@ -213,6 +353,12 @@ class Test_Subscriber extends SWPM_Test_Case {
 		$this->assertTrue( $sub->delete( 5 ) );
 	}
 
+
+
+
+	/**
+	 * Test delete returns false when no row.
+	 */
 	public function test_delete_returns_false_when_no_row(): void {
 		$this->wpdb->shouldReceive( 'delete' )->once()->andReturn( 0 );
 

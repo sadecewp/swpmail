@@ -3,7 +3,7 @@
  * PHPUnit bootstrap for SWPMail unit tests.
  *
  * Uses Brain\Monkey to mock WordPress functions so tests run
- * without a real WordPress installation.
+ * Without a real WordPress installation.
  *
  * @package SWPMail\Tests
  */
@@ -52,11 +52,23 @@ if ( ! defined( 'OBJECT' ) ) {
  */
 abstract class SWPM_Test_Case extends \PHPUnit\Framework\TestCase {
 
+
+
+
+	/**
+	 * Setup.
+	 */
 	protected function setUp(): void {
 		parent::setUp();
 		Monkey\setUp();
 	}
 
+
+
+
+	/**
+	 * Teardown.
+	 */
 	protected function tearDown(): void {
 		Monkey\tearDown();
 		parent::tearDown();

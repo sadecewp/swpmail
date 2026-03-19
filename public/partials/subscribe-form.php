@@ -71,8 +71,14 @@ if ( 'minimal' === $style ) {
 						printf(
 							/* translators: %s: privacy policy link */
 							wp_kses(
+								// phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 								__( 'I agree to the <a href="%s" target="_blank">Privacy Policy</a>.', 'swpmail' ),
-								array( 'a' => array( 'href' => array(), 'target' => array() ) )
+								array(
+									'a' => array(
+										'href'   => array(),
+										'target' => array(),
+									),
+								)
 							),
 							esc_url( $privacy_url )
 						);

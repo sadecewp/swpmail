@@ -146,37 +146,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$log_table      = $wpdb->prefix . 'swpm_logs';
 		$tracking_table = $wpdb->prefix . 'swpm_tracking';
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$queue_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$queue_table}" );
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$sub_count   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$sub_table}" );
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$log_count   = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$log_table}" );
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$track_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$tracking_table}" );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared		$queue_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$queue_table}" );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared		$sub_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$sub_table}" );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared		$log_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$log_table}" );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared		$track_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$tracking_table}" );
 
 		$info_items = array(
-			__( 'Plugin Version', 'swpmail' )   => SWPM_VERSION,
-			__( 'DB Version', 'swpmail' )        => $db_version,
-			__( 'Active Provider', 'swpmail' )   => $provider_key,
-			__( 'Backup Provider', 'swpmail' )   => $backup_key ?: '—',
-			__( 'Queue Last Run', 'swpmail' )    => $last_run_text,
-			__( 'Queue Records', 'swpmail' )     => number_format_i18n( $queue_count ),
+			__( 'Plugin Version', 'swpmail' )     => SWPM_VERSION,
+			__( 'DB Version', 'swpmail' )         => $db_version,
+			__( 'Active Provider', 'swpmail' )    => $provider_key,
+			__( 'Backup Provider', 'swpmail' )    => $backup_key ? $backup_key : '—',
+			__( 'Queue Last Run', 'swpmail' )     => $last_run_text,
+			__( 'Queue Records', 'swpmail' )      => number_format_i18n( $queue_count ),
 			__( 'Subscriber Records', 'swpmail' ) => number_format_i18n( $sub_count ),
-			__( 'Log Records', 'swpmail' )       => number_format_i18n( $log_count ),
-			__( 'Tracking Records', 'swpmail' )  => number_format_i18n( $track_count ),
+			__( 'Log Records', 'swpmail' )        => number_format_i18n( $log_count ),
+			__( 'Tracking Records', 'swpmail' )   => number_format_i18n( $track_count ),
 			'',
-			__( 'WordPress Version', 'swpmail' ) => $wp_version,
-			__( 'PHP Version', 'swpmail' )       => PHP_VERSION,
-			__( 'MySQL Version', 'swpmail' )     => $wpdb->db_version(),
-			__( 'Server Software', 'swpmail' )   => sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown' ) ),
-			__( 'PHP Memory Limit', 'swpmail' )  => ini_get( 'memory_limit' ),
-			__( 'PHP Max Execution', 'swpmail' ) => ini_get( 'max_execution_time' ) . 's',
-			__( 'WP_DEBUG', 'swpmail' )          => defined( 'WP_DEBUG' ) && WP_DEBUG ? __( 'Enabled', 'swpmail' ) : __( 'Disabled', 'swpmail' ),
-			__( 'DISABLE_WP_CRON', 'swpmail' )   => defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ? __( 'Yes', 'swpmail' ) : __( 'No', 'swpmail' ),
-			__( 'Multisite', 'swpmail' )         => is_multisite() ? __( 'Yes', 'swpmail' ) : __( 'No', 'swpmail' ),
-			__( 'Active Theme', 'swpmail' )      => wp_get_theme()->get( 'Name' ),
-			__( 'Loaded Extensions', 'swpmail' ) => implode( ', ', array_filter( array( 'openssl', 'mbstring', 'curl', 'json', 'intl', 'fileinfo' ), 'extension_loaded' ) ),
+			__( 'WordPress Version', 'swpmail' )  => $wp_version,
+			__( 'PHP Version', 'swpmail' )        => PHP_VERSION,
+			__( 'MySQL Version', 'swpmail' )      => $wpdb->db_version(),
+			__( 'Server Software', 'swpmail' )    => sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown' ) ),
+			__( 'PHP Memory Limit', 'swpmail' )   => ini_get( 'memory_limit' ),
+			__( 'PHP Max Execution', 'swpmail' )  => ini_get( 'max_execution_time' ) . 's',
+			__( 'WP_DEBUG', 'swpmail' )           => defined( 'WP_DEBUG' ) && WP_DEBUG ? __( 'Enabled', 'swpmail' ) : __( 'Disabled', 'swpmail' ),
+			__( 'DISABLE_WP_CRON', 'swpmail' )    => defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ? __( 'Yes', 'swpmail' ) : __( 'No', 'swpmail' ),
+			__( 'Multisite', 'swpmail' )          => is_multisite() ? __( 'Yes', 'swpmail' ) : __( 'No', 'swpmail' ),
+			__( 'Active Theme', 'swpmail' )       => wp_get_theme()->get( 'Name' ),
+			__( 'Loaded Extensions', 'swpmail' )  => implode( ', ', array_filter( array( 'openssl', 'mbstring', 'curl', 'json', 'intl', 'fileinfo' ), 'extension_loaded' ) ),
 		);
 		?>
 
@@ -234,11 +230,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 	});
 
 	// Severity badge helper.
+
+
+
+	/**
+	 * Severitybadge.
+	 */
 	function severityBadge(severity) {
 		var cls = 'swpm-severity-badge swpm-severity-badge--' + severity;
 		return '<span class="' + cls + '">' + severity.toUpperCase() + '</span>';
 	}
 
+
+
+
+	/**
+	 * Rendersummary.
+	 */
 	function renderSummary(prefix, summary, healthyLabel, issuesLabel) {
 		var $badge = $('#' + prefix + '-badge');
 		if (summary.healthy || summary.clean) {

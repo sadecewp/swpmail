@@ -19,12 +19,12 @@ if ( isset( $_POST['swpm_save_triggers'] ) && check_admin_referer( 'swpm_trigger
 	echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Triggers saved.', 'swpmail' ) . '</p></div>';
 }
 
-/** @var SWPM_Trigger_Manager $manager */
+/* @var SWPM_Trigger_Manager $manager */
 $manager         = swpm( 'trigger_manager' );
 $triggers        = $manager->get_all();
 $active_triggers = (array) get_option( 'swpm_active_triggers', array() );
 
-/** @var SWPM_Template_Editor $editor */
+/* @var SWPM_Template_Editor $editor */
 $editor    = swpm( 'template_editor' );
 $templates = $editor->get_template_list();
 ?>
@@ -69,15 +69,16 @@ $templates = $editor->get_template_list();
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ( $triggers as $trigger ) :
+						<?php
+						foreach ( $triggers as $trigger ) :
 							$is_custom = ! $manager->is_builtin( $trigger->get_key() );
-						?>
+							?>
 							<tr>
 								<td>
 									<input type="checkbox"
-										   name="swpm_active_triggers[]"
-										   value="<?php echo esc_attr( $trigger->get_key() ); ?>"
-										   <?php checked( in_array( $trigger->get_key(), $active_triggers, true ) ); ?>
+											name="swpm_active_triggers[]"
+											value="<?php echo esc_attr( $trigger->get_key() ); ?>"
+											<?php checked( in_array( $trigger->get_key(), $active_triggers, true ) ); ?>
 									/>
 								</td>
 								<td>
@@ -88,7 +89,19 @@ $templates = $editor->get_template_list();
 								</td>
 								<td><code><?php echo esc_html( $trigger->get_hook() ); ?></code></td>
 								<td>
-									<a href="<?php echo esc_url( add_query_arg( array( 'page' => 'swpmail-templates', 'template' => $trigger->get_template_id() ), admin_url( 'admin.php' ) ) ); ?>">
+									<a href="
+									<?php
+									echo esc_url(
+										add_query_arg(
+											array(
+												'page'     => 'swpmail-templates',
+												'template' => $trigger->get_template_id(),
+											),
+											admin_url( 'admin.php' )
+										)
+									);
+									?>
+												">
 										<?php echo esc_html( $trigger->get_template_id() ); ?> &rarr;
 									</a>
 								</td>

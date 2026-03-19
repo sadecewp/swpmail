@@ -1,4 +1,10 @@
 <?php
+/**
+ * Uninstall.php
+ *
+ * @package SWPMail
+ */
+
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
@@ -144,7 +150,12 @@ function swpm_uninstall_site(): void {
 
 // Multisite support: clean each site individually.
 if ( is_multisite() ) {
-	$sites = get_sites( array( 'fields' => 'ids', 'number' => 0 ) );
+	$sites = get_sites(
+		array(
+			'fields' => 'ids',
+			'number' => 0,
+		)
+	);
 	foreach ( $sites as $site_id ) {
 		switch_to_blog( $site_id );
 		swpm_uninstall_site();

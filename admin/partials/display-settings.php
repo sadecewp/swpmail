@@ -205,7 +205,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="swpm-ms-field">
 						<label for="swpm_weekly_send_day"><?php esc_html_e( 'Weekly Digest Day', 'swpmail' ); ?></label>
 						<?php
-						$days = array(
+						$days        = array(
 							'monday'    => __( 'Monday', 'swpmail' ),
 							'tuesday'   => __( 'Tuesday', 'swpmail' ),
 							'wednesday' => __( 'Wednesday', 'swpmail' ),

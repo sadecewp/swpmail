@@ -36,10 +36,10 @@ $failover_status = $connections ? $connections->get_status_summary() : null;
 $all_providers   = swpm( 'provider_factory' ) ? swpm( 'provider_factory' )->get_all() : array();
 
 // OAuth data.
-$gmail_oauth             = swpm( 'oauth' );
-$gmail_oauth_connected   = $gmail_oauth && $gmail_oauth->is_connected( 'gmail' );
-$gmail_oauth_email       = $gmail_oauth_connected ? $gmail_oauth->get_authenticated_email( 'gmail' ) : '';
-$gmail_has_oauth_creds   = $gmail_oauth && $gmail_oauth->has_credentials( 'gmail' );
+$gmail_oauth           = swpm( 'oauth' );
+$gmail_oauth_connected = $gmail_oauth && $gmail_oauth->is_connected( 'gmail' );
+$gmail_oauth_email     = $gmail_oauth_connected ? $gmail_oauth->get_authenticated_email( 'gmail' ) : '';
+$gmail_has_oauth_creds = $gmail_oauth && $gmail_oauth->has_credentials( 'gmail' );
 
 $outlook_oauth           = swpm( 'oauth' );
 $outlook_oauth_connected = $outlook_oauth && $outlook_oauth->is_connected( 'outlook' );
@@ -83,8 +83,8 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 	</div>
 
 	<!-- ─────────────────────────────────────────────────────────────
-	     TAB NAVIGATION
-	     ───────────────────────────────────────────────────────────── -->
+		TAB NAVIGATION
+		───────────────────────────────────────────────────────────── -->
 	<div class="swpm-ms-tabs" role="tablist">
 		<button class="swpm-ms-tab active" role="tab" aria-selected="true"  data-tab="provider"  type="button">
 			<span class="dashicons dashicons-cloud"></span>
@@ -104,15 +104,15 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 	</div>
 
 	<!-- ─────────────────────────────────────────────────────────────
-	     MAIN FORM — wraps Provider + Sender tabs
-	     ───────────────────────────────────────────────────────────── -->
+		MAIN FORM — wraps Provider + Sender tabs
+		───────────────────────────────────────────────────────────── -->
 	<form method="post" action="options.php" id="swpm-main-settings-form">
 		<?php settings_fields( 'swpm_mail_settings_group' ); ?>
 		<input type="hidden" name="swpm_mail_provider" id="swpm-provider-select" value="<?php echo esc_attr( $provider_key ); ?>">
 
 		<!-- ═══════════════════════════════════════════════════════════
-		     TAB 1 — PROVIDER
-		     ═══════════════════════════════════════════════════════════ -->
+			TAB 1 — PROVIDER
+			═══════════════════════════════════════════════════════════ -->
 		<div class="swpm-ms-panel" id="swpm-tab-provider" role="tabpanel">
 
 			<div class="swpm-card swpm-ms-provider-card">
@@ -124,7 +124,7 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 					<?php
 					$swpm_grid_active_key  = $provider_key;
 					$swpm_grid_extra_class = '';
-					include __DIR__ . '/provider-grid.php';
+					require __DIR__ . '/provider-grid.php';
 					?>
 				</div>
 
@@ -250,7 +250,7 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 									$ses_regions    = array( 'us-east-1', 'us-east-2', 'us-west-2', 'eu-west-1', 'eu-central-1', 'ap-south-1', 'ap-southeast-2' );
 									$current_region = get_option( 'swpm_ses_region', 'us-east-1' );
 									foreach ( $ses_regions as $region ) :
-									?>
+										?>
 										<option value="<?php echo esc_attr( $region ); ?>" <?php selected( $current_region, $region ); ?>><?php echo esc_html( $region ); ?></option>
 									<?php endforeach; ?>
 								</select>
@@ -401,11 +401,15 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 								<?php esc_html_e( 'OAuth 2.0 (Recommended)', 'swpmail' ); ?>
 							</div>
 							<div class="swpm-info-box" style="margin-bottom: 14px;">
-								<p><?php printf(
+								<p>
+								<?php
+								printf(
 									/* translators: %s: redirect URI */
 									esc_html__( 'Create a Google Cloud project, enable Gmail API, create OAuth credentials, and set the Redirect URI to: %s', 'swpmail' ),
 									'<code class="swpm-oauth-redirect-uri">' . esc_html( $gmail_oauth ? $gmail_oauth->get_redirect_uri() : '' ) . '</code>'
-								); ?></p>
+								);
+								?>
+								</p>
 							</div>
 							<div class="swpm-ms-field-grid">
 								<div class="swpm-ms-field swpm-ms-field--full">
@@ -422,7 +426,10 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 									<?php if ( $gmail_oauth_connected ) : ?>
 										<div class="swpm-oauth-status swpm-oauth-status--connected">
 											<span class="dashicons dashicons-yes-alt"></span>
-											<?php printf( esc_html__( 'Connected as %s', 'swpmail' ), '<strong>' . esc_html( $gmail_oauth_email ) . '</strong>' ); ?>
+										<?php
+										/* translators: %s: connected email address */
+										printf( esc_html__( 'Connected as %s', 'swpmail' ), '<strong>' . esc_html( $gmail_oauth_email ) . '</strong>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										?>
 										</div>
 										<button type="button" class="swpm-btn swpm-btn--danger swpm-oauth-disconnect" data-provider="gmail">
 											<span class="dashicons dashicons-dismiss"></span> <?php esc_html_e( 'Disconnect', 'swpmail' ); ?>
@@ -465,11 +472,15 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 								<?php esc_html_e( 'OAuth 2.0 (Recommended)', 'swpmail' ); ?>
 							</div>
 							<div class="swpm-info-box" style="margin-bottom: 14px;">
-								<p><?php printf(
+								<p>
+								<?php
+								printf(
 									/* translators: %s: redirect URI */
 									esc_html__( 'Register an app in Microsoft Entra ID (Azure AD), add SMTP.Send permission, create a client secret, and set the Redirect URI to: %s', 'swpmail' ),
 									'<code class="swpm-oauth-redirect-uri">' . esc_html( $outlook_oauth ? $outlook_oauth->get_redirect_uri() : '' ) . '</code>'
-								); ?></p>
+								);
+								?>
+								</p>
 							</div>
 							<div class="swpm-ms-field-grid">
 								<div class="swpm-ms-field swpm-ms-field--full">
@@ -486,7 +497,10 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 									<?php if ( $outlook_oauth_connected ) : ?>
 										<div class="swpm-oauth-status swpm-oauth-status--connected">
 											<span class="dashicons dashicons-yes-alt"></span>
-											<?php printf( esc_html__( 'Connected as %s', 'swpmail' ), '<strong>' . esc_html( $outlook_oauth_email ) . '</strong>' ); ?>
+										<?php
+										/* translators: %s: connected email address */
+										printf( esc_html__( 'Connected as %s', 'swpmail' ), '<strong>' . esc_html( $outlook_oauth_email ) . '</strong>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+										?>
 										</div>
 										<button type="button" class="swpm-btn swpm-btn--danger swpm-oauth-disconnect" data-provider="outlook">
 											<span class="dashicons dashicons-dismiss"></span> <?php esc_html_e( 'Disconnect', 'swpmail' ); ?>
@@ -532,8 +546,8 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 
 
 		<!-- ═══════════════════════════════════════════════════════════
-		     TAB 2 — SENDER IDENTITY
-		     ═══════════════════════════════════════════════════════════ -->
+			TAB 2 — SENDER IDENTITY
+			═══════════════════════════════════════════════════════════ -->
 		<div class="swpm-ms-panel swpm-ms-panel--hidden" id="swpm-tab-sender" role="tabpanel">
 
 			<div class="swpm-card">
@@ -561,8 +575,8 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 
 
 	<!-- ═══════════════════════════════════════════════════════════
-	     TAB 3 — FAILOVER  (own form, outside main form)
-	     ═══════════════════════════════════════════════════════════ -->
+		TAB 3 — FAILOVER  (own form, outside main form)
+		═══════════════════════════════════════════════════════════ -->
 	<div class="swpm-ms-panel swpm-ms-panel--hidden" id="swpm-tab-failover" role="tabpanel">
 
 		<div class="swpm-card">
@@ -590,7 +604,12 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 							<span class="swpm-health-label swpm-health-label--unhealthy"><?php esc_html_e( 'Unhealthy', 'swpmail' ); ?></span>
 						<?php endif; ?>
 						<?php if ( $failover_status['primary']['failures'] > 0 ) : ?>
-							<span class="swpm-health-failures"><?php printf( esc_html__( '%d failures', 'swpmail' ), $failover_status['primary']['failures'] ); ?></span>
+							<span class="swpm-health-failures">
+							<?php
+								/* translators: %d: number of failures */
+								printf( esc_html__( '%d failures', 'swpmail' ), absint( $failover_status['primary']['failures'] ) );
+							?>
+							</span>
 						<?php endif; ?>
 					</div>
 					<div class="swpm-connection-slot__actions">
@@ -603,6 +622,7 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 					<div class="swpm-connection-slot__meta">
 						<?php
 						$last_check_status = $failover_status['primary']['last_check_ok'] ? '✓' : '✗';
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.I18n.MissingTranslatorsComment
 						printf( esc_html__( 'Last check: %1$s %2$s ago', 'swpmail' ), $last_check_status, esc_html( human_time_diff( $failover_status['primary']['last_check'] ) ) );
 						?>
 					</div>
@@ -631,7 +651,12 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 								<span class="swpm-health-label swpm-health-label--unhealthy"><?php esc_html_e( 'Unhealthy', 'swpmail' ); ?></span>
 							<?php endif; ?>
 							<?php if ( $failover_status['backup']['failures'] > 0 ) : ?>
-								<span class="swpm-health-failures"><?php printf( esc_html__( '%d failures', 'swpmail' ), $failover_status['backup']['failures'] ); ?></span>
+								<span class="swpm-health-failures">
+								<?php
+									/* translators: %d: number of failures */
+									printf( esc_html__( '%d failures', 'swpmail' ), absint( $failover_status['backup']['failures'] ) );
+								?>
+								</span>
 							<?php endif; ?>
 						</div>
 						<div class="swpm-connection-slot__actions">
@@ -644,6 +669,7 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 						<div class="swpm-connection-slot__meta">
 							<?php
 							$backup_check_status = $failover_status['backup']['last_check_ok'] ? '✓' : '✗';
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.WP.I18n.MissingTranslatorsComment
 							printf( esc_html__( 'Last check: %1$s %2$s ago', 'swpmail' ), $backup_check_status, esc_html( human_time_diff( $failover_status['backup']['last_check'] ) ) );
 							?>
 						</div>
@@ -665,12 +691,19 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 					<div class="swpm-ms-field swpm-ms-field--full">
 						<label for="swpm-backup-provider-select"><?php esc_html_e( 'Backup Provider', 'swpmail' ); ?></label>
 						<select name="swpm_backup_provider" id="swpm-backup-provider-select">
-							<option value="none" <?php selected( $backup_key, '' ); selected( $backup_key, 'none' ); ?>><?php esc_html_e( '— No Backup (Disabled) —', 'swpmail' ); ?></option>
-							<?php foreach ( $all_providers as $key => $class_name ) :
-								if ( $key === $provider_key ) { continue; }
+							<option value="none" 
+							<?php
+							selected( $backup_key, '' );
+							selected( $backup_key, 'none' );
+							?>
+							><?php esc_html_e( '— No Backup (Disabled) —', 'swpmail' ); ?></option>
+							<?php
+							foreach ( $all_providers as $key => $class_name ) :
+								if ( $key === $provider_key ) {
+									continue; }
 								$tmp   = class_exists( $class_name ) ? new $class_name() : null;
 								$label = $tmp ? $tmp->get_label() : $key;
-							?>
+								?>
 								<option value="<?php echo esc_attr( $key ); ?>" <?php selected( $backup_key, $key ); ?>><?php echo esc_html( $label ); ?></option>
 							<?php endforeach; ?>
 						</select>
@@ -718,9 +751,9 @@ $img_url = plugin_dir_url( dirname( __DIR__ ) ) . 'public/img/';
 
 	/* ── Provider field switching (replaces old card show/hide) ── */
 	/* The existing swpmail-admin.js looks for .swpm-provider-fields and uses
-	   display:none / display:block. We use a CSS class instead, so we need
-	   to patch: hide means adding swpm-provider-fields--hidden,
-	   show means removing it. Override via the same data the main JS reads. */
+		display:none / display:block. We use a CSS class instead, so we need
+		to patch: hide means adding swpm-provider-fields--hidden,
+		show means removing it. Override via the same data the main JS reads. */
 	document.addEventListener('swpm:providerChanged', function(e) {
 		var key = e.detail && e.detail.provider;
 		if (!key) return;

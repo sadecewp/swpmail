@@ -9,12 +9,18 @@ require_once __DIR__ . '/bootstrap.php';
 
 use Brain\Monkey\Functions;
 
-require_once SWPM_PLUGIN_DIR . 'includes/core/class-analytics.php';
+require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-analytics.php';
 
 class Test_Analytics extends SWPM_Test_Case {
 
 	private object $wpdb;
 
+
+
+
+	/**
+	 * Setup.
+	 */
 	protected function setUp(): void {
 		parent::setUp();
 
@@ -24,15 +30,27 @@ class Test_Analytics extends SWPM_Test_Case {
 		$GLOBALS['wpdb'] = $this->wpdb;
 	}
 
+
+
+
+	/**
+	 * Teardown.
+	 */
 	protected function tearDown(): void {
 		unset( $GLOBALS['wpdb'] );
 		parent::tearDown();
 	}
 
 	/* ==================================================================
-	 * get_summary()
+	 * Get_summary()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test get summary returns expected structure.
+	 */
 	public function test_get_summary_returns_expected_structure(): void {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 
@@ -63,6 +81,12 @@ class Test_Analytics extends SWPM_Test_Case {
 		$this->assertArrayHasKey( 'total_sent', $summary );
 	}
 
+
+
+
+	/**
+	 * Test get summary avoids division by zero.
+	 */
 	public function test_get_summary_avoids_division_by_zero(): void {
 		Functions\when( 'apply_filters' )->returnArg( 2 );
 
@@ -87,9 +111,15 @@ class Test_Analytics extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * get_daily_trend()
+	 * Get_daily_trend()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test get daily trend returns array.
+	 */
 	public function test_get_daily_trend_returns_array(): void {
 		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
 		$this->wpdb->shouldReceive( 'get_results' )->once()->andReturn( array(
@@ -104,9 +134,15 @@ class Test_Analytics extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * get_top_links()
+	 * Get_top_links()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test get top links returns array.
+	 */
 	public function test_get_top_links_returns_array(): void {
 		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
 		$this->wpdb->shouldReceive( 'get_results' )->once()->andReturn( array(
@@ -120,9 +156,15 @@ class Test_Analytics extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * cleanup_old_tracking()
+	 * Cleanup_old_tracking()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test cleanup deletes in batches.
+	 */
 	public function test_cleanup_deletes_in_batches(): void {
 		Functions\when( 'apply_filters' )->alias( function ( $tag, $value ) {
 			if ( 'swpm_cleanup_batch_size' === $tag ) {
@@ -145,6 +187,12 @@ class Test_Analytics extends SWPM_Test_Case {
 		$this->assertSame( 2, $this->wpdb->mockery_getExpectationCount() > 0 ? 2 : 0 );
 	}
 
+
+
+
+	/**
+	 * Test cleanup stops immediately when nothing to delete.
+	 */
 	public function test_cleanup_stops_immediately_when_nothing_to_delete(): void {
 		Functions\when( 'apply_filters' )->alias( function ( $tag, $value ) {
 			return $value;

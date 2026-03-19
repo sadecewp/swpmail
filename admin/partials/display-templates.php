@@ -10,14 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** @var SWPM_Template_Editor $editor */
+/* @var SWPM_Template_Editor $editor */
 $editor    = swpm( 'template_editor' );
 $templates = $editor->get_template_list();
 $variables = $editor->get_template_variables();
 
-/** @var SWPM_Template_Engine $engine */
+/* @var SWPM_Template_Engine $engine */
 $engine = swpm( 'template_engine' );
 
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $current = isset( $_GET['template'] ) ? sanitize_key( $_GET['template'] ) : 'confirm-subscription';
 if ( ! array_key_exists( $current, $templates ) ) {
 	$current = 'confirm-subscription';
@@ -55,10 +56,23 @@ $is_builtin = $editor->is_builtin( $current );
 					<span class="dashicons dashicons-media-text"></span> <?php esc_html_e( 'Templates', 'swpmail' ); ?>
 				</h3>
 				<ul>
+					<?php // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited ?>
 					<?php foreach ( $templates as $id => $label ) : ?>
 						<li>
-							<a href="<?php echo esc_url( add_query_arg( array( 'page' => 'swpmail-templates', 'template' => $id ), admin_url( 'admin.php' ) ) ); ?>"
-							   class="<?php echo esc_attr( $id === $current ? 'active' : '' ); ?>">
+							<a href="
+							<?php
+							echo esc_url(
+								add_query_arg(
+									array(
+										'page'     => 'swpmail-templates',
+										'template' => $id,
+									),
+									admin_url( 'admin.php' )
+								)
+							);
+							?>
+										"
+								class="<?php echo esc_attr( $id === $current ? 'active' : '' ); ?>">
 								<?php echo esc_html( $label ); ?>
 								<?php if ( ! $editor->is_builtin( $id ) ) : ?>
 									<span class="swpm-badge swpm-badge--custom"><?php esc_html_e( 'Custom', 'swpmail' ); ?></span>

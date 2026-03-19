@@ -10,10 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** @var SWPM_DNS_Checker $dns_checker */
-$dns_checker  = swpm( 'dns_checker' );
-$from_domain  = $dns_checker ? $dns_checker->get_from_domain() : '';
-$auto_result  = $from_domain ? $dns_checker->check( $from_domain ) : null;
+/* @var SWPM_DNS_Checker $dns_checker */
+$dns_checker = swpm( 'dns_checker' );
+$from_domain = $dns_checker ? $dns_checker->get_from_domain() : '';
+$auto_result = $from_domain ? $dns_checker->check( $from_domain ) : null;
 ?>
 
 <div class="swpm-wrap">
@@ -64,7 +64,7 @@ $auto_result  = $from_domain ? $dns_checker->check( $from_domain ) : null;
 
 		<?php if ( $auto_result ) : ?>
 		<!-- Auto-check results (server-rendered on page load) -->
-		<?php $r = $auto_result; ?>
+			<?php $r = $auto_result; ?>
 
 		<!-- Overall Score -->
 		<div class="swpm-dns-overall swpm-dns-overall--<?php echo esc_attr( $r['overall'] ); ?>">

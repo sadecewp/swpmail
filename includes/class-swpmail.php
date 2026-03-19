@@ -10,14 +10,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Main plugin bootstrap and service container.
+ */
 class SWPMail {
 
-	/** @var SWPM_Loader */
+	/**
+
+	 * Variable.
+	 *
+	 * @var SWPM_Loader
+	 */
 	private SWPM_Loader $loader;
 
-	/** @var array<string, object> Service registry. */
+	/**
+	 * Service registry.
+	 *
+	 * @var array<string, object>
+	 */
 	private static array $instances = array();
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		$this->loader = new SWPM_Loader();
 	}
@@ -48,79 +63,79 @@ class SWPMail {
 	 */
 	private function load_dependencies(): void {
 		// i18n.
-		require_once SWPM_PLUGIN_DIR . 'includes/class-i18n.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/class-swpm-i18n.php';
 
 		// wp-config.php constants support (must run before any get_option calls).
 		swpm_init_constant_overrides();
 
 		// Providers.
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-send-result.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-send-result.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/providers/interface-provider.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-factory.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-phpmail.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-smtp.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-sendlayer.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-smtpcom.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-gmail.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-outlook.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-mailgun.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-sendgrid.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-postmark.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-brevo.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-ses.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-resend.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-elasticemail.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-mailjet.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-mailersend.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-smtp2go.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-sparkpost.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-provider-zoho.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-factory.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-phpmail.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-smtp.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-sendlayer.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-smtpcom.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-gmail.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-outlook.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-mailgun.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-sendgrid.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-postmark.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-brevo.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-ses.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-resend.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-elasticemail.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-mailjet.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-mailersend.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-smtp2go.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-sparkpost.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/providers/class-swpm-provider-zoho.php';
 
 		// Core modules.
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-subscriber.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-template-engine.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-queue.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-mailer.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-cron.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-connections-manager.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-tracker.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-analytics.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-router.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-db-repair.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/core/class-conflict-detector.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-subscriber.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-template-engine.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-queue.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-mailer.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-cron.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-connections-manager.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-tracker.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-analytics.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-router.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-db-repair.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-conflict-detector.php';
 
 		// Hooks.
-		require_once SWPM_PLUGIN_DIR . 'includes/hooks/class-wp-mail-override.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/hooks/class-swpm-wp-mail-override.php';
 
 		// Alarms.
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/interface-alarm-channel.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-slack.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-discord.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-alarm-channel-teams.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-teams.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-twilio.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-channel-custom.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/alarms/class-swpm-alarm-dispatcher.php';
 
 		// Triggers.
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-base.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-manager.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-new-post.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-new-user.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-user-login.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-new-comment.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-password-reset.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-trigger-custom.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-base.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-manager.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-new-post.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-new-user.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-user-login.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-new-comment.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-password-reset.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/triggers/class-swpm-trigger-custom.php';
 
 		// Admin.
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-admin.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-settings.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-subscribers-list-table.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-template-editor.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-setup-wizard.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-oauth-manager.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-dns-checker.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-logs-list-table.php';
-		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-dashboard-data.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-admin.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-settings.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-subscribers-list-table.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-template-editor.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-setup-wizard.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-oauth-manager.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-dns-checker.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-logs-list-table.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-swpm-dashboard-data.php';
 
 		// Public.
 		require_once SWPM_PLUGIN_DIR . 'includes/public/class-swpm-public.php';
@@ -167,23 +182,23 @@ class SWPMail {
 		self::$instances['alarm_dispatcher'] = new SWPM_Alarm_Dispatcher();
 
 		// Diagnostic tools.
-		self::$instances['db_repair']          = new SWPM_DB_Repair();
-		self::$instances['conflict_detector']  = new SWPM_Conflict_Detector();
+		self::$instances['db_repair']         = new SWPM_DB_Repair();
+		self::$instances['conflict_detector'] = new SWPM_Conflict_Detector();
 
 		// WP-CLI.
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			require_once SWPM_PLUGIN_DIR . 'includes/cli/class-cli.php';
+			require_once SWPM_PLUGIN_DIR . 'includes/cli/class-swpm-cli.php';
 			\WP_CLI::add_command( 'swpmail', 'SWPM_CLI' );
 		}
 
 		// Admin / Public.
 		if ( is_admin() ) {
-			self::$instances['admin']          = new SWPM_Admin( $this->loader );
-			self::$instances['settings']       = new SWPM_Settings();
-			self::$instances['template_editor']= new SWPM_Template_Editor( $this->loader );
-			self::$instances['setup_wizard']   = new SWPM_Setup_Wizard();
-			self::$instances['dns_checker']    = new SWPM_DNS_Checker();
-			self::$instances['dashboard_data'] = new SWPM_Dashboard_Data();
+			self::$instances['admin']           = new SWPM_Admin( $this->loader );
+			self::$instances['settings']        = new SWPM_Settings();
+			self::$instances['template_editor'] = new SWPM_Template_Editor( $this->loader );
+			self::$instances['setup_wizard']    = new SWPM_Setup_Wizard();
+			self::$instances['dns_checker']     = new SWPM_DNS_Checker();
+			self::$instances['dashboard_data']  = new SWPM_Dashboard_Data();
 		} else {
 			self::$instances['public']    = new SWPM_Public( $this->loader );
 			self::$instances['shortcode'] = new SWPM_Shortcode( self::$instances['subscriber'] );
@@ -262,9 +277,13 @@ class SWPMail {
 	 * @param \WP_Error $error Error object.
 	 */
 	public function handle_wp_mail_failure( \WP_Error $error ): void {
-		swpm_log( 'error', 'wp_mail failed: ' . $error->get_error_message(), array(
-			'data' => $error->get_error_data(),
-		) );
+		swpm_log(
+			'error',
+			'wp_mail failed: ' . $error->get_error_message(),
+			array(
+				'data' => $error->get_error_data(),
+			)
+		);
 
 		if ( get_transient( 'swpm_mail_failed_notified' ) ) {
 			return;
@@ -319,17 +338,24 @@ class SWPMail {
 		$token = isset( $_GET['token'] ) ? sanitize_text_field( wp_unslash( $_GET['token'] ) ) : '';
 		if ( empty( $token ) ) {
 			return;
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 		}
 
-		/** @var SWPM_Subscriber $subscriber */
+		/**
+
+		 * Subscriber.
+		 *
+		 * @var SWPM_Subscriber
+		 */
 		$subscriber = self::$instances['subscriber'];
 
 		// On POST — execute the action (nonce-verified).
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 		if ( 'POST' === $_SERVER['REQUEST_METHOD'] ) {
 			// Rate limit confirm/unsubscribe actions by IP.
-			$ip        = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) );
-			$rate_key  = 'swpm_action_rate_' . md5( $ip );
-			$attempts  = (int) get_transient( $rate_key );
+			$ip       = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ?? '' ) );
+			$rate_key = 'swpm_action_rate_' . md5( $ip );
+			$attempts = (int) get_transient( $rate_key );
 			if ( $attempts >= 10 ) {
 				wp_die(
 					esc_html__( 'Too many requests. Please try again later.', 'swpmail' ),
@@ -354,11 +380,18 @@ class SWPMail {
 					$sub = $subscriber->get_by_token( $token );
 					// Send welcome email.
 					if ( $sub ) {
-						/** @var SWPM_Template_Engine $engine */
+						/**
+						 * Engine.
+						 *
+						 * @var SWPM_Template_Engine
+						 */
 						$engine = self::$instances['template_engine'];
-						$body   = $engine->render( 'welcome', array(
-							'subscriber_name' => $sub->name ?: $sub->email,
-						) );
+						$body   = $engine->render(
+							'welcome',
+							array(
+								'subscriber_name' => $sub->name ? $sub->name : $sub->email,
+							)
+						);
 
 						add_filter( 'swpm_skip_override', '__return_true' );
 						try {
@@ -392,7 +425,7 @@ class SWPMail {
 
 			if ( 'unsubscribe' === $action ) {
 				// Verify HMAC signature prevents brute-force unsubscribes.
-				$sig = isset( $_POST['sig'] ) ? sanitize_text_field( wp_unslash( $_POST['sig'] ) ) : '';
+				$sig      = isset( $_POST['sig'] ) ? sanitize_text_field( wp_unslash( $_POST['sig'] ) ) : '';
 				$expected = hash_hmac( 'sha256', $token, wp_salt( 'nonce' ) );
 				if ( ! hash_equals( $expected, $sig ) ) {
 					wp_die(
@@ -434,11 +467,16 @@ class SWPMail {
 	 * @param string $sig    HMAC signature for unsubscribe.
 	 */
 	private function render_action_form( string $action, string $token, string $sig = '' ): void {
-		$nonce   = wp_create_nonce( 'swpm_' . $action . '_' . $token );
-		$form_url = esc_url( add_query_arg( array(
-			'swpm_action' => $action,
-			'token'       => rawurlencode( $token ),
-		), home_url() ) );
+		$nonce    = wp_create_nonce( 'swpm_' . $action . '_' . $token );
+		$form_url = esc_url(
+			add_query_arg(
+				array(
+					'swpm_action' => $action,
+					'token'       => rawurlencode( $token ),
+				),
+				home_url()
+			)
+		);
 
 		if ( 'confirm' === $action ) {
 			$heading     = esc_html__( 'Confirm Subscription', 'swpmail' );
@@ -456,12 +494,14 @@ class SWPMail {
 			. '<form method="post" action="' . $form_url . '">'
 			. '<input type="hidden" name="_wpnonce" value="' . esc_attr( $nonce ) . '" />'
 			. ( ! empty( $sig ) ? '<input type="hidden" name="sig" value="' . esc_attr( $sig ) . '" />' : '' )
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			. '<button type="submit" style="background:#0073aa;color:#fff;border:none;padding:12px 32px;font-size:16px;border-radius:4px;cursor:pointer;">'
 			. $button_text
 			. '</button>'
 			. '</form>'
 			. '</div>';
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		wp_die( $html, $heading, array( 'response' => 200 ) );
 	}
 

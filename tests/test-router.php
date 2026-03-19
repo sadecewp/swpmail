@@ -12,6 +12,16 @@ use Brain\Monkey\Functions;
 // Stub SWPM_Provider_Factory.
 if ( ! class_exists( 'SWPM_Provider_Factory' ) ) {
 	class SWPM_Provider_Factory {
+
+
+
+
+
+		/**
+		 * Get all.
+		 *
+		 * @return array
+		 */
 		public function get_all(): array {
 			return array();
 		}
@@ -25,15 +35,35 @@ if ( ! interface_exists( 'SWPM_Provider_Interface' ) ) {
 
 // Stub dependencies.
 if ( ! function_exists( 'swpm_log' ) ) {
+
+
+
+
+
+
+
+	/**
+	 * Swpm log.
+	 *
+	 * @param string $level Level.
+	 * @param string $message Message.
+	 * @param array $context Context.
+	 */
 	function swpm_log( string $level, string $message, array $context = array() ): void {}
 }
 
-require_once SWPM_PLUGIN_DIR . 'includes/core/class-router.php';
+require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-router.php';
 
 class Test_Router extends SWPM_Test_Case {
 
 	private SWPM_Router $router;
 
+
+
+
+	/**
+	 * Setup.
+	 */
 	protected function setUp(): void {
 		parent::setUp();
 
@@ -50,9 +80,15 @@ class Test_Router extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * evaluate_rule — basic operators
+	 * Evaluate_rule — basic operators
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test contains operator matches.
+	 */
 	public function test_contains_operator_matches(): void {
 		$rule = array(
 			'conditions' => array(
@@ -64,6 +100,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertTrue( $this->router->evaluate_rule( $rule, $context ) );
 	}
 
+
+
+
+	/**
+	 * Test contains operator misses.
+	 */
 	public function test_contains_operator_misses(): void {
 		$rule = array(
 			'conditions' => array(
@@ -75,6 +117,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, $context ) );
 	}
 
+
+
+
+	/**
+	 * Test equals operator.
+	 */
 	public function test_equals_operator(): void {
 		$rule = array(
 			'conditions' => array(
@@ -86,6 +134,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'subject' => 'Goodbye' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test not equals operator.
+	 */
 	public function test_not_equals_operator(): void {
 		$rule = array(
 			'conditions' => array(
@@ -97,6 +151,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'subject' => 'welcome' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test starts with operator.
+	 */
 	public function test_starts_with_operator(): void {
 		$rule = array(
 			'conditions' => array(
@@ -108,6 +168,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'subject' => 'Server Down [Alert]' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test ends with operator.
+	 */
 	public function test_ends_with_operator(): void {
 		$rule = array(
 			'conditions' => array(
@@ -119,6 +185,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'to' => 'user@regular.com' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test not contains operator.
+	 */
 	public function test_not_contains_operator(): void {
 		$rule = array(
 			'conditions' => array(
@@ -130,6 +202,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'subject' => 'This is spam' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test matches regex operator.
+	 */
 	public function test_matches_regex_operator(): void {
 		$rule = array(
 			'conditions' => array(
@@ -141,6 +219,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'to' => 'user@example.com' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test matches returns false for invalid regex.
+	 */
 	public function test_matches_returns_false_for_invalid_regex(): void {
 		$rule = array(
 			'conditions' => array(
@@ -151,6 +235,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'to' => 'anything' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test unknown operator returns false.
+	 */
 	public function test_unknown_operator_returns_false(): void {
 		$rule = array(
 			'conditions' => array(
@@ -162,9 +252,15 @@ class Test_Router extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * evaluate_rule — multiple conditions (AND logic)
+	 * Evaluate_rule — multiple conditions (AND logic)
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test all conditions must match.
+	 */
 	public function test_all_conditions_must_match(): void {
 		$rule = array(
 			'conditions' => array(
@@ -192,6 +288,12 @@ class Test_Router extends SWPM_Test_Case {
 		) ) );
 	}
 
+
+
+
+	/**
+	 * Test empty conditions never matches.
+	 */
 	public function test_empty_conditions_never_matches(): void {
 		$rule = array( 'conditions' => array() );
 
@@ -202,6 +304,12 @@ class Test_Router extends SWPM_Test_Case {
 	 * Field extraction
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test from field uses context or option.
+	 */
 	public function test_from_field_uses_context_or_option(): void {
 		// When from is in context.
 		$rule = array(
@@ -220,6 +328,12 @@ class Test_Router extends SWPM_Test_Case {
 		) ) === false ); // Default is noreply@example.com.
 	}
 
+
+
+
+	/**
+	 * Test header field flattens array.
+	 */
 	public function test_header_field_flattens_array(): void {
 		$rule = array(
 			'conditions' => array(
@@ -232,6 +346,12 @@ class Test_Router extends SWPM_Test_Case {
 		) ) );
 	}
 
+
+
+
+	/**
+	 * Test source field.
+	 */
 	public function test_source_field(): void {
 		$rule = array(
 			'conditions' => array(
@@ -243,6 +363,12 @@ class Test_Router extends SWPM_Test_Case {
 		$this->assertFalse( $this->router->evaluate_rule( $rule, array( 'source' => 'contact-form-7' ) ) );
 	}
 
+
+
+
+	/**
+	 * Test unknown field returns empty.
+	 */
 	public function test_unknown_field_returns_empty(): void {
 		$rule = array(
 			'conditions' => array(

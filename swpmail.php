@@ -30,9 +30,9 @@ define( 'SWPM_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 require_once SWPM_PLUGIN_DIR . 'includes/helpers.php';
 
 // Core infrastructure (needed for activation/deactivation hooks).
-require_once SWPM_PLUGIN_DIR . 'includes/class-loader.php';
-require_once SWPM_PLUGIN_DIR . 'includes/class-activator.php';
-require_once SWPM_PLUGIN_DIR . 'includes/class-deactivator.php';
+require_once SWPM_PLUGIN_DIR . 'includes/class-swpm-loader.php';
+require_once SWPM_PLUGIN_DIR . 'includes/class-swpm-activator.php';
+require_once SWPM_PLUGIN_DIR . 'includes/class-swpm-deactivator.php';
 
 // Main plugin class (loads all other dependencies).
 require_once SWPM_PLUGIN_DIR . 'includes/class-swpmail.php';

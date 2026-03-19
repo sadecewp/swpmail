@@ -103,9 +103,9 @@ class SWPM_Ajax_Handler {
 		if ( get_option( 'swpm_double_opt_in', true ) ) {
 			$sub = $this->subscriber->get_by_email( $email );
 
-			/** @var SWPM_Template_Engine $engine */
+			/* @var SWPM_Template_Engine $engine */
 			$engine = swpm( 'template_engine' );
-			$body = $engine->render(
+			$body   = $engine->render(
 				'confirm-subscription',
 				array(
 					'subscriber_name' => $name ? $name : $email,

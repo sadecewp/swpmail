@@ -207,9 +207,9 @@ class SWPM_REST_API {
 		if ( get_option( 'swpm_double_opt_in', true ) ) {
 			$sub = $this->subscriber->get_by_email( $email );
 
-			/** @var SWPM_Template_Engine $engine */
+			/* @var SWPM_Template_Engine $engine */
 			$engine = swpm( 'template_engine' );
-			$body = $engine->render(
+			$body   = $engine->render(
 				'confirm-subscription',
 				array(
 					'subscriber_name' => $name ? $name : $email,
@@ -280,6 +280,7 @@ class SWPM_REST_API {
 		$results = $wpdb->get_results(
 			// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
 			$wpdb->prepare(
+				// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				"SELECT id, email, name, status, frequency, created_at FROM {$table} {$where} ORDER BY id DESC LIMIT %d OFFSET %d",
 				$params
 			)

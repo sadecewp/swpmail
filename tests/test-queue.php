@@ -13,9 +13,35 @@ use Brain\Monkey\Functions;
 if ( ! class_exists( 'SWPMail' ) ) {
 	class SWPMail {
 		private static array $instances = array();
+
+
+
+
+
+
+
+		/**
+		 * Get.
+		 *
+		 * @param string $key Key.
+		 *
+		 * @return ?object
+		 */
 		public static function get( string $key ): ?object {
 			return self::$instances[ $key ] ?? null;
 		}
+
+
+
+
+
+
+		/**
+		 * Set.
+		 *
+		 * @param string $key Key.
+		 * @param object $obj Obj.
+		 */
 		public static function set( string $key, object $obj ): void {
 			self::$instances[ $key ] = $obj;
 		}
@@ -23,18 +49,66 @@ if ( ! class_exists( 'SWPMail' ) ) {
 }
 
 if ( ! function_exists( 'swpm' ) ) {
+
+
+
+
+
+
+
+	/**
+	 * Swpm.
+	 *
+	 * @param string $key Key.
+	 *
+	 * @return ?object
+	 */
 	function swpm( string $key ): ?object {
 		return SWPMail::get( $key );
 	}
 }
 
 if ( ! function_exists( 'swpm_log' ) ) {
+
+
+
+
+
+
+
+	/**
+	 * Swpm log.
+	 *
+	 * @param string $level Level.
+	 * @param string $message Message.
+	 * @param array $context Context.
+	 */
 	function swpm_log( string $level, string $message, array $context = array() ): void {}
 }
 
 // Stub classes.
 if ( ! class_exists( 'SWPM_Tracker' ) ) {
 	class SWPM_Tracker {
+
+
+
+
+
+
+
+
+
+
+		/**
+		 * Inject tracking.
+		 *
+		 * @param string $body Body.
+		 * @param string $to To.
+		 * @param string $subject Subject.
+		 * @param int $id Id.
+		 *
+		 * @return string
+		 */
 		public function inject_tracking( string $body, string $to, string $subject, int $id ): string {
 			return $body;
 		}
@@ -49,12 +123,18 @@ if ( ! interface_exists( 'SWPM_Provider_Interface' ) ) {
 	interface SWPM_Provider_Interface {}
 }
 
-require_once SWPM_PLUGIN_DIR . 'includes/core/class-queue.php';
+require_once SWPM_PLUGIN_DIR . 'includes/core/class-swpm-queue.php';
 
 class Test_Queue extends SWPM_Test_Case {
 
 	private object $wpdb;
 
+
+
+
+	/**
+	 * Setup.
+	 */
 	protected function setUp(): void {
 		parent::setUp();
 
@@ -65,15 +145,27 @@ class Test_Queue extends SWPM_Test_Case {
 		$GLOBALS['wpdb'] = $this->wpdb;
 	}
 
+
+
+
+	/**
+	 * Teardown.
+	 */
 	protected function tearDown(): void {
 		unset( $GLOBALS['wpdb'] );
 		parent::tearDown();
 	}
 
 	/* ==================================================================
-	 * enqueue()
+	 * Enqueue()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test enqueue inserts and returns id.
+	 */
 	public function test_enqueue_inserts_and_returns_id(): void {
 		Functions\when( 'sanitize_email' )->returnArg();
 		Functions\when( 'sanitize_text_field' )->returnArg();
@@ -97,6 +189,12 @@ class Test_Queue extends SWPM_Test_Case {
 		$this->assertSame( 99, $result );
 	}
 
+
+
+
+	/**
+	 * Test enqueue returns false on failure.
+	 */
 	public function test_enqueue_returns_false_on_failure(): void {
 		Functions\when( 'sanitize_email' )->returnArg();
 		Functions\when( 'sanitize_text_field' )->returnArg();
@@ -110,6 +208,12 @@ class Test_Queue extends SWPM_Test_Case {
 		$this->assertFalse( $result );
 	}
 
+
+
+
+	/**
+	 * Test enqueue includes optional fields.
+	 */
 	public function test_enqueue_includes_optional_fields(): void {
 		Functions\when( 'sanitize_email' )->returnArg();
 		Functions\when( 'sanitize_text_field' )->returnArg();
@@ -144,9 +248,15 @@ class Test_Queue extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * get_stats()
+	 * Get_stats()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test get stats returns all statuses.
+	 */
 	public function test_get_stats_returns_all_statuses(): void {
 		$this->wpdb->shouldReceive( 'get_results' )->once()->andReturn( array(
 			(object) array( 'status' => 'pending', 'count' => 10 ),
@@ -164,9 +274,15 @@ class Test_Queue extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * reschedule_with_delay()
+	 * Reschedule_with_delay()
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test reschedule updates scheduled at.
+	 */
 	public function test_reschedule_updates_scheduled_at(): void {
 		$this->wpdb->shouldReceive( 'update' )->once()->with(
 			'wp_swpm_queue',

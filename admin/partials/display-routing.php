@@ -14,11 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$router = swpm( 'router' );
-$rules  = ( $router instanceof SWPM_Router ) ? $router->get_rules() : array();
+$router  = swpm( 'router' );
+$rules   = ( $router instanceof SWPM_Router ) ? $router->get_rules() : array();
 $enabled = get_option( 'swpm_enable_smart_routing', false );
 
-/** @var SWPM_Provider_Factory $factory */
+/* @var SWPM_Provider_Factory $factory */
 $factory   = swpm( 'provider_factory' );
 $providers = ( $factory instanceof SWPM_Provider_Factory ) ? $factory->get_all() : array();
 $default   = get_option( 'swpm_mail_provider', 'phpmail' );

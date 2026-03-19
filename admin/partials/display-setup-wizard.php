@@ -13,9 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 $img_url = SWPM_PLUGIN_URL . 'public/img/';
 
 // Add body class for CSS targeting.
-add_filter( 'admin_body_class', function ( $classes ) {
-	return $classes . ' swpm-wizard-page';
-} );
+add_filter(
+	'admin_body_class',
+	function ( $classes ) {
+		return $classes . ' swpm-wizard-page';
+	}
+);
 ?>
 <div class="swpm-wizard-wrap">
 
@@ -45,8 +48,8 @@ add_filter( 'admin_body_class', function ( $classes ) {
 	</div>
 
 	<!-- ═══════════════════════════════════════════════════════════════
-	     STEP 1 — Choose Mailer
-	     ═══════════════════════════════════════════════════════════════ -->
+		STEP 1 — Choose Mailer
+		═══════════════════════════════════════════════════════════════ -->
 	<div class="swpm-wizard-panel" id="swpm-wizard-step-1">
 		<h2><?php esc_html_e( 'Choose Your SMTP Mailer', 'swpmail' ); ?></h2>
 		<p><?php esc_html_e( 'Select the mailer you would like to use to send emails from your WordPress site.', 'swpmail' ); ?></p>
@@ -54,7 +57,7 @@ add_filter( 'admin_body_class', function ( $classes ) {
 		<?php
 		$swpm_grid_active_key  = '';
 		$swpm_grid_extra_class = 'swpm-wizard-provider-grid';
-		include __DIR__ . '/provider-grid.php';
+		require __DIR__ . '/provider-grid.php';
 		?>
 
 		<div class="swpm-wizard-actions">
@@ -66,8 +69,8 @@ add_filter( 'admin_body_class', function ( $classes ) {
 	</div>
 
 	<!-- ═══════════════════════════════════════════════════════════════
-	     STEP 2 — Configuration
-	     ═══════════════════════════════════════════════════════════════ -->
+		STEP 2 — Configuration
+		═══════════════════════════════════════════════════════════════ -->
 	<div class="swpm-wizard-panel" id="swpm-wizard-step-2" style="display:none">
 		<h2><?php esc_html_e( 'Configure Your Mailer', 'swpmail' ); ?></h2>
 		<p><?php esc_html_e( 'Enter your sender identity and provider credentials below.', 'swpmail' ); ?></p>
@@ -417,8 +420,8 @@ add_filter( 'admin_body_class', function ( $classes ) {
 	</div>
 
 	<!-- ═══════════════════════════════════════════════════════════════
-	     STEP 3 — Test & Finish
-	     ═══════════════════════════════════════════════════════════════ -->
+		STEP 3 — Test & Finish
+		═══════════════════════════════════════════════════════════════ -->
 	<div class="swpm-wizard-panel" id="swpm-wizard-step-3" style="display:none">
 		<h2><?php esc_html_e( 'Test & Complete Setup', 'swpmail' ); ?></h2>
 		<p><?php esc_html_e( 'We will save your settings and send a test email to verify everything works.', 'swpmail' ); ?></p>

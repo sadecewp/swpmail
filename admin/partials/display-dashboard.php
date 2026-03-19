@@ -328,7 +328,7 @@ $connections     = swpm( 'connections' );
 					$opens_h  = $max_val > 0 ? round( ( (int) $day['opens'] / $max_val ) * 100 ) : 0;
 					$clicks_h = $max_val > 0 ? round( ( (int) $day['clicks'] / $max_val ) * 100 ) : 0;
 					$label    = wp_date( 'M j', strtotime( $day['day'] ) );
-				?>
+					?>
 				<div class="swpm-tracking-bar-group" title="<?php echo esc_attr( $label . ': ' . (int) $day['opens'] . ' opens, ' . (int) $day['clicks'] . ' clicks' ); ?>">
 					<div class="swpm-tracking-bar-col">
 						<div class="swpm-tracking-bar swpm-tracking-bar--opens" style="height:<?php echo esc_attr( max( $opens_h, 2 ) ); ?>%"></div>
@@ -357,6 +357,7 @@ $connections     = swpm( 'connections' );
 					</tr>
 				</thead>
 				<tbody>
+					<?php // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited ?>
 					<?php foreach ( $top_links as $link ) : ?>
 					<tr>
 						<td style="word-break:break-all;font-size:13px;"><?php echo esc_html( $link['url'] ); ?></td>

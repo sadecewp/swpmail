@@ -63,7 +63,7 @@ function swpm_sanitize_header_value( string $value ): string {
  * Validate and secure an attachment file for email sending.
  *
  * Checks file existence, readability, symlink safety, path traversal,
- * and enforces a maximum file size.
+ * And enforces a maximum file size.
  *
  * @since 1.0.1
  * @param string $file     Absolute file path.
@@ -113,7 +113,7 @@ function swpm_encrypt( string $value ): string {
  * Decrypt a value encrypted with swpm_encrypt().
  *
  * Verifies HMAC before decrypting to prevent padding-oracle and
- * ciphertext-manipulation attacks.
+ * Ciphertext-manipulation attacks.
  *
  * @param string $encrypted Base64-encoded authenticated encrypted string.
  * @return string Decrypted plain text.
@@ -258,10 +258,11 @@ function swpm_get_site_logo_url(): string {
 	return $id ? (string) wp_get_attachment_image_url( $id, 'full' ) : '';
 }
 
-/* =========================================================================
- * wp-config.php Constants Support
- * ========================================================================= */
+// =========================================================================
+// wp-config.php Constants Support
+// =========================================================================
 
+// phpcs:ignore Squiz.Commenting.BlockComment.NoEmptyLineBefore
 /**
  * Return the constant-name map: option_key => CONSTANT_NAME.
  *
@@ -271,8 +272,8 @@ function swpm_get_site_logo_url(): string {
  *  - Uppercase and prefix with `SWPM_`.
  *
  * Usage in wp-config.php:
- *   define( 'SWPM_MAIL_PROVIDER', 'mailgun' );
- *   define( 'SWPM_SMTP_PASSWORD', 'plain-text-secret' );
+ *   Define( 'SWPM_MAIL_PROVIDER', 'mailgun' );
+ *   Define( 'SWPM_SMTP_PASSWORD', 'plain-text-secret' );
  *
  * @return array<string, string>
  */
@@ -358,8 +359,8 @@ function swpm_get_constant_map(): array {
 
 	$map = array();
 	foreach ( $options as $option_key ) {
-		$name = preg_replace( '/^swpm_/', '', $option_key );
-		$name = preg_replace( '/_enc$/', '', $name );
+		$name               = preg_replace( '/^swpm_/', '', $option_key );
+		$name               = preg_replace( '/_enc$/', '', $name );
 		$map[ $option_key ] = 'SWPM_' . strtoupper( $name );
 	}
 
@@ -396,11 +397,11 @@ function swpm_get_defined_constants(): array {
  * Register pre_option filters for all constant-defined options.
  *
  * This uses WordPress's `pre_option_{$option}` filter so that
- * existing `get_option()` calls automatically pick up constants
- * with zero code changes across the plugin codebase.
+ * Existing `get_option()` calls automatically pick up constants
+ * With zero code changes across the plugin codebase.
  *
  * Also registers `pre_update_option_{$option}` to block database
- * writes for constant-defined options (the constant is authoritative).
+ * Writes for constant-defined options (the constant is authoritative).
  */
 function swpm_init_constant_overrides(): void {
 	foreach ( swpm_get_constant_map() as $option_key => $const_name ) {
@@ -409,28 +410,36 @@ function swpm_init_constant_overrides(): void {
 		}
 
 		// Override option reads.
-		add_filter( "pre_option_{$option_key}", static function () use ( $option_key, $const_name ) {
-			$value = constant( $const_name );
+		add_filter(
+			"pre_option_{$option_key}",
+			static function () use ( $option_key, $const_name ) {
+				$value = constant( $const_name );
 
-			// Boolean false would be mistaken for "no override" by WP core.
-			if ( true === $value ) {
-				return '1';
-			}
-			if ( false === $value ) {
-				return '0';
-			}
+				// Boolean false would be mistaken for "no override" by WP core.
+				if ( true === $value ) {
+					return '1';
+				}
+				if ( false === $value ) {
+					return '0';
+				}
 
-			// Encrypted fields: constant holds plain text, callers expect encrypted.
-			if ( str_ends_with( $option_key, '_enc' ) && is_string( $value ) && '' !== $value ) {
-				return swpm_encrypt( $value );
-			}
+				// Encrypted fields: constant holds plain text, callers expect encrypted.
+				if ( str_ends_with( $option_key, '_enc' ) && is_string( $value ) && '' !== $value ) {
+					return swpm_encrypt( $value );
+				}
 
-			return $value;
-		} );
+				return $value;
+			}
+		);
 
 		// Block database writes — keep existing DB value unchanged.
-		add_filter( "pre_update_option_{$option_key}", static function ( $new_value, $old_value ) {
-			return $old_value;
-		}, 10, 2 );
+		add_filter(
+			"pre_update_option_{$option_key}",
+			static function ( $new_value, $old_value ) {
+				return $old_value;
+			},
+			10,
+			2
+		);
 	}
 }

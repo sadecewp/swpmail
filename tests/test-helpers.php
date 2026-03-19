@@ -15,9 +15,15 @@ require_once SWPM_PLUGIN_DIR . 'includes/helpers.php';
 class Test_Helpers extends SWPM_Test_Case {
 
 	/* ==================================================================
-	 * swpm_sanitize_header_value
+	 * Swpm_sanitize_header_value
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test sanitize header value strips crlf.
+	 */
 	public function test_sanitize_header_value_strips_crlf(): void {
 		$this->assertSame(
 			'HelloWorld',
@@ -25,6 +31,12 @@ class Test_Helpers extends SWPM_Test_Case {
 		);
 	}
 
+
+
+
+	/**
+	 * Test sanitize header value strips null bytes.
+	 */
 	public function test_sanitize_header_value_strips_null_bytes(): void {
 		$this->assertSame(
 			'clean',
@@ -32,6 +44,12 @@ class Test_Helpers extends SWPM_Test_Case {
 		);
 	}
 
+
+
+
+	/**
+	 * Test sanitize header value keeps normal text.
+	 */
 	public function test_sanitize_header_value_keeps_normal_text(): void {
 		$this->assertSame(
 			'Normal Header Value 123',
@@ -39,6 +57,12 @@ class Test_Helpers extends SWPM_Test_Case {
 		);
 	}
 
+
+
+
+	/**
+	 * Test sanitize header value strips all control characters.
+	 */
 	public function test_sanitize_header_value_strips_all_control_characters(): void {
 		$this->assertSame(
 			'AB',
@@ -47,21 +71,39 @@ class Test_Helpers extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * swpm_is_safe_url
+	 * Swpm_is_safe_url
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test safe url rejects http.
+	 */
 	public function test_safe_url_rejects_http(): void {
 		Functions\when( 'wp_parse_url' )->alias( 'parse_url' );
 
 		$this->assertFalse( swpm_is_safe_url( 'http://example.com' ) );
 	}
 
+
+
+
+	/**
+	 * Test safe url rejects ftp.
+	 */
 	public function test_safe_url_rejects_ftp(): void {
 		Functions\when( 'wp_parse_url' )->alias( 'parse_url' );
 
 		$this->assertFalse( swpm_is_safe_url( 'ftp://example.com' ) );
 	}
 
+
+
+
+	/**
+	 * Test safe url rejects empty host.
+	 */
 	public function test_safe_url_rejects_empty_host(): void {
 		Functions\when( 'wp_parse_url' )->alias( 'parse_url' );
 
@@ -69,9 +111,15 @@ class Test_Helpers extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * swpm_encrypt / swpm_decrypt round-trip
+	 * Swpm_encrypt / swpm_decrypt round-trip
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test encrypt decrypt roundtrip.
+	 */
 	public function test_encrypt_decrypt_roundtrip(): void {
 		Functions\when( 'wp_salt' )->justReturn( 'test-salt-value-for-unit-tests' );
 
@@ -85,14 +133,32 @@ class Test_Helpers extends SWPM_Test_Case {
 		$this->assertSame( $plain, $decrypted );
 	}
 
+
+
+
+	/**
+	 * Test encrypt returns empty for empty input.
+	 */
 	public function test_encrypt_returns_empty_for_empty_input(): void {
 		$this->assertSame( '', swpm_encrypt( '' ) );
 	}
 
+
+
+
+	/**
+	 * Test decrypt returns empty for empty input.
+	 */
 	public function test_decrypt_returns_empty_for_empty_input(): void {
 		$this->assertSame( '', swpm_decrypt( '' ) );
 	}
 
+
+
+
+	/**
+	 * Test decrypt returns empty for tampered ciphertext.
+	 */
 	public function test_decrypt_returns_empty_for_tampered_ciphertext(): void {
 		Functions\when( 'wp_salt' )->justReturn( 'test-salt-value-for-unit-tests' );
 
@@ -103,6 +169,12 @@ class Test_Helpers extends SWPM_Test_Case {
 		$this->assertSame( '', swpm_decrypt( $tampered ) );
 	}
 
+
+
+
+	/**
+	 * Test encrypt produces unique ciphertexts.
+	 */
 	public function test_encrypt_produces_unique_ciphertexts(): void {
 		Functions\when( 'wp_salt' )->justReturn( 'test-salt' );
 
@@ -118,9 +190,15 @@ class Test_Helpers extends SWPM_Test_Case {
 	}
 
 	/* ==================================================================
-	 * swpm_get_constant_map
+	 * Swpm_get_constant_map
 	 * ================================================================*/
 
+
+
+
+	/**
+	 * Test constant map strips swpm prefix and enc suffix.
+	 */
 	public function test_constant_map_strips_swpm_prefix_and_enc_suffix(): void {
 		$map = swpm_get_constant_map();
 
@@ -129,6 +207,12 @@ class Test_Helpers extends SWPM_Test_Case {
 		$this->assertSame( 'SWPM_SMTP_PASSWORD', $map['swpm_smtp_password_enc'] );
 	}
 
+
+
+
+	/**
+	 * Test constant map simple option.
+	 */
 	public function test_constant_map_simple_option(): void {
 		$map = swpm_get_constant_map();
 

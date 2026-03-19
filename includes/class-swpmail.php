@@ -269,6 +269,9 @@ class SWPMail {
 
 		// Front-end action: confirm / unsubscribe via URL.
 		add_action( 'template_redirect', array( $this, 'handle_front_actions' ) );
+
+		// Show confirmation/unsubscribe notice after redirect.
+		add_action( 'wp_footer', array( $this, 'render_confirmation_notice' ) );
 	}
 
 	/**
@@ -409,11 +412,17 @@ class SWPMail {
 							remove_filter( 'swpm_skip_override', '__return_true' );
 						}
 					}
-					wp_die(
-						esc_html__( 'Your subscription has been confirmed! Thank you.', 'swpmail' ),
-						esc_html__( 'Subscription Confirmed', 'swpmail' ),
-						array( 'response' => 200 )
-					);
+
+					/**
+					 * Filters the redirect URL after a successful subscription confirmation.
+					 *
+					 * @param string $url   Redirect URL. Defaults to the home page.
+					 * @param object|null $sub Subscriber object.
+					 */
+					$redirect_url = apply_filters( 'swpm_confirm_redirect_url', home_url(), $sub );
+					$redirect_url = add_query_arg( 'swpm_confirmed', '1', $redirect_url );
+					wp_safe_redirect( esc_url_raw( $redirect_url ) );
+					exit;
 				} else {
 					wp_die(
 						esc_html__( 'Invalid or expired confirmation link.', 'swpmail' ),
@@ -437,11 +446,15 @@ class SWPMail {
 
 				$unsubscribed = $subscriber->unsubscribe( $token );
 				if ( $unsubscribed ) {
-					wp_die(
-						esc_html__( 'You have been unsubscribed successfully.', 'swpmail' ),
-						esc_html__( 'Unsubscribed', 'swpmail' ),
-						array( 'response' => 200 )
-					);
+					/**
+					 * Filters the redirect URL after a successful unsubscribe.
+					 *
+					 * @param string $url Redirect URL. Defaults to the home page.
+					 */
+					$redirect_url = apply_filters( 'swpm_unsubscribe_redirect_url', home_url() );
+					$redirect_url = add_query_arg( 'swpm_unsubscribed', '1', $redirect_url );
+					wp_safe_redirect( esc_url_raw( $redirect_url ) );
+					exit;
 				} else {
 					wp_die(
 						esc_html__( 'Invalid unsubscribe link.', 'swpmail' ),
@@ -503,6 +516,39 @@ class SWPMail {
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		wp_die( $html, $heading, array( 'response' => 200 ) );
+	}
+
+	/**
+	 * Render a toast-style notice on the front-end after confirm/unsubscribe redirect.
+	 */
+	public function render_confirmation_notice(): void {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display of query param.
+		$confirmed = isset( $_GET['swpm_confirmed'] ) && '1' === $_GET['swpm_confirmed'];
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display of query param.
+		$unsubscribed = isset( $_GET['swpm_unsubscribed'] ) && '1' === $_GET['swpm_unsubscribed'];
+
+		if ( ! $confirmed && ! $unsubscribed ) {
+			return;
+		}
+
+		$message = $confirmed
+			? esc_html__( 'Your subscription has been confirmed! Thank you.', 'swpmail' )
+			: esc_html__( 'You have been unsubscribed successfully.', 'swpmail' );
+
+		$bg_color = $confirmed ? '#10b981' : '#6b7280';
+		?>
+		<div id="swpm-notice" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:<?php echo esc_attr( $bg_color ); ?>;color:#fff;padding:14px 28px;border-radius:8px;font-size:15px;font-family:-apple-system,BlinkMacSystemFont,sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:999999;opacity:0;transition:opacity .3s ease;">
+			<?php echo esc_html( $message ); ?>
+		</div>
+		<script>
+		(function(){
+			var n=document.getElementById('swpm-notice');
+			if(!n)return;
+			setTimeout(function(){n.style.opacity='1';},100);
+			setTimeout(function(){n.style.opacity='0';setTimeout(function(){n.remove();},400);},5000);
+		})();
+		</script>
+		<?php
 	}
 
 	/**

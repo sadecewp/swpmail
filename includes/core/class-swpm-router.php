@@ -267,6 +267,7 @@ class SWPM_Router {
 
 			case 'matches':
 				// Validate regex before use to prevent errors.
+				// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- intentional; testing regex validity.
 				if ( @preg_match( $value, '' ) === false ) {
 					return false;
 				}

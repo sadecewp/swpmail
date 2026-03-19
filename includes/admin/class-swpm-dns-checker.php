@@ -408,8 +408,6 @@ class SWPM_DNS_Checker {
 			return $result;
 		}
 
-// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-
 		$result['record'] = $dmarc_txt;
 
 		// Parse tags.
@@ -433,7 +431,6 @@ class SWPM_DNS_Checker {
 		// Sub‐domain policy (sp=).
 		if ( isset( $tags['sp'] ) ) {
 			$result['details'][] = sprintf(
-				// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 				/* translators: %s: subdomain policy */
 				__( 'Subdomain policy: %s', 'swpmail' ),
 				$tags['sp']
@@ -478,7 +475,6 @@ class SWPM_DNS_Checker {
 				/* translators: %s: forensic URI */
 				__( 'Forensic reports sent to: %s', 'swpmail' ),
 				$tags['ruf']
-			// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 			);
 			if ( ! $ruf_valid ) {
 				$result['warnings'][] = __( 'One or more ruf= email addresses appear invalid.', 'swpmail' );
@@ -565,14 +561,13 @@ class SWPM_DNS_Checker {
 	 * @param string $host  Hostname to query.
 	 * @param int    $type  DNS record type constant.
 	 * @return array|false
-	 *
-	 // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 	 */
 	private function dns_lookup( string $host, int $type ) {
 		if ( ! function_exists( 'dns_get_record' ) ) {
 			return false;
 		}
 		// Suppress warnings from invalid/unreachable domains.
+		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged -- dns_get_record warns on unreachable domains.
 		$records = @dns_get_record( $host, $type );
 		return is_array( $records ) ? $records : false;
 	}

@@ -11,9 +11,35 @@
 	<rule ref="WordPress"/>
 	<rule ref="WordPress.WP.I18n">
 		<properties>
-			<property name="text_domain" type="array" value="swpmail"/>
+			<property name="text_domain" type="array">
+				<element value="swpmail"/>
+			</property>
 		</properties>
 	</rule>
+
+	<!-- Exclude false-positive "commented out code" warnings (translators comments, inline docs). -->
+	<rule ref="Squiz.PHP.CommentedOutCode">
+		<severity>0</severity>
+	</rule>
+
+	<!-- base64 functions are used legitimately for SMTP auth and OAuth. -->
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode">
+		<severity>0</severity>
+	</rule>
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode">
+		<severity>0</severity>
+	</rule>
+
+	<!-- 5-minute cron interval is intentional for the mail queue. -->
+	<rule ref="WordPress.WP.CronInterval.CronSchedulesInterval">
+		<severity>0</severity>
+	</rule>
+
+	<!-- WordPress hook signatures require specific parameter names. -->
+	<rule ref="Universal.NamingConventions.NoReservedKeywordParameterNames">
+		<severity>0</severity>
+	</rule>
+
 	<config name="minimum_supported_wp_version" value="6.0"/>
 	<config name="testVersion" value="7.4-"/>
 </ruleset>

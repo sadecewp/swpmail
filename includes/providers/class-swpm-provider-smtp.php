@@ -56,17 +56,52 @@ class SWPM_Provider_SMTP implements SWPM_Provider_Interface {
 			return SWPM_Send_Result::failure( 'Invalid recipient email.', 'INVALID_EMAIL' );
 		}
 
+		// Capture the real PHPMailer error when wp_mail() fails.
+		$last_error        = '';
+		$phpmailer_ref     = null;
+		$error_catcher     = function ( $wp_error ) use ( &$last_error ) {
+			if ( is_wp_error( $wp_error ) ) {
+				$msg  = $wp_error->get_error_message();
+				$data = $wp_error->get_error_data();
+				if ( ! empty( $data['phpmailer_exception_code'] ) ) {
+					$msg .= ' (code ' . $data['phpmailer_exception_code'] . ')';
+				}
+				$last_error = $msg;
+			}
+		};
+		$capture_phpmailer = function ( $phpmailer ) use ( &$phpmailer_ref ) {
+			$phpmailer_ref = $phpmailer;
+		};
+
+		add_action( 'wp_mail_failed', $error_catcher );
+		add_action( 'phpmailer_init', $capture_phpmailer, 999 );
+
 		// Prevent recursive override.
 		add_filter( 'swpm_skip_override', '__return_true' );
+
+		// Ensure PHPMailer is configured even if the global hook was not registered
+		// (e.g. first setup when swpm_mail_provider was empty at plugins_loaded).
+		$configure_cb = array( $this, 'configure_phpmailer' );
+		add_action( 'phpmailer_init', $configure_cb, 99999 );
 		try {
 			$sent = wp_mail( $to, $subject, $body, $headers, $attachments );
 		} finally {
+			remove_action( 'phpmailer_init', $configure_cb, 99999 );
+			remove_action( 'phpmailer_init', $capture_phpmailer, 999 );
 			remove_filter( 'swpm_skip_override', '__return_true' );
+			remove_action( 'wp_mail_failed', $error_catcher );
 		}
 
-		return $sent
-			? SWPM_Send_Result::success()
-			: SWPM_Send_Result::failure( 'wp_mail() returned false', 'WP_MAIL_FAILED' );
+		if ( $sent ) {
+			return SWPM_Send_Result::success();
+		}
+
+		// Try to get the most informative error message available.
+		if ( empty( $last_error ) && $phpmailer_ref && ! empty( $phpmailer_ref->ErrorInfo ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$last_error = $phpmailer_ref->ErrorInfo; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+		}
+		$message = ! empty( $last_error ) ? $last_error : 'wp_mail() returned false';
+		return SWPM_Send_Result::failure( $message, 'WP_MAIL_FAILED' );
 	}
 
 	/**

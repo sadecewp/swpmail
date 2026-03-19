@@ -246,16 +246,13 @@ class SWPM_OAuth_Manager {
 	 * Handle the OAuth callback from the provider.
 	 * Validates state, exchanges code for tokens, stores them encrypted.
 	 */
-	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	/**
 	 * Handle callback.
 	 */
 	public function handle_callback(): void {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- OAuth callback uses CSRF state token.
 		if ( ! current_user_can( 'manage_options' ) ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_die( esc_html__( 'Insufficient permissions.', 'swpmail' ), 403 );
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		// Check for errors from the provider.
@@ -264,9 +261,6 @@ class SWPM_OAuth_Manager {
 				? sanitize_text_field( wp_unslash( $_GET['error_description'] ) )
 				: sanitize_text_field( wp_unslash( $_GET['error'] ) );
 
-// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			swpm_log( 'error', 'OAuth authorization error: ' . $error_desc );
 			$this->redirect_with_notice( 'error', $error_desc );
 			return;
@@ -274,6 +268,7 @@ class SWPM_OAuth_Manager {
 
 		$code  = isset( $_GET['code'] ) ? sanitize_text_field( wp_unslash( $_GET['code'] ) ) : '';
 		$state = isset( $_GET['state'] ) ? sanitize_text_field( wp_unslash( $_GET['state'] ) ) : '';
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 		if ( empty( $code ) || empty( $state ) ) {
 			$this->redirect_with_notice( 'error', __( 'Invalid OAuth callback parameters.', 'swpmail' ) );

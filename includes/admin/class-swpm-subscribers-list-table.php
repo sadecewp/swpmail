@@ -218,14 +218,12 @@ class SWPM_Subscribers_List_Table extends WP_List_Table {
 			$orderby = explode( ' ', $orderby )[0];
 		}
 
-// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 		$order = isset( $_REQUEST['order'] ) && 'asc' === strtolower( $_REQUEST['order'] ) ? 'ASC' : 'DESC';
 
 		// Total items.
 		if ( ! empty( $params ) ) {
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 			$total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} {$where}", $params ) );
 		} else {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -250,7 +248,6 @@ class SWPM_Subscribers_List_Table extends WP_List_Table {
 
 	/**
 	 * Extra table nav: status filter.
-	 // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	 *
 	 * @param mixed $which Which.
 	 */
@@ -259,6 +256,7 @@ class SWPM_Subscribers_List_Table extends WP_List_Table {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only filter display.
 		$current = isset( $_REQUEST['status'] ) ? sanitize_key( $_REQUEST['status'] ) : '';
 
 		?>
@@ -296,13 +294,12 @@ class SWPM_Subscribers_List_Table extends WP_List_Table {
 			return;
 		}
 
-		// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-		// Bulk delete.
+		// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- Bulk delete.
 		if ( ! empty( $_REQUEST['subscriber_ids'] ) && is_array( $_REQUEST['subscriber_ids'] ) ) {
 			check_admin_referer( 'bulk-' . $this->_args['plural'] );
 			$ids          = array_map( 'absint', $_REQUEST['subscriber_ids'] );
 			$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 			$wpdb->query( $wpdb->prepare( "DELETE FROM {$table} WHERE id IN ({$placeholders})", $ids ) );
 		}
 	}

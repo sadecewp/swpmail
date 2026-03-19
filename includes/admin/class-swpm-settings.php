@@ -667,7 +667,9 @@ class SWPM_Settings {
 			wp_send_json_error( array( 'message' => __( 'Insufficient permissions.', 'swpmail' ) ), 403 );
 		}
 
-		$provider = swpm( 'provider' );
+		// Always create a fresh provider instance so it picks up newly saved options.
+		$factory  = new SWPM_Provider_Factory();
+		$provider = $factory->make();
 
 		if ( ! $provider ) {
 			wp_send_json_error( array( 'message' => __( 'No provider configured.', 'swpmail' ) ) );
@@ -735,13 +737,13 @@ class SWPM_Settings {
 		$output = fopen( 'php://output', 'w' );
 		fputcsv( $output, array( 'Email', 'Status', 'Frequency', 'Subscribed Date' ) );
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		if ( $rows ) {
 			foreach ( $rows as $row ) {
 				fputcsv( $output, $row );
 			}
 		}
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- writing to php://output.
 		fclose( $output );
 		exit;
 	}

@@ -376,15 +376,15 @@ class SWPM_Logs_List_Table extends WP_List_Table {
 	 */
 	protected function extra_tablenav( $which ): void {
 		if ( 'top' !== $which ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
 		global $wpdb;
 		$queue_table = $wpdb->prefix . 'swpm_queue';
 
-		$current_status   = isset( $_REQUEST['log_status'] ) ? sanitize_key( $_REQUEST['log_status'] ) : '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only filter display.
+		$current_status = isset( $_REQUEST['log_status'] ) ? sanitize_key( $_REQUEST['log_status'] ) : '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only filter display.
 		$current_provider = isset( $_REQUEST['provider'] ) ? sanitize_key( $_REQUEST['provider'] ) : '';
 
 		// Get distinct providers.
@@ -435,16 +435,14 @@ class SWPM_Logs_List_Table extends WP_List_Table {
 			return;
 		}
 
-		// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 		// Bulk delete.
 		if ( ! empty( $_REQUEST['log_ids'] ) && is_array( $_REQUEST['log_ids'] ) ) {
-			// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 			check_admin_referer( 'bulk-' . $this->_args['plural'] );
 			$ids          = array_map( 'absint', $_REQUEST['log_ids'] );
 			$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 			$wpdb->query( $wpdb->prepare( "DELETE FROM {$tracking_table} WHERE queue_id IN ({$placeholders})", $ids ) );
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
 			$wpdb->query( $wpdb->prepare( "DELETE FROM {$queue_table} WHERE id IN ({$placeholders})", $ids ) );
 		}
 	}

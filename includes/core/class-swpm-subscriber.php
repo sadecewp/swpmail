@@ -362,7 +362,6 @@ class SWPM_Subscriber {
 		return $erasers;
 	}
 
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 	/**
 	 * GDPR: Export personal data.
 	 *
@@ -370,7 +369,7 @@ class SWPM_Subscriber {
 	 * @param int    $page          Page number.
 	 * @return array
 	 */
-	public function export_personal_data( string $email_address, int $page = 1 ): array {
+	public function export_personal_data( string $email_address, int $page = 1 ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		$subscriber = $this->get_by_email( $email_address );
 		$data       = array();
 
@@ -414,7 +413,6 @@ class SWPM_Subscriber {
 		);
 	}
 
-	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 	/**
 	 * GDPR: Erase personal data.
 	 *
@@ -422,7 +420,7 @@ class SWPM_Subscriber {
 	 * @param int    $page          Page number.
 	 * @return array
 	 */
-	public function erase_personal_data( string $email_address, int $page = 1 ): array {
+	public function erase_personal_data( string $email_address, int $page = 1 ): array { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 		$subscriber = $this->get_by_email( $email_address );
 		$removed    = false;
 

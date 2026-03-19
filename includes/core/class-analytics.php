@@ -144,18 +144,25 @@ class SWPM_Analytics {
 	/**
 	 * Delete tracking records older than the retention period.
 	 *
+	 * Runs in batches to avoid long-running queries on large tables.
+	 *
 	 * @param int $retention_days Days to retain data (default 90).
 	 */
 	public function cleanup_old_tracking( int $retention_days = 90 ): void {
 		$retention_days = (int) apply_filters( 'swpm_tracking_retention_days', $retention_days );
 		$cutoff         = gmdate( 'Y-m-d H:i:s', strtotime( "-{$retention_days} days" ) );
+		$batch_size     = (int) apply_filters( 'swpm_cleanup_batch_size', 1000 );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$this->db->query(
-			$this->db->prepare(
-				"DELETE FROM {$this->table} WHERE created_at < %s LIMIT 1000",
-				$cutoff
-			)
-		);
+		// Delete in batches to prevent locking the table for extended periods.
+		do {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$deleted = (int) $this->db->query(
+				$this->db->prepare(
+					"DELETE FROM {$this->table} WHERE created_at < %s LIMIT %d",
+					$cutoff,
+					$batch_size
+				)
+			);
+		} while ( $deleted >= $batch_size );
 	}
 }

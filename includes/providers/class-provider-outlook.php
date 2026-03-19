@@ -121,8 +121,8 @@ class SWPM_Provider_Outlook implements SWPM_Provider_Interface {
 	 * @param \PHPMailer\PHPMailer\PHPMailer $phpmailer PHPMailer instance.
 	 */
 	public function configure_phpmailer_oauth( object $phpmailer ): void {
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
 
 		$phpmailer->isSMTP();
 		$phpmailer->Host       = 'smtp.office365.com';
@@ -191,8 +191,8 @@ class SWPM_Provider_Outlook implements SWPM_Provider_Interface {
 	public function configure_phpmailer( object $phpmailer ): void {
 		$username   = get_option( 'swpm_outlook_username', '' );
 		$password   = swpm_decrypt( get_option( 'swpm_outlook_password_enc', '' ) );
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
 
 		$phpmailer->isSMTP();
 		$phpmailer->Host       = 'smtp.office365.com';

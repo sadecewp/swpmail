@@ -157,14 +157,11 @@ class SWPM_Subscribers_List_Table extends WP_List_Table {
 		// Handle bulk delete.
 		$this->process_bulk_action();
 
-		// Nonce verification for all list table requests (unconditional).
-		if ( isset( $_REQUEST['_wpnonce'] ) || isset( $_REQUEST['s'] ) || isset( $_REQUEST['status'] ) || isset( $_REQUEST['filter_action'] ) || isset( $_REQUEST['orderby'] ) || isset( $_REQUEST['paged'] ) ) {
-			if ( ! isset( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'swpm_subscribers_filter' ) ) {
+		// Verify nonce for any request that carries user-submitted parameters.
+		if ( ! empty( $_REQUEST['_wpnonce'] ) ) {
+			if ( ! wp_verify_nonce( sanitize_key( $_REQUEST['_wpnonce'] ), 'swpm_subscribers_filter' ) ) {
 				wp_die( esc_html__( 'Security check failed.', 'swpmail' ), 403 );
 			}
-		} elseif ( 'GET' === ( $_SERVER['REQUEST_METHOD'] ?? '' ) ) {
-			// First page load without params — verify admin context via referer.
-			check_admin_referer( -1, false );
 		}
 
 		// Search.

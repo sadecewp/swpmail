@@ -10,70 +10,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-global $wpdb;
-
-$sub_table   = $wpdb->prefix . 'swpm_subscribers';
-$queue_table = $wpdb->prefix . 'swpm_queue';
-$log_table   = $wpdb->prefix . 'swpm_logs';
-
-// Subscriber stats (single grouped query).
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-$sub_stats_raw = $wpdb->get_results( "SELECT status, COUNT(*) AS cnt FROM {$sub_table} GROUP BY status" );
-$sub_stats = array( 'pending' => 0, 'confirmed' => 0, 'unsubscribed' => 0, 'bounced' => 0 );
-foreach ( $sub_stats_raw as $row ) {
-	$sub_stats[ $row->status ] = (int) $row->cnt;
+// Fetch all dashboard data via the data-layer class (MVC separation).
+$dashboard_data = swpm( 'dashboard_data' );
+if ( ! $dashboard_data instanceof SWPM_Dashboard_Data ) {
+	$dashboard_data = new SWPM_Dashboard_Data();
 }
-$total_subscribers = array_sum( $sub_stats );
+$data = $dashboard_data->get_all();
+
+// Unpack for template usage.
+$sub_stats         = $data['subscribers'];
+$total_subscribers = $sub_stats['total'];
 $confirmed         = $sub_stats['confirmed'];
 $pending           = $sub_stats['pending'];
 $unsubscribed      = $sub_stats['unsubscribed'];
 
-// Queue stats (single grouped query).
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-$queue_stats_raw = $wpdb->get_results( "SELECT status, COUNT(*) AS cnt FROM {$queue_table} GROUP BY status" );
-$queue_stats = array( 'pending' => 0, 'sending' => 0, 'sent' => 0, 'failed' => 0 );
-foreach ( $queue_stats_raw as $row ) {
-	$queue_stats[ $row->status ] = (int) $row->cnt;
-}
+$queue_stats   = $data['queue'];
 $queue_pending = $queue_stats['pending'];
 $queue_sent    = $queue_stats['sent'];
 $queue_failed  = $queue_stats['failed'];
 
-// Provider info.
-$provider_key = get_option( 'swpm_mail_provider', 'smtp' );
-$provider_labels = array(
-	'smtp'     => 'Generic SMTP',
-	'mailgun'  => 'Mailgun',
-	'sendgrid' => 'SendGrid',
-	'postmark' => 'Postmark',
-	'brevo'    => 'Brevo',
-	'ses'      => 'Amazon SES',
-	'resend'   => 'Resend',
-);
-$provider_label = $provider_labels[ $provider_key ] ?? $provider_key;
+$provider_info  = $data['provider'];
+$provider_key   = $provider_info['key'];
+$provider_label = $provider_info['label'];
 
-// Queue last run.
-$last_run = get_option( 'swpm_queue_last_run', false );
-if ( false !== $last_run && (int) $last_run > 0 ) {
-	$last_run_text = human_time_diff( (int) $last_run, time() ) . ' ' . __( 'ago', 'swpmail' );
-} else {
-	$last_run_text = __( 'Never', 'swpmail' );
-}
+$last_run_text = $data['last_run_text'];
+$recent_logs   = $data['recent_logs'];
 
-// Recent logs.
-// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-$recent_logs = $wpdb->get_results(
-	$wpdb->prepare(
-		"SELECT * FROM {$log_table} ORDER BY id DESC LIMIT %d",
-		10
-	)
-);
-
-// Tracking analytics.
-$analytics       = swpm( 'analytics' );
-$tracking_stats  = ( $analytics instanceof SWPM_Analytics ) ? $analytics->get_summary( 30 ) : array();
-$tracking_trend  = ( $analytics instanceof SWPM_Analytics ) ? $analytics->get_daily_trend( 14 ) : array();
-$top_links       = ( $analytics instanceof SWPM_Analytics ) ? $analytics->get_top_links( 5, 30 ) : array();
+$tracking_stats  = $data['tracking']['stats'];
+$tracking_trend  = $data['tracking']['trend'];
+$top_links       = $data['tracking']['top_links'];
 $t_opens         = $tracking_stats['total_opens'] ?? 0;
 $t_unique_opens  = $tracking_stats['unique_opens'] ?? 0;
 $t_clicks        = $tracking_stats['total_clicks'] ?? 0;
@@ -81,19 +46,17 @@ $t_unique_clicks = $tracking_stats['unique_clicks'] ?? 0;
 $t_open_rate     = $tracking_stats['open_rate'] ?? 0;
 $t_click_rate    = $tracking_stats['click_rate'] ?? 0;
 
-// Failover / backup info.
-$backup_key      = get_option( 'swpm_backup_provider', '' );
-$connections     = swpm( 'connections' );
-$failover_status = ( $connections instanceof SWPM_Connections_Manager ) ? $connections->get_status_summary() : null;
+$failover_info   = $data['failover'];
+$backup_key      = $failover_info['backup_key'];
+$failover_status = $failover_info['status'];
 
-// Active triggers summary.
-$active_triggers = (array) get_option( 'swpm_active_triggers', array() );
-$trigger_count   = count( $active_triggers );
-
-// Smart routing summary.
-$routing_enabled = get_option( 'swpm_enable_smart_routing', false );
+$automation      = $data['automation'];
+$trigger_count   = $automation['trigger_count'];
+$routing_enabled = $automation['routing_enabled'];
+$routing_count   = $automation['routing_count'];
 $routing_rules   = ( swpm( 'router' ) instanceof SWPM_Router ) ? swpm( 'router' )->get_rules() : array();
-$routing_count   = count( $routing_rules );
+$active_triggers = (array) get_option( 'swpm_active_triggers', array() );
+$connections     = swpm( 'connections' );
 ?>
 
 <div class="swpm-wrap">

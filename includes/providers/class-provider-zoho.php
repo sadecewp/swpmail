@@ -79,8 +79,8 @@ class SWPM_Provider_Zoho implements SWPM_Provider_Interface {
 		$username   = get_option( 'swpm_zoho_username', '' );
 		$password   = swpm_decrypt( get_option( 'swpm_zoho_password_enc', '' ) );
 		$region     = get_option( 'swpm_zoho_region', 'com' );
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
 
 		$hosts = array(
 			'com'    => 'smtp.zoho.com',

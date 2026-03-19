@@ -77,7 +77,15 @@ class SWPM_Alarm_Channel_Teams implements SWPM_Alarm_Channel_Interface {
 
 	private function get_webhook_url(): string {
 		$encrypted = get_option( 'swpm_alarm_teams_webhook_enc', '' );
-		return swpm_decrypt( $encrypted );
+		$url = swpm_decrypt( $encrypted );
+
+		// Validate Microsoft Teams / Power Automate webhook URL format.
+		if ( '' !== $url && ! preg_match( '#^https://[a-z0-9\-]+\.(?:webhook\.office\.com|logic\.azure\.com|office365\.com)/#i', $url ) ) {
+			swpm_log( 'warning', 'Teams alarm: webhook URL does not match expected Microsoft domain.' );
+			return '';
+		}
+
+		return $url;
 	}
 
 	private function post( string $url, array $payload ): bool {

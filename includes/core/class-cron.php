@@ -218,13 +218,16 @@ class SWPM_Cron {
 		$table          = $wpdb->prefix . 'swpm_logs';
 		$cutoff         = gmdate( 'Y-m-d H:i:s', time() - $retention_days * DAY_IN_SECONDS );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE FROM {$table} WHERE created_at < %s",
-				$cutoff
-			)
-		);
+		// Paginated delete to avoid table locks on large datasets.
+		do {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$deleted = $wpdb->query(
+				$wpdb->prepare(
+					"DELETE FROM {$table} WHERE created_at < %s LIMIT 1000",
+					$cutoff
+				)
+			);
+		} while ( $deleted > 0 );
 	}
 
 	/**
@@ -236,13 +239,16 @@ class SWPM_Cron {
 		$table          = $wpdb->prefix . 'swpm_queue';
 		$cutoff         = gmdate( 'Y-m-d H:i:s', time() - $retention_days * DAY_IN_SECONDS );
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE FROM {$table} WHERE status IN ('sent', 'failed') AND created_at < %s",
-				$cutoff
-			)
-		);
+		// Paginated delete to avoid table locks on large datasets.
+		do {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$deleted = $wpdb->query(
+				$wpdb->prepare(
+					"DELETE FROM {$table} WHERE status IN ('sent', 'failed') AND created_at < %s LIMIT 1000",
+					$cutoff
+				)
+			);
+		} while ( $deleted > 0 );
 	}
 
 	/**
@@ -251,7 +257,8 @@ class SWPM_Cron {
 	public function cleanup_old_tracking(): void {
 		$analytics = swpm( 'analytics' );
 		if ( $analytics instanceof SWPM_Analytics ) {
-			$analytics->cleanup_old_tracking( 90 );
+			$retention = (int) apply_filters( 'swpm_analytics_retention_days', 90 );
+			$analytics->cleanup_old_tracking( $retention );
 		}
 	}
 }

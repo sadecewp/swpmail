@@ -43,14 +43,16 @@ class SWPM_Ajax_Handler {
 		}
 
 		// 2. Rate limit.
-		$ip       = self::get_client_ip();
-		$rate_key = 'swpm_rate_' . md5( $ip );
-		$attempts = (int) get_transient( $rate_key );
+		$ip            = self::get_client_ip();
+		$rate_key      = 'swpm_rate_' . md5( $ip );
+		$attempts      = (int) get_transient( $rate_key );
+		$max_attempts  = (int) apply_filters( 'swpm_subscribe_rate_limit', 5 );
+		$rate_window   = (int) apply_filters( 'swpm_subscribe_rate_window', 10 * MINUTE_IN_SECONDS );
 
-		if ( $attempts >= 5 ) {
+		if ( $attempts >= $max_attempts ) {
 			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'swpmail' ) ), 429 );
 		}
-		set_transient( $rate_key, $attempts + 1, 10 * MINUTE_IN_SECONDS );
+		set_transient( $rate_key, $attempts + 1, $rate_window );
 
 		// 3. Honeypot.
 		if ( ! empty( $_POST['swpm_website'] ) ) {
@@ -138,14 +140,16 @@ class SWPM_Ajax_Handler {
 		}
 
 		// Rate limit.
-		$ip       = self::get_client_ip();
-		$rate_key = 'swpm_confirm_rate_' . md5( $ip );
-		$attempts = (int) get_transient( $rate_key );
+		$ip            = self::get_client_ip();
+		$rate_key      = 'swpm_confirm_rate_' . md5( $ip );
+		$attempts      = (int) get_transient( $rate_key );
+		$max_attempts  = (int) apply_filters( 'swpm_confirm_rate_limit', 10 );
+		$rate_window   = (int) apply_filters( 'swpm_confirm_rate_window', 10 * MINUTE_IN_SECONDS );
 
-		if ( $attempts >= 10 ) {
+		if ( $attempts >= $max_attempts ) {
 			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'swpmail' ) ), 429 );
 		}
-		set_transient( $rate_key, $attempts + 1, 10 * MINUTE_IN_SECONDS );
+		set_transient( $rate_key, $attempts + 1, $rate_window );
 
 		$confirmed = $this->subscriber->confirm( $token );
 
@@ -172,14 +176,16 @@ class SWPM_Ajax_Handler {
 		}
 
 		// Rate limit.
-		$ip       = self::get_client_ip();
-		$rate_key = 'swpm_unsub_rate_' . md5( $ip );
-		$attempts = (int) get_transient( $rate_key );
+		$ip            = self::get_client_ip();
+		$rate_key      = 'swpm_unsub_rate_' . md5( $ip );
+		$attempts      = (int) get_transient( $rate_key );
+		$max_attempts  = (int) apply_filters( 'swpm_unsubscribe_rate_limit', 10 );
+		$rate_window   = (int) apply_filters( 'swpm_unsubscribe_rate_window', 10 * MINUTE_IN_SECONDS );
 
-		if ( $attempts >= 10 ) {
+		if ( $attempts >= $max_attempts ) {
 			wp_send_json_error( array( 'message' => __( 'Too many requests. Please try again later.', 'swpmail' ) ), 429 );
 		}
-		set_transient( $rate_key, $attempts + 1, 10 * MINUTE_IN_SECONDS );
+		set_transient( $rate_key, $attempts + 1, $rate_window );
 
 		$unsubscribed = $this->subscriber->unsubscribe( $token );
 

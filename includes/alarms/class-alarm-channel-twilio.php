@@ -30,6 +30,12 @@ class SWPM_Alarm_Channel_Twilio implements SWPM_Alarm_Channel_Interface {
 			return false;
 		}
 
+		// Validate E.164 phone number format.
+		if ( ! preg_match( '/^\+[1-9]\d{1,14}$/', $from ) || ! preg_match( '/^\+[1-9]\d{1,14}$/', $to ) ) {
+			swpm_log( 'warning', 'Twilio alarm: invalid phone number format (E.164 required).' );
+			return false;
+		}
+
 		$body = sprintf(
 			"[SWPMail] %s\n%s\n%s",
 			$event['title'],

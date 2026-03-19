@@ -90,10 +90,18 @@ class SWPM_Tracker {
 		$click_hash = get_query_var( self::CLICK_ENDPOINT, '' );
 
 		if ( ! empty( $open_hash ) ) {
+			if ( ! $this->check_tracking_rate_limit() ) {
+				$this->serve_pixel();
+				return;
+			}
 			$this->handle_open( $open_hash );
 		}
 
 		if ( ! empty( $click_hash ) ) {
+			if ( ! $this->check_tracking_rate_limit() ) {
+				wp_safe_redirect( home_url() );
+				exit;
+			}
 			$this->handle_click( $click_hash );
 		}
 	}
@@ -123,7 +131,19 @@ class SWPM_Tracker {
 		$ua = isset( $_SERVER['HTTP_USER_AGENT'] )
 			? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) )
 			: '';
-		$prefetch_patterns = array( 'GoogleImageProxy', 'YahooMailProxy', 'Outlook-iOS', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' );
+		$prefetch_patterns = array(
+			'GoogleImageProxy',
+			'YahooMailProxy',
+			'Outlook-iOS',
+			'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+			'Googlebot',
+			'bingbot',
+			'Barracuda',
+			'ZmImgProxy',
+			'CloudFlare-AlwaysOnline',
+			'Fastly-Image-Proxy',
+			'AppleWebKit/605.1',
+		);
 		foreach ( $prefetch_patterns as $pattern ) {
 			if ( ! empty( $ua ) && stripos( $ua, $pattern ) !== false ) {
 				$this->serve_pixel();
@@ -350,6 +370,25 @@ class SWPM_Tracker {
 	 */
 	private function is_valid_hash( string $hash ): bool {
 		return (bool) preg_match( '/^[a-f0-9]{64}$/', $hash );
+	}
+
+	/**
+	 * IP-based rate limit for tracking endpoints.
+	 *
+	 * @return bool True if request is within limit, false if throttled.
+	 */
+	private function check_tracking_rate_limit(): bool {
+		$ip    = $this->get_client_ip();
+		$key   = 'swpm_track_rl_' . md5( $ip );
+		$count = (int) get_transient( $key );
+		$limit = (int) apply_filters( 'swpm_tracking_rate_limit', 100 );
+
+		if ( $count >= $limit ) {
+			return false;
+		}
+
+		set_transient( $key, $count + 1, 5 * MINUTE_IN_SECONDS );
+		return true;
 	}
 
 	/* ------------------------------------------------------------------

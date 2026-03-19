@@ -88,6 +88,8 @@ class SWPM_Queue {
 	/**
 	 * Enqueue bulk emails for multiple recipients.
 	 *
+	 * Uses batch INSERT for better performance with large recipient lists.
+	 *
 	 * @param array  $recipients  Array of subscriber objects with email, name, token.
 	 * @param string $template_id Template ID.
 	 * @param string $subject     Subject line.
@@ -95,12 +97,17 @@ class SWPM_Queue {
 	 */
 	public function enqueue_bulk( array $recipients, string $template_id, string $subject, array $data ): void {
 		/** @var SWPM_Template_Engine $engine */
-		$engine = swpm( 'template_engine' );
+		$engine     = swpm( 'template_engine' );
+		$now        = current_time( 'mysql' );
+		$safe_tpl   = sanitize_key( $template_id );
+		$safe_subj  = sanitize_text_field( $subject );
+		$batch_size = (int) apply_filters( 'swpm_bulk_enqueue_batch_size', 50 );
+		$rows       = array();
 
 		foreach ( $recipients as $recipient ) {
-			$email = is_object( $recipient ) ? $recipient->email : $recipient;
-			$name  = is_object( $recipient ) ? ( $recipient->name ?? '' ) : '';
-			$token = is_object( $recipient ) ? ( $recipient->token ?? '' ) : '';
+			$email  = is_object( $recipient ) ? $recipient->email : $recipient;
+			$name   = is_object( $recipient ) ? ( $recipient->name ?? '' ) : '';
+			$token  = is_object( $recipient ) ? ( $recipient->token ?? '' ) : '';
 			$sub_id = is_object( $recipient ) && isset( $recipient->id ) ? (int) $recipient->id : null;
 
 			$vars = array_merge( $data, array(
@@ -120,8 +127,40 @@ class SWPM_Queue {
 
 			$body = $engine->render( $template_id, $vars );
 
-			$this->enqueue( $email, $subject, $body, $template_id, $sub_id );
+			$rows[] = $this->db->prepare(
+				'(%s, %s, %s, %s, %d, %s, %s, %s)',
+				sanitize_email( $email ),
+				$safe_subj,
+				$body,
+				$safe_tpl,
+				$sub_id ?? 0,
+				'pending',
+				$now,
+				$now
+			);
+
+			if ( count( $rows ) >= $batch_size ) {
+				$this->insert_bulk_rows( $rows );
+				$rows = array();
+			}
 		}
+
+		if ( ! empty( $rows ) ) {
+			$this->insert_bulk_rows( $rows );
+		}
+	}
+
+	/**
+	 * Execute a batch INSERT for pre-prepared row values.
+	 *
+	 * @param array $rows Array of prepared value strings.
+	 */
+	private function insert_bulk_rows( array $rows ): void {
+		$values = implode( ', ', $rows );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$this->db->query(
+			"INSERT INTO {$this->table} (to_email, subject, body, template_id, subscriber_id, status, scheduled_at, created_at) VALUES {$values}"
+		);
 	}
 
 	/**
@@ -133,7 +172,7 @@ class SWPM_Queue {
 		// Prevent concurrent execution with database-level atomic lock.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$locked = $this->db->get_var( "SELECT GET_LOCK('swpm_queue_lock', 0)" );
-		if ( ! $locked ) {
+		if ( '1' !== $locked ) {
 			return;
 		}
 

@@ -179,9 +179,17 @@ class SWPM_Connections_Manager implements SWPM_Provider_Interface {
 	/**
 	 * Record a send failure for a provider slot.
 	 *
+	 * Uses a database-level lock to prevent race conditions when
+	 * concurrent requests attempt to update the same health data.
+	 *
 	 * @param string $slot 'primary' or 'backup'.
 	 */
 	private function record_failure( string $slot ): void {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->query( "SELECT GET_LOCK('swpm_health_{$slot}', 2)" );
+
 		$health = $this->get_health_data( $slot );
 		$health['consecutive_failures']++;
 		$health['total_failures']++;
@@ -192,6 +200,9 @@ class SWPM_Connections_Manager implements SWPM_Provider_Interface {
 		}
 
 		$this->save_health_data( $slot, $health );
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->query( "SELECT RELEASE_LOCK('swpm_health_{$slot}')" );
 	}
 
 	/**
@@ -200,11 +211,19 @@ class SWPM_Connections_Manager implements SWPM_Provider_Interface {
 	 * @param string $slot 'primary' or 'backup'.
 	 */
 	private function reset_failures( string $slot ): void {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->query( "SELECT GET_LOCK('swpm_health_{$slot}', 2)" );
+
 		$health = $this->get_health_data( $slot );
 		$health['consecutive_failures'] = 0;
 		$health['unhealthy_since']      = 0;
 		$health['last_success_at']      = time();
 		$this->save_health_data( $slot, $health );
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->query( "SELECT RELEASE_LOCK('swpm_health_{$slot}')" );
 	}
 
 	/**

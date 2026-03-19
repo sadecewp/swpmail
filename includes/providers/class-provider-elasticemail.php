@@ -33,8 +33,12 @@ class SWPM_Provider_ElasticEmail implements SWPM_Provider_Interface {
 		}
 
 		$api_key    = swpm_decrypt( get_option( 'swpm_elasticemail_api_key_enc', '' ) );
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
+
+		if ( ! is_email( $from_email ) ) {
+			return SWPM_Send_Result::failure( 'Invalid from email address.', 'INVALID_FROM_EMAIL' );
+		}
 
 		if ( empty( $api_key ) ) {
 			return SWPM_Send_Result::failure(

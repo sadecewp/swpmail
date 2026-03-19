@@ -121,8 +121,8 @@ class SWPM_Provider_Gmail implements SWPM_Provider_Interface {
 	 * @param \PHPMailer\PHPMailer\PHPMailer $phpmailer PHPMailer instance.
 	 */
 	public function configure_phpmailer_oauth( object $phpmailer ): void {
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
 
 		$phpmailer->isSMTP();
 		$phpmailer->Host       = 'smtp.gmail.com';

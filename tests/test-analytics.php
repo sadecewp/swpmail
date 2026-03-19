@@ -1,0 +1,144 @@
+<?php
+/**
+ * Tests for SWPM_Analytics (includes/core/class-analytics.php).
+ *
+ * @package SWPMail\Tests
+ */
+
+require_once __DIR__ . '/bootstrap.php';
+
+use Brain\Monkey\Functions;
+
+require_once SWPM_PLUGIN_DIR . 'includes/core/class-analytics.php';
+
+class Test_Analytics extends SWPM_Test_Case {
+
+	private object $wpdb;
+
+	protected function setUp(): void {
+		parent::setUp();
+
+		$this->wpdb = Mockery::mock( 'wpdb' );
+		$this->wpdb->prefix = 'wp_';
+
+		$GLOBALS['wpdb'] = $this->wpdb;
+	}
+
+	protected function tearDown(): void {
+		unset( $GLOBALS['wpdb'] );
+		parent::tearDown();
+	}
+
+	/* ==================================================================
+	 * get_summary()
+	 * ================================================================*/
+
+	public function test_get_summary_returns_expected_structure(): void {
+		Functions\when( 'apply_filters' )->returnArg( 2 );
+
+		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
+
+		// First get_var returns total opens, second unique opens, etc.
+		$this->wpdb->shouldReceive( 'get_var' )
+			->times( 5 )
+			->andReturn( '100', '80', '50', '40', '200' );
+
+		$analytics = new SWPM_Analytics();
+		$summary   = $analytics->get_summary( 30 );
+
+		$this->assertArrayHasKey( 'total_opens', $summary );
+		$this->assertArrayHasKey( 'unique_opens', $summary );
+		$this->assertArrayHasKey( 'total_clicks', $summary );
+		$this->assertArrayHasKey( 'unique_clicks', $summary );
+		$this->assertArrayHasKey( 'open_rate', $summary );
+		$this->assertArrayHasKey( 'click_rate', $summary );
+		$this->assertArrayHasKey( 'total_sent', $summary );
+	}
+
+	public function test_get_summary_avoids_division_by_zero(): void {
+		Functions\when( 'apply_filters' )->returnArg( 2 );
+
+		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
+		$this->wpdb->shouldReceive( 'get_var' )
+			->times( 5 )
+			->andReturn( '0', '0', '0', '0', '0' );
+
+		$analytics = new SWPM_Analytics();
+		$summary   = $analytics->get_summary( 30 );
+
+		$this->assertSame( 0.0, $summary['open_rate'] );
+		$this->assertSame( 0.0, $summary['click_rate'] );
+	}
+
+	/* ==================================================================
+	 * get_daily_trend()
+	 * ================================================================*/
+
+	public function test_get_daily_trend_returns_array(): void {
+		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
+		$this->wpdb->shouldReceive( 'get_results' )->once()->andReturn( array(
+			(object) array( 'day' => '2026-01-01', 'opens' => 10, 'clicks' => 5 ),
+			(object) array( 'day' => '2026-01-02', 'opens' => 20, 'clicks' => 8 ),
+		) );
+
+		$analytics = new SWPM_Analytics();
+		$trend     = $analytics->get_daily_trend( 7 );
+
+		$this->assertCount( 2, $trend );
+	}
+
+	/* ==================================================================
+	 * get_top_links()
+	 * ================================================================*/
+
+	public function test_get_top_links_returns_array(): void {
+		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'SELECT ...' );
+		$this->wpdb->shouldReceive( 'get_results' )->once()->andReturn( array(
+			array( 'url' => 'https://example.com', 'clicks' => 42 ),
+		) );
+
+		$analytics = new SWPM_Analytics();
+		$links     = $analytics->get_top_links( 10, 30 );
+
+		$this->assertCount( 1, $links );
+	}
+
+	/* ==================================================================
+	 * cleanup_old_tracking()
+	 * ================================================================*/
+
+	public function test_cleanup_deletes_in_batches(): void {
+		Functions\when( 'apply_filters' )->alias( function ( $tag, $value ) {
+			if ( 'swpm_cleanup_batch_size' === $tag ) {
+				return 100; // Small batch for testing.
+			}
+			return $value;
+		} );
+
+		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'DELETE ...' );
+
+		// Simulate: first batch deletes 100 (= batch_size), second deletes 30.
+		$this->wpdb->shouldReceive( 'query' )
+			->twice()
+			->andReturn( 100, 30 );
+
+		$analytics = new SWPM_Analytics();
+		$analytics->cleanup_old_tracking( 90 );
+
+		// Mockery verifies that query was called exactly twice.
+	}
+
+	public function test_cleanup_stops_immediately_when_nothing_to_delete(): void {
+		Functions\when( 'apply_filters' )->alias( function ( $tag, $value ) {
+			return $value;
+		} );
+
+		$this->wpdb->shouldReceive( 'prepare' )->andReturn( 'DELETE ...' );
+		$this->wpdb->shouldReceive( 'query' )->once()->andReturn( 0 );
+
+		$analytics = new SWPM_Analytics();
+		$analytics->cleanup_old_tracking( 90 );
+
+		// Mockery verifies single call.
+	}
+}

@@ -45,8 +45,8 @@ class SWPM_Provider_PHPMail implements SWPM_Provider_Interface {
 		$reset_mailer = function ( $phpmailer ) {
 			$phpmailer->isMail();
 
-			$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-			$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+			$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+			$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
 
 			if ( ! empty( $from_email ) && is_email( $from_email ) ) {
 				try {

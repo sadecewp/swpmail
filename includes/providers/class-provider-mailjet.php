@@ -34,8 +34,12 @@ class SWPM_Provider_Mailjet implements SWPM_Provider_Interface {
 
 		$api_key    = swpm_decrypt( get_option( 'swpm_mailjet_api_key_enc', '' ) );
 		$secret_key = swpm_decrypt( get_option( 'swpm_mailjet_secret_key_enc', '' ) );
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
+
+		if ( ! is_email( $from_email ) ) {
+			return SWPM_Send_Result::failure( 'Invalid from email address.', 'INVALID_FROM_EMAIL' );
+		}
 
 		if ( empty( $api_key ) || empty( $secret_key ) ) {
 			return SWPM_Send_Result::failure(

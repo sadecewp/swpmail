@@ -120,6 +120,7 @@ class SWPMail {
 		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-oauth-manager.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-dns-checker.php';
 		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-logs-list-table.php';
+		require_once SWPM_PLUGIN_DIR . 'includes/admin/class-dashboard-data.php';
 
 		// Public.
 		require_once SWPM_PLUGIN_DIR . 'includes/public/class-public.php';
@@ -177,11 +178,12 @@ class SWPMail {
 
 		// Admin / Public.
 		if ( is_admin() ) {
-			self::$instances['admin']           = new SWPM_Admin( $this->loader );
-			self::$instances['settings']        = new SWPM_Settings();
-			self::$instances['template_editor'] = new SWPM_Template_Editor( $this->loader );
-			self::$instances['setup_wizard']    = new SWPM_Setup_Wizard();
-			self::$instances['dns_checker']     = new SWPM_DNS_Checker();
+			self::$instances['admin']          = new SWPM_Admin( $this->loader );
+			self::$instances['settings']       = new SWPM_Settings();
+			self::$instances['template_editor']= new SWPM_Template_Editor( $this->loader );
+			self::$instances['setup_wizard']   = new SWPM_Setup_Wizard();
+			self::$instances['dns_checker']    = new SWPM_DNS_Checker();
+			self::$instances['dashboard_data'] = new SWPM_Dashboard_Data();
 		} else {
 			self::$instances['public']    = new SWPM_Public( $this->loader );
 			self::$instances['shortcode'] = new SWPM_Shortcode( self::$instances['subscriber'] );

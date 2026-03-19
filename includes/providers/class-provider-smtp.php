@@ -68,8 +68,8 @@ class SWPM_Provider_SMTP implements SWPM_Provider_Interface {
 		$username   = get_option( 'swpm_smtp_username', '' );
 		$password   = swpm_decrypt( get_option( 'swpm_smtp_password_enc', '' ) );
 		$encryption = get_option( 'swpm_smtp_encryption', 'tls' );
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
 
 		$phpmailer->isSMTP();
 		$phpmailer->Host       = sanitize_text_field( $host );

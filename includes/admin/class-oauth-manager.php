@@ -202,14 +202,21 @@ class SWPM_OAuth_Manager {
 		$state = wp_generate_password( 40, false );
 		set_transient( "swpm_oauth_state_{$state}", $provider, 10 * MINUTE_IN_SECONDS );
 
+		// PKCE: Generate code verifier and challenge.
+		$code_verifier  = bin2hex( random_bytes( 32 ) );
+		$code_challenge = rtrim( strtr( base64_encode( hash( 'sha256', $code_verifier, true ) ), '+/', '-_' ), '=' );
+		set_transient( "swpm_oauth_verifier_{$state}", $code_verifier, 10 * MINUTE_IN_SECONDS );
+
 		$params = array(
-			'client_id'     => $client_id,
-			'redirect_uri'  => $this->get_redirect_uri(),
-			'response_type' => 'code',
-			'scope'         => $config['scopes'],
-			'state'         => $state,
-			'access_type'   => 'offline', // Google: request refresh_token.
-			'prompt'        => 'consent', // Force consent to always get refresh_token.
+			'client_id'             => $client_id,
+			'redirect_uri'          => $this->get_redirect_uri(),
+			'response_type'         => 'code',
+			'scope'                 => $config['scopes'],
+			'state'                 => $state,
+			'access_type'           => 'offline', // Google: request refresh_token.
+			'prompt'                => 'consent', // Force consent to always get refresh_token.
+			'code_challenge'        => $code_challenge,
+			'code_challenge_method' => 'S256',
 		);
 
 		return $config['authorize_url'] . '?' . http_build_query( $params, '', '&', PHP_QUERY_RFC3986 );
@@ -251,13 +258,17 @@ class SWPM_OAuth_Manager {
 		$provider = get_transient( "swpm_oauth_state_{$state}" );
 		delete_transient( "swpm_oauth_state_{$state}" );
 
+		// Retrieve PKCE code verifier.
+		$code_verifier = get_transient( "swpm_oauth_verifier_{$state}" );
+		delete_transient( "swpm_oauth_verifier_{$state}" );
+
 		if ( empty( $provider ) || ! isset( self::PROVIDERS[ $provider ] ) ) {
 			$this->redirect_with_notice( 'error', __( 'Invalid or expired state. Please try again.', 'swpmail' ) );
 			return;
 		}
 
 		// Exchange authorization code for tokens.
-		$result = $this->exchange_code( $provider, $code );
+		$result = $this->exchange_code( $provider, $code, $code_verifier );
 
 		if ( is_wp_error( $result ) ) {
 			swpm_log( 'error', 'OAuth token exchange failed: ' . $result->get_error_message() );
@@ -294,11 +305,12 @@ class SWPM_OAuth_Manager {
 	/**
 	 * Exchange an authorization code for access/refresh tokens.
 	 *
-	 * @param string $provider 'gmail' or 'outlook'.
-	 * @param string $code     Authorization code.
+	 * @param string $provider      'gmail' or 'outlook'.
+	 * @param string $code          Authorization code.
+	 * @param string $code_verifier PKCE code verifier (optional for backwards compat).
 	 * @return array|\WP_Error Token response or error.
 	 */
-	private function exchange_code( string $provider, string $code ) {
+	private function exchange_code( string $provider, string $code, string $code_verifier = '' ) {
 		$config        = self::PROVIDERS[ $provider ];
 		$client_id     = get_option( "swpm_{$provider}_oauth_client_id", '' );
 		$client_secret = swpm_decrypt( get_option( "swpm_{$provider}_oauth_client_secret_enc", '' ) );
@@ -310,6 +322,10 @@ class SWPM_OAuth_Manager {
 			'client_id'     => $client_id,
 			'client_secret' => $client_secret,
 		);
+
+		if ( ! empty( $code_verifier ) ) {
+			$body['code_verifier'] = $code_verifier;
+		}
 
 		$response = wp_remote_post( $config['token_url'], array(
 			'timeout' => 30,
@@ -355,10 +371,12 @@ class SWPM_OAuth_Manager {
 		$data = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		if ( 'outlook' === $provider ) {
-			return $data['mail'] ?? $data['userPrincipalName'] ?? '';
+			$email = $data['mail'] ?? $data['userPrincipalName'] ?? '';
+		} else {
+			$email = $data['email'] ?? '';
 		}
 
-		return $data['email'] ?? '';
+		return is_email( $email ) ? $email : '';
 	}
 
 	/* ------------------------------------------------------------------

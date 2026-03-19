@@ -129,17 +129,19 @@ class SWPM_REST_API {
 		}
 
 		// 1. Rate limit.
-		$ip       = SWPM_Ajax_Handler::get_client_ip();
-		$rate_key = 'swpm_rate_' . md5( $ip );
-		$attempts = (int) get_transient( $rate_key );
+		$ip            = SWPM_Ajax_Handler::get_client_ip();
+		$rate_key      = 'swpm_rate_' . md5( $ip );
+		$attempts      = (int) get_transient( $rate_key );
+		$max_attempts  = (int) apply_filters( 'swpm_subscribe_rate_limit', 5 );
+		$rate_window   = (int) apply_filters( 'swpm_subscribe_rate_window', 10 * MINUTE_IN_SECONDS );
 
-		if ( $attempts >= 5 ) {
+		if ( $attempts >= $max_attempts ) {
 			return new WP_REST_Response(
 				array( 'message' => __( 'Too many requests. Please try again later.', 'swpmail' ) ),
 				429
 			);
 		}
-		set_transient( $rate_key, $attempts + 1, 10 * MINUTE_IN_SECONDS );
+		set_transient( $rate_key, $attempts + 1, $rate_window );
 
 		// 2. Honeypot.
 		if ( ! empty( $request->get_param( 'swpm_website' ) ) ) {

@@ -35,8 +35,12 @@ class SWPM_Provider_SES implements SWPM_Provider_Interface {
 		$access_key = swpm_decrypt( get_option( 'swpm_ses_access_key_enc', '' ) );
 		$secret_key = swpm_decrypt( get_option( 'swpm_ses_secret_key_enc', '' ) );
 		$region     = sanitize_text_field( get_option( 'swpm_ses_region', 'us-east-1' ) );
-		$from_email = get_option( 'swpm_from_email', get_option( 'admin_email' ) );
-		$from_name  = get_option( 'swpm_from_name', get_bloginfo( 'name' ) );
+		$from_email = sanitize_email( get_option( 'swpm_from_email', get_option( 'admin_email' ) ) );
+		$from_name  = sanitize_text_field( get_option( 'swpm_from_name', get_bloginfo( 'name' ) ) );
+
+		if ( ! is_email( $from_email ) ) {
+			return SWPM_Send_Result::failure( 'Invalid from email address.', 'INVALID_FROM_EMAIL' );
+		}
 
 		if ( empty( $access_key ) || empty( $secret_key ) ) {
 			return SWPM_Send_Result::failure(

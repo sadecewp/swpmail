@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-GPLv2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)](#)
 
-SWPMail is a fully customizable **email subscription, notification, and sending infrastructure plugin** that integrates with WordPress sites, supports **19 professional mail services**, applies the configured SMTP/API setting to **all WordPress emails** sent via `wp_mail()`, and features enterprise-grade capabilities such as smart routing, failover, OAuth 2.0, email tracking & analytics, alarm system, and DNS verification.
+SWPMail is a fully customizable **email subscription, notification, and sending infrastructure plugin** that integrates with WordPress sites, supports **18 professional mail services**, applies the configured SMTP/API setting to **all WordPress emails** sent via `wp_mail()`, and features enterprise-grade capabilities such as smart routing, failover, OAuth 2.0, email tracking & analytics, alarm system, and DNS verification.
 
 ---
 
@@ -174,21 +174,21 @@ If you skipped the wizard or want to change settings later:
 
 ### HTTP API-Based Providers
 
-| #   | Service                | Method              | Free Quota              |
-| --- | ---------------------- | ------------------- | ----------------------- |
-| 6   | **Mailgun**            | HTTP API            | 100/day                 |
-| 7   | **SendGrid**           | HTTP API            | 100/day (60-day trial)  |
-| 8   | **Postmark**           | HTTP API            | 100/month (test)        |
-| 9   | **Brevo (Sendinblue)** | HTTP API            | 300/day                 |
-| 10  | **Amazon SES**         | HTTP API (SDK-less) | 62,000/month (EC2)      |
-| 11  | **Resend**             | HTTP API            | 3,000/month             |
-| 12  | **Elastic Email**      | HTTP API            | 100/day                 |
-| 13  | **Mailjet**            | HTTP API            | 200/day                 |
-| 14  | **MailerSend**         | HTTP API            | 3,000/month             |
-| 15  | **SendLayer**          | HTTP API            | 200/month (trial)       |
-| 16  | **SMTP.com**           | HTTP API            | Plan-dependent          |
-| 17  | **SMTP2GO**            | HTTP API            | 1,000/month             |
-| 18  | **SparkPost**          | HTTP API            | 500/month (test)        |
+| #   | Service                | Method              | Free Quota             |
+| --- | ---------------------- | ------------------- | ---------------------- |
+| 6   | **Mailgun**            | HTTP API            | 100/day                |
+| 7   | **SendGrid**           | HTTP API            | 100/day (60-day trial) |
+| 8   | **Postmark**           | HTTP API            | 100/month (test)       |
+| 9   | **Brevo (Sendinblue)** | HTTP API            | 300/day                |
+| 10  | **Amazon SES**         | HTTP API (SDK-less) | 62,000/month (EC2)     |
+| 11  | **Resend**             | HTTP API            | 3,000/month            |
+| 12  | **Elastic Email**      | HTTP API            | 100/day                |
+| 13  | **Mailjet**            | HTTP API            | 200/day                |
+| 14  | **MailerSend**         | HTTP API            | 3,000/month            |
+| 15  | **SendLayer**          | HTTP API            | 200/month (trial)      |
+| 16  | **SMTP.com**           | HTTP API            | Plan-dependent         |
+| 17  | **SMTP2GO**            | HTTP API            | 1,000/month            |
+| 18  | **SparkPost**          | HTTP API            | 500/month (test)       |
 
 ### Provider Configuration
 
@@ -256,21 +256,21 @@ SWPMail allows you to send different emails through different providers using th
 
 Each routing rule consists of the following components:
 
-| Component    | Description                                                   |
-| ------------ | ------------------------------------------------------------- |
-| **Name**     | Descriptive name for the rule                                 |
-| **Priority** | Lower number = evaluated first                                |
-| **Provider** | Which provider to use for emails matching this rule           |
-| **Conditions** | Matching criteria (AND logic)                               |
+| Component      | Description                                         |
+| -------------- | --------------------------------------------------- |
+| **Name**       | Descriptive name for the rule                       |
+| **Priority**   | Lower number = evaluated first                      |
+| **Provider**   | Which provider to use for emails matching this rule |
+| **Conditions** | Matching criteria (AND logic)                       |
 
 ### Condition Fields
 
-| Field     | Description                                   |
-| --------- | --------------------------------------------- |
-| `to`      | Recipient email address                       |
-| `subject` | Email subject                                 |
-| `from`    | Sender address                                |
-| `header`  | Any header value                              |
+| Field     | Description                                    |
+| --------- | ---------------------------------------------- |
+| `to`      | Recipient email address                        |
+| `subject` | Email subject                                  |
+| `from`    | Sender address                                 |
+| `header`  | Any header value                               |
 | `source`  | Source that triggered the email (plugin, etc.) |
 
 ### Condition Operators
@@ -370,20 +370,20 @@ Frequency: instant / daily / weekly
 
 ### Subscription Statuses
 
-| Status         | Description                      |
-| -------------- | -------------------------------- |
+| Status         | Description                           |
+| -------------- | ------------------------------------- |
 | `pending`      | Awaiting confirmation (double opt-in) |
-| `confirmed`    | Active subscriber                |
-| `unsubscribed` | Unsubscribed                     |
-| `bounced`      | Email bounced                    |
+| `confirmed`    | Active subscriber                     |
+| `unsubscribed` | Unsubscribed                          |
+| `bounced`      | Email bounced                         |
 
 ### Subscription Frequencies
 
-| Frequency | Description                                |
-| --------- | ------------------------------------------ |
-| `instant` | Immediately (on every new post)            |
-| `daily`   | Daily digest (configurable hour)           |
-| `weekly`  | Weekly digest (configurable day)           |
+| Frequency | Description                      |
+| --------- | -------------------------------- |
+| `instant` | Immediately (on every new post)  |
+| `daily`   | Daily digest (configurable hour) |
+| `weekly`  | Weekly digest (configurable day) |
 
 ---
 
@@ -397,14 +397,14 @@ Frequency: instant / daily / weekly
 
 ### All Parameters
 
-| Parameter           | Default     | Description                                  |
-| ------------------- | ----------- | -------------------------------------------- |
-| `title`             | From settings | Form title                                 |
-| `show_name`         | `false`     | Show name field                              |
-| `frequency`         | From settings | Show frequency selection (`true`/`false`)  |
-| `frequency_default` | `instant`   | Default frequency                            |
-| `style`             | `default`   | Form style (`default`/`minimal`)             |
-| `button_text`       | "Subscribe" | Button text                                  |
+| Parameter           | Default       | Description                               |
+| ------------------- | ------------- | ----------------------------------------- |
+| `title`             | From settings | Form title                                |
+| `show_name`         | `false`       | Show name field                           |
+| `frequency`         | From settings | Show frequency selection (`true`/`false`) |
+| `frequency_default` | `instant`     | Default frequency                         |
+| `style`             | `default`     | Form style (`default`/`minimal`)          |
+| `button_text`       | "Subscribe"   | Button text                               |
 
 ### Examples
 
@@ -425,27 +425,27 @@ Frequency: instant / daily / weekly
 
 ### Built-in Templates
 
-| Template ID            | Usage                          | Variables                                                                                     |
-| ---------------------- | ------------------------------ | --------------------------------------------------------------------------------------------- |
-| `base`                 | Base layout for all emails     | `{{content}}`                                                                                 |
-| `confirm-subscription` | Double opt-in email            | `{{confirm_url}}`, `{{subscriber_name}}`                                                      |
-| `welcome`              | Welcome email                  | `{{subscriber_name}}`, `{{site_name}}`                                                        |
-| `new-post`             | New post notification          | `{{post_title}}`, `{{post_url}}`, `{{post_excerpt}}`, `{{post_thumbnail}}`, `{{author_name}}` |
-| `digest-daily`         | Daily digest                   | `{{post_list}}`, `{{date}}`                                                                   |
-| `digest-weekly`        | Weekly digest                  | `{{post_list}}`, `{{week_start}}`, `{{week_end}}`                                             |
+| Template ID            | Usage                      | Variables                                                                                     |
+| ---------------------- | -------------------------- | --------------------------------------------------------------------------------------------- |
+| `base`                 | Base layout for all emails | `{{content}}`                                                                                 |
+| `confirm-subscription` | Double opt-in email        | `{{confirm_url}}`, `{{subscriber_name}}`                                                      |
+| `welcome`              | Welcome email              | `{{subscriber_name}}`, `{{site_name}}`                                                        |
+| `new-post`             | New post notification      | `{{post_title}}`, `{{post_url}}`, `{{post_excerpt}}`, `{{post_thumbnail}}`, `{{author_name}}` |
+| `digest-daily`         | Daily digest               | `{{post_list}}`, `{{date}}`                                                                   |
+| `digest-weekly`        | Weekly digest              | `{{post_list}}`, `{{week_start}}`, `{{week_end}}`                                             |
 
 ### Global Variables (Available in All Templates)
 
-| Variable               | Description              |
-| ---------------------- | ------------------------ |
-| `{{site_name}}`        | Site name                |
-| `{{site_url}}`         | Site URL                 |
-| `{{site_logo}}`        | Site logo URL            |
-| `{{year}}`             | Current year             |
-| `{{from_name}}`        | Sender name              |
-| `{{privacy_url}}`      | Privacy policy URL       |
-| `{{unsubscribe_text}}` | "Unsubscribe" text       |
-| `{{visit_site_text}}`  | "Visit Site" text        |
+| Variable               | Description        |
+| ---------------------- | ------------------ |
+| `{{site_name}}`        | Site name          |
+| `{{site_url}}`         | Site URL           |
+| `{{site_logo}}`        | Site logo URL      |
+| `{{year}}`             | Current year       |
+| `{{from_name}}`        | Sender name        |
+| `{{privacy_url}}`      | Privacy policy URL |
+| `{{unsubscribe_text}}` | "Unsubscribe" text |
+| `{{visit_site_text}}`  | "Visit Site" text  |
 
 ### Template Loading Priority
 
@@ -474,13 +474,13 @@ your-theme/
 
 ### Built-in Triggers
 
-| Trigger              | WordPress Hook           | Template         |
-| -------------------- | ------------------------ | ---------------- |
-| New Post Published   | `transition_post_status` | `new-post`       |
-| New User Registered  | `user_register`          | `new-user`       |
-| User Login           | `wp_login`               | `user-login`     |
-| New Comment          | `comment_post`           | `new-comment`    |
-| Password Reset       | `retrieve_password`      | `password-reset` |
+| Trigger             | WordPress Hook           | Template         |
+| ------------------- | ------------------------ | ---------------- |
+| New Post Published  | `transition_post_status` | `new-post`       |
+| New User Registered | `user_register`          | `new-user`       |
+| User Login          | `wp_login`               | `user-login`     |
+| New Comment         | `comment_post`           | `new-comment`    |
+| Password Reset      | `retrieve_password`      | `password-reset` |
 
 ### Creating Custom Triggers
 
@@ -548,14 +548,14 @@ add_filter( 'swpm_trigger_new_post_types', function( $types ) {
 
 ### Scheduled Tasks
 
-| Task                      | Interval | Description                                       |
-| ------------------------- | -------- | ------------------------------------------------- |
-| `swpm_process_queue`      | 5 min    | Queue processing (batch: 50 items)                |
-| `swpm_send_daily_digest`  | Daily    | Daily digest sending (default: 09:00)             |
-| `swpm_send_weekly_digest` | Weekly   | Weekly digest sending (default: Monday)           |
-| `swpm_cleanup_logs`       | Daily    | Clean up old log records                          |
-| `swpm_cleanup_queue`      | Daily    | Clean up sent/failed queue items                  |
-| `swpm_cleanup_tracking`   | Daily    | Clean up old tracking data                        |
+| Task                      | Interval | Description                             |
+| ------------------------- | -------- | --------------------------------------- |
+| `swpm_process_queue`      | 5 min    | Queue processing (batch: 50 items)      |
+| `swpm_send_daily_digest`  | Daily    | Daily digest sending (default: 09:00)   |
+| `swpm_send_weekly_digest` | Weekly   | Weekly digest sending (default: Monday) |
+| `swpm_cleanup_logs`       | Daily    | Clean up old log records                |
+| `swpm_cleanup_queue`      | Daily    | Clean up sent/failed queue items        |
+| `swpm_cleanup_tracking`   | Daily    | Clean up old tracking data              |
 
 ### Configuration Options
 
@@ -578,11 +578,11 @@ Namespace: `swpmail/v1`
 
 ### Endpoints
 
-| Method   | Endpoint                       | Auth         | Description              |
-| -------- | ------------------------------ | ------------ | ------------------------ |
-| `POST`   | `/swpmail/v1/subscribe`        | Public       | Create new subscriber    |
-| `GET`    | `/swpmail/v1/subscribers`      | Admin        | Subscriber list (paged)  |
-| `DELETE` | `/swpmail/v1/subscribers/{id}` | Admin        | Delete subscriber        |
+| Method   | Endpoint                       | Auth   | Description             |
+| -------- | ------------------------------ | ------ | ----------------------- |
+| `POST`   | `/swpmail/v1/subscribe`        | Public | Create new subscriber   |
+| `GET`    | `/swpmail/v1/subscribers`      | Admin  | Subscriber list (paged) |
+| `DELETE` | `/swpmail/v1/subscribers/{id}` | Admin  | Delete subscriber       |
 
 ### Usage Examples
 
@@ -629,10 +629,10 @@ curl https://site.com/wp-json/swpmail/v1/subscribers \
 
 SWPMail automatically adds tracking mechanisms to sent HTML emails:
 
-| Feature            | Method               | Description                                             |
-| ------------------ | -------------------- | ------------------------------------------------------- |
-| **Open Tracking**  | 1×1 invisible pixel  | Sends request to `swpm_open` endpoint when email opened |
-| **Click Tracking** | Link proxy redirect  | Links are rewritten through `swpm_click`                |
+| Feature            | Method              | Description                                             |
+| ------------------ | ------------------- | ------------------------------------------------------- |
+| **Open Tracking**  | 1×1 invisible pixel | Sends request to `swpm_open` endpoint when email opened |
+| **Click Tracking** | Link proxy redirect | Links are rewritten through `swpm_click`                |
 
 - Tracking data is stored in the `swpm_tracking` table with hash, queue_id, IP, and user agent information
 - Rewrite rules are registered in the `init` hook (priority 5)
@@ -654,13 +654,13 @@ Metrics displayed on the **SWPMail > Dashboard** page:
 
 ### Alarm Channels
 
-| Channel             | Key       | Method    | Configuration                        |
-| ------------------- | --------- | --------- | ------------------------------------ |
-| **Slack**           | `slack`   | Webhook   | Incoming Webhook URL                 |
-| **Discord**         | `discord` | Webhook   | Discord Webhook URL                  |
-| **Microsoft Teams** | `teams`   | Webhook   | Teams Incoming Webhook URL           |
-| **Twilio SMS**      | `twilio`  | REST API  | Account SID, Auth Token, Phone       |
-| **Custom**          | `custom`  | HTTP POST | Target URL, Payload format           |
+| Channel             | Key       | Method    | Configuration                  |
+| ------------------- | --------- | --------- | ------------------------------ |
+| **Slack**           | `slack`   | Webhook   | Incoming Webhook URL           |
+| **Discord**         | `discord` | Webhook   | Discord Webhook URL            |
+| **Microsoft Teams** | `teams`   | Webhook   | Teams Incoming Webhook URL     |
+| **Twilio SMS**      | `twilio`  | REST API  | Account SID, Auth Token, Phone |
+| **Custom**          | `custom`  | HTTP POST | Target URL, Payload format     |
 
 ### Triggering
 
@@ -676,11 +676,11 @@ Verifying domain DNS records is critical for improving email deliverability.
 
 ### Verified Records
 
-| Record    | Description                                                          |
-| --------- | -------------------------------------------------------------------- |
-| **SPF**   | Specifies which servers can send mail on behalf of the domain        |
-| **DKIM**  | Ensures the authenticity of the email signature                      |
-| **DMARC** | Defines what to do when SPF/DKIM fails                               |
+| Record    | Description                                                   |
+| --------- | ------------------------------------------------------------- |
+| **SPF**   | Specifies which servers can send mail on behalf of the domain |
+| **DKIM**  | Ensures the authenticity of the email signature               |
+| **DMARC** | Defines what to do when SPF/DKIM fails                        |
 
 ### Features
 
@@ -814,21 +814,21 @@ SWPMail (dashicon: email)
 
 ## Security
 
-| Topic                 | Method                                                             |
-| --------------------- | ------------------------------------------------------------------ |
-| CSRF                  | `wp_create_nonce()` + `check_ajax_referer()` / `wp_verify_nonce()` |
-| XSS                   | `esc_html()`, `esc_attr()`, `esc_url()`, `wp_kses_post()`          |
-| SQL Injection         | `$wpdb->prepare()` — in all queries                                |
-| Direct File Access    | `if ( ! defined( 'ABSPATH' ) ) exit;` in every PHP file            |
-| Permission Check      | `current_user_can( 'manage_options' )` in all admin operations     |
-| Rate Limiting         | Transient API with 5 requests per IP / 10 minutes                  |
-| Bot Protection        | Hidden honeypot field (`swpm_website`)                             |
-| Token Security        | `random_bytes(32)` + `bin2hex()` (64 characters)                   |
-| API Key Encryption    | AES-256-CBC + HMAC-SHA256 + WordPress salt                         |
-| IP Validation         | `FILTER_VALIDATE_IP` (IPv4 + IPv6)                                 |
-| OAuth Token Storage   | Encrypted token storage, automatic refresh                         |
-| Conflict Detection    | wp_mail override analysis via ReflectionFunction                   |
-| Origin/Referer        | Origin/referer validation in REST API                              |
+| Topic               | Method                                                             |
+| ------------------- | ------------------------------------------------------------------ |
+| CSRF                | `wp_create_nonce()` + `check_ajax_referer()` / `wp_verify_nonce()` |
+| XSS                 | `esc_html()`, `esc_attr()`, `esc_url()`, `wp_kses_post()`          |
+| SQL Injection       | `$wpdb->prepare()` — in all queries                                |
+| Direct File Access  | `if ( ! defined( 'ABSPATH' ) ) exit;` in every PHP file            |
+| Permission Check    | `current_user_can( 'manage_options' )` in all admin operations     |
+| Rate Limiting       | Transient API with 5 requests per IP / 10 minutes                  |
+| Bot Protection      | Hidden honeypot field (`swpm_website`)                             |
+| Token Security      | `random_bytes(32)` + `bin2hex()` (64 characters)                   |
+| API Key Encryption  | AES-256-CBC + HMAC-SHA256 + WordPress salt                         |
+| IP Validation       | `FILTER_VALIDATE_IP` (IPv4 + IPv6)                                 |
+| OAuth Token Storage | Encrypted token storage, automatic refresh                         |
+| Conflict Detection  | wp_mail override analysis via ReflectionFunction                   |
+| Origin/Referer      | Origin/referer validation in REST API                              |
 
 ---
 
@@ -906,34 +906,34 @@ $mailer = SWPMail::get( 'mailer' );
 
 ### Action Hooks
 
-| Hook                           | Parameters                            | Description                                         |
-| ------------------------------ | ------------------------------------- | --------------------------------------------------- |
-| `swpm_subscriber_created`      | `$id`, `$email`, `$frequency`         | When a new subscriber is created                    |
-| `swpm_subscriber_confirmed`    | `$id`, `$email`                       | When a subscriber is confirmed                      |
-| `swpm_subscriber_unsubscribed` | `$id`, `$email`                       | When a subscription is cancelled                    |
-| `swpm_register_triggers`       | `$trigger_manager`                    | Custom trigger registration point                   |
-| `swpm_mail_sent`               | `$result`, `$recipient`, `$mail_data` | When an email is sent successfully                  |
-| `swpm_mail_failed`             | `$result`, `$recipient`, `$mail_data` | When sending fails (triggers alarms)                |
-| `swpm_auth_failure`            | `$provider_key`                       | API authentication failure                          |
-| `swpm_smtp_exception`          | `$exception`, `$friendly_msg`         | When an SMTP error occurs                           |
+| Hook                           | Parameters                            | Description                          |
+| ------------------------------ | ------------------------------------- | ------------------------------------ |
+| `swpm_subscriber_created`      | `$id`, `$email`, `$frequency`         | When a new subscriber is created     |
+| `swpm_subscriber_confirmed`    | `$id`, `$email`                       | When a subscriber is confirmed       |
+| `swpm_subscriber_unsubscribed` | `$id`, `$email`                       | When a subscription is cancelled     |
+| `swpm_register_triggers`       | `$trigger_manager`                    | Custom trigger registration point    |
+| `swpm_mail_sent`               | `$result`, `$recipient`, `$mail_data` | When an email is sent successfully   |
+| `swpm_mail_failed`             | `$result`, `$recipient`, `$mail_data` | When sending fails (triggers alarms) |
+| `swpm_auth_failure`            | `$provider_key`                       | API authentication failure           |
+| `swpm_smtp_exception`          | `$exception`, `$friendly_msg`         | When an SMTP error occurs            |
 
 ### Filter Hooks
 
-| Hook                             | Returns  | Description                                         |
-| -------------------------------- | -------- | --------------------------------------------------- |
-| `swpm_provider_registry`         | `array`  | Add new provider to the provider list               |
-| `swpm_subscribe_template`        | `string` | Change shortcode form template path                 |
-| `swpm_template_path`             | `string` | Change email template path                          |
-| `swpm_trigger_should_send_{key}` | `bool`   | Stop/allow trigger sending                          |
-| `swpm_trigger_new_post_types`    | `array`  | Extend triggerable post types                       |
-| `swpm_pre_send`                  | `bool`   | Pre-send filter                                     |
-| `swpm_mail_headers`              | `array`  | Modify mail headers                                 |
-| `swpm_skip_override`             | `bool`   | Skip wp_mail override                               |
-| `swpm_queue_batch_size`          | `int`    | Queue batch size (default: 50)                      |
-| `swpm_api_timeout`               | `int`    | HTTP request timeout (default: 20s)                 |
-| `swpm_confirm_token_expiry`      | `int`    | Token expiry (default: 172800s / 48 hours)          |
-| `swpm_blocked_email_domains`     | `array`  | Blocked email domains                               |
-| `swpm_log_retention_days`        | `int`    | Log retention period (default: 30 days)             |
+| Hook                             | Returns  | Description                                |
+| -------------------------------- | -------- | ------------------------------------------ |
+| `swpm_provider_registry`         | `array`  | Add new provider to the provider list      |
+| `swpm_subscribe_template`        | `string` | Change shortcode form template path        |
+| `swpm_template_path`             | `string` | Change email template path                 |
+| `swpm_trigger_should_send_{key}` | `bool`   | Stop/allow trigger sending                 |
+| `swpm_trigger_new_post_types`    | `array`  | Extend triggerable post types              |
+| `swpm_pre_send`                  | `bool`   | Pre-send filter                            |
+| `swpm_mail_headers`              | `array`  | Modify mail headers                        |
+| `swpm_skip_override`             | `bool`   | Skip wp_mail override                      |
+| `swpm_queue_batch_size`          | `int`    | Queue batch size (default: 50)             |
+| `swpm_api_timeout`               | `int`    | HTTP request timeout (default: 20s)        |
+| `swpm_confirm_token_expiry`      | `int`    | Token expiry (default: 172800s / 48 hours) |
+| `swpm_blocked_email_domains`     | `array`  | Blocked email domains                      |
+| `swpm_log_retention_days`        | `int`    | Log retention period (default: 30 days)    |
 
 ### Usage Examples
 
@@ -1138,54 +1138,54 @@ The plugin creates 4 custom tables. All tables use the `{prefix}swpm_` prefix.
 
 ### `swpm_queue`
 
-| Column            | Type                   | Description                             |
-| ----------------- | ---------------------- | --------------------------------------- |
-| `id`              | BIGINT(20) UNSIGNED PK | Auto-incrementing ID                    |
+| Column            | Type                   | Description                                 |
+| ----------------- | ---------------------- | ------------------------------------------- |
+| `id`              | BIGINT(20) UNSIGNED PK | Auto-incrementing ID                        |
 | `subscriber_id`   | BIGINT(20) UNSIGNED    | Related subscriber (NULL = general wp_mail) |
-| `template_id`     | VARCHAR(100)           | Template identifier                     |
-| `to_email`        | VARCHAR(200)           | Recipient email                         |
-| `subject`         | VARCHAR(500)           | Subject                                 |
-| `body`            | LONGTEXT               | HTML body                               |
-| `headers`         | TEXT                   | JSON formatted headers                  |
-| `attachments`     | TEXT                   | JSON file paths                         |
-| `status`          | ENUM                   | pending, sending, sent, failed          |
-| `attempts`        | TINYINT(3)             | Attempt count                           |
-| `max_attempts`    | TINYINT(3)             | Maximum attempts (default: 3)           |
-| `provider_used`   | VARCHAR(50)            | Provider used                           |
-| `provider_msg_id` | VARCHAR(200)           | Provider message ID                     |
-| `scheduled_at`    | DATETIME               | Scheduled send time                     |
-| `sent_at`         | DATETIME               | Send date                               |
-| `error_message`   | TEXT                   | Error message                           |
-| `error_code`      | VARCHAR(50)            | Error code                              |
-| `created_at`      | DATETIME               | Creation date                           |
+| `template_id`     | VARCHAR(100)           | Template identifier                         |
+| `to_email`        | VARCHAR(200)           | Recipient email                             |
+| `subject`         | VARCHAR(500)           | Subject                                     |
+| `body`            | LONGTEXT               | HTML body                                   |
+| `headers`         | TEXT                   | JSON formatted headers                      |
+| `attachments`     | TEXT                   | JSON file paths                             |
+| `status`          | ENUM                   | pending, sending, sent, failed              |
+| `attempts`        | TINYINT(3)             | Attempt count                               |
+| `max_attempts`    | TINYINT(3)             | Maximum attempts (default: 3)               |
+| `provider_used`   | VARCHAR(50)            | Provider used                               |
+| `provider_msg_id` | VARCHAR(200)           | Provider message ID                         |
+| `scheduled_at`    | DATETIME               | Scheduled send time                         |
+| `sent_at`         | DATETIME               | Send date                                   |
+| `error_message`   | TEXT                   | Error message                               |
+| `error_code`      | VARCHAR(50)            | Error code                                  |
+| `created_at`      | DATETIME               | Creation date                               |
 
 ### `swpm_logs`
 
-| Column        | Type                   | Description                  |
-| ------------- | ---------------------- | ---------------------------- |
-| `id`          | BIGINT(20) UNSIGNED PK | Auto-incrementing ID         |
-| `queue_id`    | BIGINT(20) UNSIGNED    | Related queue item           |
-| `trigger_key` | VARCHAR(100)           | Trigger key                  |
-| `provider`    | VARCHAR(50)            | Provider name                |
-| `level`       | ENUM                   | debug, info, warning, error  |
-| `message`     | TEXT                   | Log message                  |
-| `context`     | LONGTEXT               | JSON details                 |
-| `created_at`  | DATETIME               | Record date                  |
+| Column        | Type                   | Description                 |
+| ------------- | ---------------------- | --------------------------- |
+| `id`          | BIGINT(20) UNSIGNED PK | Auto-incrementing ID        |
+| `queue_id`    | BIGINT(20) UNSIGNED    | Related queue item          |
+| `trigger_key` | VARCHAR(100)           | Trigger key                 |
+| `provider`    | VARCHAR(50)            | Provider name               |
+| `level`       | ENUM                   | debug, info, warning, error |
+| `message`     | TEXT                   | Log message                 |
+| `context`     | LONGTEXT               | JSON details                |
+| `created_at`  | DATETIME               | Record date                 |
 
 ### `swpm_tracking`
 
-| Column       | Type                   | Description                              |
-| ------------ | ---------------------- | ---------------------------------------- |
-| `id`         | BIGINT(20) UNSIGNED PK | Auto-incrementing ID                     |
-| `hash`       | VARCHAR(64)            | Tracking hash (unique identifier)        |
-| `queue_id`   | BIGINT(20) UNSIGNED    | Related queue item                       |
-| `to_email`   | VARCHAR(200)           | Recipient email address                  |
-| `subject`    | VARCHAR(500)           | Email subject                            |
-| `event_type` | ENUM                   | open, click                              |
-| `url`        | TEXT                   | Clicked URL (for click events)           |
-| `ip_address` | VARCHAR(45)            | IPv4/IPv6 address                        |
-| `user_agent` | VARCHAR(500)           | Browser/client information               |
-| `created_at` | DATETIME               | Event date                               |
+| Column       | Type                   | Description                       |
+| ------------ | ---------------------- | --------------------------------- |
+| `id`         | BIGINT(20) UNSIGNED PK | Auto-incrementing ID              |
+| `hash`       | VARCHAR(64)            | Tracking hash (unique identifier) |
+| `queue_id`   | BIGINT(20) UNSIGNED    | Related queue item                |
+| `to_email`   | VARCHAR(200)           | Recipient email address           |
+| `subject`    | VARCHAR(500)           | Email subject                     |
+| `event_type` | ENUM                   | open, click                       |
+| `url`        | TEXT                   | Clicked URL (for click events)    |
+| `ip_address` | VARCHAR(45)            | IPv4/IPv6 address                 |
+| `user_agent` | VARCHAR(500)           | Browser/client information        |
+| `created_at` | DATETIME               | Event date                        |
 
 **Indexes:** `hash`, `queue_id`, `event_type`, `created_at`, (`to_email`, `event_type`)
 
@@ -1197,10 +1197,10 @@ A three-tabbed diagnostics interface accessible from the **SWPMail > Tools** pag
 
 ### Database Repair (DB Repair)
 
-| Function       | Description                                                                                                                                |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Diagnostics** | Missing tables, columns, indexes; orphaned queue items; stuck sends; missing options                                                      |
-| **Repair**     | Schema update with `dbDelta()`; set orphan `subscriber_id`s to NULL; reset stuck sending→pending; restore missing options                  |
+| Function        | Description                                                                                                               |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **Diagnostics** | Missing tables, columns, indexes; orphaned queue items; stuck sends; missing options                                      |
+| **Repair**      | Schema update with `dbDelta()`; set orphan `subscriber_id`s to NULL; reset stuck sending→pending; restore missing options |
 
 AJAX: `wp_ajax_swpm_db_diagnose`, `wp_ajax_swpm_db_repair`
 

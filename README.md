@@ -4,6 +4,12 @@
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-777BB4.svg)](https://php.net/)
 [![License](https://img.shields.io/badge/License-GPLv2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)](#)
+[![Providers](https://img.shields.io/badge/Mail%20Providers-18-1e3d2f.svg)](#supported-mail-services-18-providers)
+[![Lines of Code](https://img.shields.io/badge/Lines%20of%20Code-26%2C000%2B-informational.svg)](#tech-stack)
+[![Dependencies](https://img.shields.io/badge/External%20Dependencies-0-success.svg)](#)
+[![i18n](https://img.shields.io/badge/Languages-9-blueviolet.svg)](#multilingual-support-i18n)
+
+🇬🇧 English · 🇹🇷 Türkçe · 🇩🇪 Deutsch · 🇪🇸 Español · 🇫🇷 Français · 🇮🇹 Italiano · 🇯🇵 日本語 · 🇳🇱 Nederlands · 🇧🇷 Português
 
 SWPMail is a fully customizable **email subscription, notification, and sending infrastructure plugin** that integrates with WordPress sites, supports **18 professional mail services**, applies the configured SMTP/API setting to **all WordPress emails** sent via `wp_mail()`, and features enterprise-grade capabilities such as smart routing, failover, OAuth 2.0, email tracking & analytics, alarm system, DNS verification, and multilingual support (9 languages).
 
@@ -12,6 +18,7 @@ SWPMail is a fully customizable **email subscription, notification, and sending 
 ## Table of Contents
 
 - [Features](#features)
+- [Tech Stack](#tech-stack)
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Quick Start (Setup Wizard)](#quick-start-setup-wizard)
@@ -42,6 +49,34 @@ SWPMail is a fully customizable **email subscription, notification, and sending 
 - [Testing](#testing)
 - [FAQ (Frequently Asked Questions)](#faq-frequently-asked-questions)
 - [License](#license)
+
+---
+
+## Tech Stack
+
+| Layer            | Technology               | Details                                                               |
+| ---------------- | ------------------------ | --------------------------------------------------------------------- |
+| **Backend**      | PHP 7.4+                 | 19,000+ lines — OOP with Factory, Strategy & Template Method patterns |
+| **Frontend**     | JavaScript (jQuery)      | 1,900+ lines — AJAX-driven admin UI, multi-step setup wizard          |
+| **Styling**      | CSS3 (Custom Properties) | 4,000+ lines — 570+ CSS variables, "Parchment & Forest" design system |
+| **Typography**   | Google Fonts             | Cormorant Garamond (display), Nunito (body), JetBrains Mono (code)    |
+| **Editor**       | CodeMirror               | Built-in HTML template editor via WordPress code editor API           |
+| **Database**     | MySQL / MariaDB          | 4 custom InnoDB tables with optimized indexes                         |
+| **CLI**          | WP-CLI                   | 16 subcommands for full terminal management                           |
+| **API**          | WordPress REST API       | 3 endpoints + 32 AJAX handlers                                        |
+| **Testing**      | PHPUnit 9 + Brain\Monkey | WordPress-aware unit testing                                          |
+| **Linting**      | PHPCS + WPCS             | WordPress Coding Standards enforced                                   |
+| **i18n**         | WordPress L10n           | 9 languages with `.po` / `.mo` files                                  |
+| **Dependencies** | **None (runtime)**       | Zero external libraries — pure WordPress HTTP API                     |
+
+### At a Glance
+
+```
+📦 26,000+ lines of code    🗂️ 83 PHP classes       🎨 570+ CSS variables
+📮 18 mail providers         🔌 48 extensibility hooks  🗄️ 4 custom DB tables
+🌍 9 languages              ⚡ 16 WP-CLI commands      📡 3 REST + 32 AJAX endpoints
+🔔 5 alarm channels          📋 10 email templates      🔄 6 cron events
+```
 
 ---
 

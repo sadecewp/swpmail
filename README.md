@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-GPLv2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)](#)
 [![Providers](https://img.shields.io/badge/Mail%20Providers-18-1e3d2f.svg)](#supported-mail-services-18-providers)
-[![Lines of Code](https://img.shields.io/badge/Lines%20of%20Code-26%2C000%2B-informational.svg)](#tech-stack)
+[![Lines of Code](https://img.shields.io/badge/Lines%20of%20Code-30%2C000%2B-informational.svg)](#tech-stack)
 [![Dependencies](https://img.shields.io/badge/External%20Dependencies-0-success.svg)](#)
 [![i18n](https://img.shields.io/badge/Languages-9-blueviolet.svg)](#multilingual-support-i18n)
 
@@ -56,7 +56,7 @@ SWPMail is a fully customizable **email subscription, notification, and sending 
 
 | Layer            | Technology               | Details                                                               |
 | ---------------- | ------------------------ | --------------------------------------------------------------------- |
-| **Backend**      | PHP 7.4+                 | 19,000+ lines — OOP with Factory, Strategy & Template Method patterns |
+| **Backend**      | PHP 7.4+                 | 24,000+ lines — OOP with Factory, Strategy & Template Method patterns |
 | **Frontend**     | JavaScript (jQuery)      | 1,900+ lines — AJAX-driven admin UI, multi-step setup wizard          |
 | **Styling**      | CSS3 (Custom Properties) | 4,000+ lines — 570+ CSS variables, "Parchment & Forest" design system |
 | **Typography**   | Google Fonts             | Cormorant Garamond (display), Nunito (body), JetBrains Mono (code)    |
@@ -72,7 +72,7 @@ SWPMail is a fully customizable **email subscription, notification, and sending 
 ### At a Glance
 
 ```
-📦 26,000+ lines of code    🗂️ 83 PHP classes       🎨 570+ CSS variables
+📦 30,000+ lines of code    🗂️ 67 PHP classes       🎨 570+ CSS variables
 📮 18 mail providers         🔌 48 extensibility hooks  🗄️ 4 custom DB tables
 🌍 9 languages              ⚡ 16 WP-CLI commands      📡 3 REST + 32 AJAX endpoints
 🔔 5 alarm channels          📋 10 email templates      🔄 6 cron events
@@ -177,7 +177,7 @@ When the plugin is activated for the first time, the **Setup Wizard** opens auto
 
 ### Wizard Steps
 
-1. **Provider Selection** — Choose your mail provider from 19 services
+1. **Provider Selection** — Choose your mail provider from 18 providers
 2. **Credentials** — Enter API key or SMTP credentials
 3. **Test Send** — Send a test email to verify the connection
 4. **Complete** — `swpm_setup_complete` is marked, and you are redirected to the dashboard
@@ -460,14 +460,18 @@ Frequency: instant / daily / weekly
 
 ### Built-in Templates
 
-| Template ID            | Usage                      | Variables                                                                                     |
-| ---------------------- | -------------------------- | --------------------------------------------------------------------------------------------- |
-| `base`                 | Base layout for all emails | `{{content}}`                                                                                 |
-| `confirm-subscription` | Double opt-in email        | `{{confirm_url}}`, `{{subscriber_name}}`                                                      |
-| `welcome`              | Welcome email              | `{{subscriber_name}}`, `{{site_name}}`                                                        |
-| `new-post`             | New post notification      | `{{post_title}}`, `{{post_url}}`, `{{post_excerpt}}`, `{{post_thumbnail}}`, `{{author_name}}` |
-| `digest-daily`         | Daily digest               | `{{post_list}}`, `{{date}}`                                                                   |
-| `digest-weekly`        | Weekly digest              | `{{post_list}}`, `{{week_start}}`, `{{week_end}}`                                             |
+| Template ID            | Usage                              | Variables                                                                                     |
+| ---------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------- |
+| `base`                 | Base layout for all emails         | `{{content}}`                                                                                 |
+| `confirm-subscription` | Double opt-in email                | `{{confirm_url}}`, `{{subscriber_name}}`                                                      |
+| `welcome`              | Welcome email                      | `{{subscriber_name}}`, `{{site_name}}`                                                        |
+| `new-post`             | New post notification              | `{{post_title}}`, `{{post_url}}`, `{{post_excerpt}}`, `{{post_thumbnail}}`, `{{author_name}}` |
+| `new-user`             | New user registration notification | `{{username}}`, `{{login_url}}`                                                               |
+| `new-comment`          | New comment notification           | `{{commenter_name}}`, `{{comment_excerpt}}`, `{{post_title}}`                                 |
+| `user-login`           | User login notification            | `{{username}}`, `{{ip_address}}`, `{{login_time}}`                                            |
+| `password-reset`       | Password reset notification        | `{{username}}`, `{{reset_link}}`                                                              |
+| `digest-daily`         | Daily digest                       | `{{post_list}}`, `{{date}}`                                                                   |
+| `digest-weekly`        | Weekly digest                      | `{{post_list}}`, `{{week_start}}`, `{{week_end}}`                                             |
 
 ### Global Variables (Available in All Templates)
 
@@ -1035,95 +1039,101 @@ swpmail/
 ├── phpcs.xml                            ← Code standards
 │
 ├── includes/
-│   ├── helpers.php                      ← Helper functions (encrypt/decrypt/log/swpm)
-│   ├── class-swpmail.php                ← Bootstrap / Service Container
-│   ├── class-loader.php                 ← Action/Filter loader
-│   ├── class-i18n.php                   ← Language support
-│   ├── class-activator.php              ← Activation (DB tables + defaults)
-│   ├── class-deactivator.php            ← Deactivation (cron cleanup)
+│   ├── helpers.php                          ← Helper functions (encrypt/decrypt/log/swpm)
+│   ├── class-swpmail.php                    ← Bootstrap / Service Container
+│   ├── class-swpm-loader.php                ← Action/Filter loader
+│   ├── class-swpm-i18n.php                  ← Language support
+│   ├── class-swpm-activator.php             ← Activation (DB tables + defaults)
+│   ├── class-swpm-deactivator.php           ← Deactivation (cron cleanup)
 │   │
 │   ├── core/
-│   │   ├── class-subscriber.php         ← Subscriber CRUD + GDPR
-│   │   ├── class-mailer.php             ← Sending via provider
-│   │   ├── class-queue.php              ← Email queue
-│   │   ├── class-cron.php               ← 6 scheduled tasks
-│   │   ├── class-template-engine.php    ← Template engine (variable system)
-│   │   ├── class-router.php             ← Smart routing engine
-│   │   ├── class-connections-manager.php← Failover & health check
-│   │   ├── class-analytics.php          ← Open/click analytics
-│   │   ├── class-tracker.php            ← Open pixel & click redirect
-│   │   ├── class-conflict-detector.php  ← 18+ conflict detection
-│   │   └── class-db-repair.php          ← Database diagnostics & repair
+│   │   ├── class-swpm-subscriber.php        ← Subscriber CRUD + GDPR
+│   │   ├── class-swpm-mailer.php            ← Sending via provider
+│   │   ├── class-swpm-queue.php             ← Email queue
+│   │   ├── class-swpm-cron.php              ← 6 scheduled tasks
+│   │   ├── class-swpm-template-engine.php   ← Template engine (variable system)
+│   │   ├── class-swpm-router.php            ← Smart routing engine
+│   │   ├── class-swpm-connections-manager.php ← Failover & health check
+│   │   ├── class-swpm-analytics.php         ← Open/click analytics
+│   │   ├── class-swpm-tracker.php           ← Open pixel & click redirect
+│   │   ├── class-swpm-conflict-detector.php ← 18+ conflict detection
+│   │   └── class-swpm-db-repair.php         ← Database diagnostics & repair
 │   │
 │   ├── providers/
-│   │   ├── interface-provider.php       ← Provider contract
-│   │   ├── class-send-result.php        ← Send result DTO
-│   │   ├── class-provider-factory.php   ← Provider factory (18 providers)
-│   │   ├── class-provider-phpmail.php   ← PHP Mail (default)
-│   │   ├── class-provider-smtp.php      ← Generic SMTP
-│   │   ├── class-provider-gmail.php     ← Gmail (SMTP / OAuth 2.0)
-│   │   ├── class-provider-outlook.php   ← Outlook (SMTP / OAuth 2.0)
-│   │   ├── class-provider-zoho.php      ← Zoho Mail
-│   │   ├── class-provider-mailgun.php   ← Mailgun HTTP API
-│   │   ├── class-provider-sendgrid.php  ← SendGrid HTTP API
-│   │   ├── class-provider-postmark.php  ← Postmark HTTP API
-│   │   ├── class-provider-brevo.php     ← Brevo HTTP API
-│   │   ├── class-provider-ses.php       ← Amazon SES (SDK-less)
-│   │   ├── class-provider-resend.php    ← Resend HTTP API
-│   │   ├── class-provider-elasticemail.php ← Elastic Email HTTP API
-│   │   ├── class-provider-mailjet.php   ← Mailjet HTTP API
-│   │   ├── class-provider-mailersend.php← MailerSend HTTP API
-│   │   ├── class-provider-sendlayer.php ← SendLayer HTTP API
-│   │   ├── class-provider-smtpcom.php   ← SMTP.com HTTP API
-│   │   ├── class-provider-smtp2go.php   ← SMTP2GO HTTP API
-│   │   └── class-provider-sparkpost.php ← SparkPost HTTP API
+│   │   ├── interface-provider.php              ← Provider contract
+│   │   ├── class-swpm-send-result.php          ← Send result DTO
+│   │   ├── class-swpm-provider-factory.php     ← Provider factory (18 providers)
+│   │   ├── class-swpm-provider-phpmail.php     ← PHP Mail (default)
+│   │   ├── class-swpm-provider-smtp.php        ← Generic SMTP
+│   │   ├── class-swpm-provider-gmail.php       ← Gmail (SMTP / OAuth 2.0)
+│   │   ├── class-swpm-provider-outlook.php     ← Outlook (SMTP / OAuth 2.0)
+│   │   ├── class-swpm-provider-zoho.php        ← Zoho Mail
+│   │   ├── class-swpm-provider-mailgun.php     ← Mailgun HTTP API
+│   │   ├── class-swpm-provider-sendgrid.php    ← SendGrid HTTP API
+│   │   ├── class-swpm-provider-postmark.php    ← Postmark HTTP API
+│   │   ├── class-swpm-provider-brevo.php       ← Brevo HTTP API
+│   │   ├── class-swpm-provider-ses.php         ← Amazon SES (SDK-less)
+│   │   ├── class-swpm-provider-resend.php      ← Resend HTTP API
+│   │   ├── class-swpm-provider-elasticemail.php← Elastic Email HTTP API
+│   │   ├── class-swpm-provider-mailjet.php     ← Mailjet HTTP API
+│   │   ├── class-swpm-provider-mailersend.php  ← MailerSend HTTP API
+│   │   ├── class-swpm-provider-sendlayer.php   ← SendLayer HTTP API
+│   │   ├── class-swpm-provider-smtpcom.php     ← SMTP.com HTTP API
+│   │   ├── class-swpm-provider-smtp2go.php     ← SMTP2GO HTTP API
+│   │   └── class-swpm-provider-sparkpost.php   ← SparkPost HTTP API
 │   │
 │   ├── hooks/
-│   │   └── class-wp-mail-override.php   ← Global wp_mail interceptor
+│   │   └── class-swpm-wp-mail-override.php  ← Global wp_mail interceptor
 │   │
 │   ├── triggers/
-│   │   ├── class-trigger-base.php       ← Abstract trigger class
-│   │   ├── class-trigger-manager.php    ← Trigger manager
-│   │   ├── class-trigger-new-post.php   ← New post trigger
-│   │   ├── class-trigger-new-user.php   ← New user trigger
-│   │   ├── class-trigger-user-login.php ← User login trigger
-│   │   ├── class-trigger-new-comment.php← New comment trigger
-│   │   └── class-trigger-password-reset.php ← Password reset trigger
+│   │   ├── class-swpm-trigger-base.php          ← Abstract trigger class
+│   │   ├── class-swpm-trigger-manager.php       ← Trigger manager
+│   │   ├── class-swpm-trigger-new-post.php      ← New post trigger
+│   │   ├── class-swpm-trigger-new-user.php      ← New user trigger
+│   │   ├── class-swpm-trigger-user-login.php    ← User login trigger
+│   │   ├── class-swpm-trigger-new-comment.php   ← New comment trigger
+│   │   ├── class-swpm-trigger-password-reset.php← Password reset trigger
+│   │   └── class-swpm-trigger-custom.php        ← Extensible custom trigger base
 │   │
 │   ├── alarms/
-│   │   ├── interface-alarm-channel.php  ← Alarm channel contract
-│   │   ├── class-alarm-dispatcher.php   ← Alarm dispatcher
-│   │   ├── class-alarm-channel-slack.php    ← Slack webhook
-│   │   ├── class-alarm-channel-discord.php  ← Discord webhook
-│   │   ├── class-alarm-channel-teams.php    ← Teams webhook
-│   │   ├── class-alarm-channel-twilio.php   ← Twilio SMS
-│   │   └── class-alarm-channel-custom.php   ← Custom webhook
+│   │   ├── interface-alarm-channel.php              ← Alarm channel contract
+│   │   ├── class-swpm-alarm-dispatcher.php          ← Alarm dispatcher
+│   │   ├── class-swpm-alarm-channel-slack.php       ← Slack webhook
+│   │   ├── class-swpm-alarm-channel-discord.php     ← Discord webhook
+│   │   ├── class-swpm-alarm-channel-teams.php       ← Teams webhook
+│   │   ├── class-swpm-alarm-channel-twilio.php      ← Twilio SMS
+│   │   └── class-swpm-alarm-channel-custom.php      ← Custom webhook
 │   │
 │   ├── admin/
-│   │   ├── class-admin.php              ← Admin menu (12 pages) and asset loading
-│   │   ├── class-settings.php           ← Settings API integration
-│   │   ├── class-subscribers-list-table.php ← WP_List_Table
-│   │   ├── class-template-editor.php    ← CodeMirror template editor
-│   │   ├── class-logs-list-table.php    ← Email log table
-│   │   ├── class-dns-checker.php        ← SPF/DKIM/DMARC verification
-│   │   ├── class-oauth-manager.php      ← Gmail/Outlook OAuth 2.0
-│   │   └── class-setup-wizard.php       ← First-run setup wizard
+│   │   ├── class-swpm-admin.php                 ← Admin menu (12 pages) and asset loading
+│   │   ├── class-swpm-dashboard-data.php        ← Dashboard statistics aggregator
+│   │   ├── class-swpm-settings.php              ← Settings API integration
+│   │   ├── class-swpm-subscribers-list-table.php← WP_List_Table
+│   │   ├── class-swpm-template-editor.php       ← CodeMirror template editor
+│   │   ├── class-swpm-logs-list-table.php       ← Email log table
+│   │   ├── class-swpm-dns-checker.php           ← SPF/DKIM/DMARC verification
+│   │   ├── class-swpm-oauth-manager.php         ← Gmail/Outlook OAuth 2.0
+│   │   └── class-swpm-setup-wizard.php          ← First-run setup wizard
 │   │
 │   ├── cli/
-│   │   └── class-cli.php                ← WP-CLI commands (16+ subcommands)
+│   │   └── class-swpm-cli.php               ← WP-CLI commands (16 subcommands)
 │   │
 │   └── public/
-│       ├── class-public.php             ← Frontend asset loading
-│       ├── class-shortcode.php          ← [swpmail_subscribe] shortcode
-│       ├── class-ajax-handler.php       ← AJAX endpoints
-│       └── class-rest-api.php           ← REST API endpoints
+│       ├── class-swpm-public.php            ← Frontend asset loading
+│       ├── class-swpm-shortcode.php         ← [swpmail_subscribe] shortcode
+│       ├── class-swpm-ajax-handler.php      ← AJAX endpoints
+│       └── class-swpm-rest-api.php          ← REST API endpoints
 │
 ├── templates/
 │   └── default/
 │       ├── base.html                    ← Base email layout
-│       ├── new-post.html                ← New post template
-│       ├── welcome.html                 ← Welcome template
 │       ├── confirm-subscription.html    ← Double opt-in template
+│       ├── welcome.html                 ← Welcome template
+│       ├── new-post.html                ← New post notification template
+│       ├── new-user.html                ← New user registration template
+│       ├── new-comment.html             ← New comment notification template
+│       ├── user-login.html              ← User login notification template
+│       ├── password-reset.html          ← Password reset notification template
 │       ├── digest-daily.html            ← Daily digest template
 │       └── digest-weekly.html           ← Weekly digest template
 │
@@ -1157,9 +1167,15 @@ swpmail/
 │       └── subscribe-form.php           ← Subscription form template
 │
 └── languages/
-    ├── swpmail.pot                      ← Translation template
-    ├── swpmail-tr_TR.po                 ← Turkish translation source
-    └── swpmail-tr_TR.mo                 ← Turkish translation (compiled)
+    ├── swpmail.pot              ← Translation template
+    ├── swpmail-de_DE.po / .mo   ← German
+    ├── swpmail-es_ES.po / .mo   ← Spanish
+    ├── swpmail-fr_FR.po / .mo   ← French
+    ├── swpmail-it_IT.po / .mo   ← Italian
+    ├── swpmail-ja.po / .mo      ← Japanese
+    ├── swpmail-nl_NL.po / .mo   ← Dutch
+    ├── swpmail-pt_BR.po / .mo   ← Portuguese (Brazil)
+    └── swpmail-tr_TR.po / .mo   ← Turkish
 ```
 
 ---

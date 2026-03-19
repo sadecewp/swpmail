@@ -181,7 +181,7 @@ class SWPM_Template_Editor {
 			wp_send_json_error( array( 'message' => __( 'Invalid template.', 'swpmail' ) ) );
 		}
 
-		/** @var SWPM_Template_Engine $engine */
+		/* @var SWPM_Template_Engine $engine */
 		$engine = swpm( 'template_engine' );
 		$engine->save( $template_id, $content, $locale );
 
@@ -205,7 +205,7 @@ class SWPM_Template_Editor {
 			wp_send_json_error( array( 'message' => __( 'Invalid template.', 'swpmail' ) ) );
 		}
 
-		/** @var SWPM_Template_Engine $engine */
+		/* @var SWPM_Template_Engine $engine */
 		$engine = swpm( 'template_engine' );
 		$engine->reset( $template_id, $locale );
 		$content = $engine->get_default_file_content( $template_id, $locale );
